@@ -1,11 +1,7 @@
 <template>
-  <div>
-    <Button>按钮</Button>
-  </div>
+  <router-view></router-view>
 </template>
 
-<script setup lang="ts">
-import { Button } from 'ant-design-vue'
-</script>
+<script setup lang="ts"></script>
 
 <style scoped></style>
