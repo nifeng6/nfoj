@@ -1,0 +1,26 @@
+server:
+  servlet:
+    context-path: /
+    multipart:
+      max-request-size: 5MB  # 上传文件总的最大值 默认10MB
+      max-file-size: 5MB #单个文件最大值 默认10MB
+  port: 8000
+
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/codeoj?serverTimezone=Asia/Shanghai
+    username: root
+    password: root
+
+
+mybatis-plus:
+  global-config:
+    db-config:
+      id-type: auto #id??
+  configuration:
+    map-underscore-to-camel-case: true
+    auto-mapping-behavior: full
+  #    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  mapper-locations: classpath:mybatis/mapper/*.xml
+
