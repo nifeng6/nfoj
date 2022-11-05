@@ -5,22 +5,27 @@ export interface IDataType<T = any> {
   page?: IPage
 }
 
-export interface ICtfType {
+export interface IToolTag {
   id: number
   name: string
 }
 
-export interface ICtfTag {
+export interface IToolType {
   id: number
   name: string
 }
 
-export interface ICtfList {
+export interface ITool {
   id: number
   title: string
-  needCoin: number
-  count: number
-  successCount: number
+  url: string
+  tags: string
+  intro: string
+  website: string
+  download: string
+  createTime: number
+  updateTime: number
+  avatarUrl: string
 }
 
 export interface IPage {
@@ -30,10 +35,9 @@ export interface IPage {
   pages: number
 }
 
-// 请求参数
-export interface ICtfListParams {
+export interface IToolListParams {
   currentPage: number
   pageSize: number
-  // type: number
-  // keywords: string
+  type: number
+  keywords: string
 }

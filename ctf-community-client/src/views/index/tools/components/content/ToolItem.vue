@@ -1,14 +1,12 @@
 <template>
   <div class="tool-item">
-    <el-card class="box-card" shadow="hover">
-      <h4 class="title">工具名称</h4>
+    <el-card class="box-card" shadow="hover" style="min-height: 230px">
+      <h4 class="title">{{ itemData.title }}</h4>
       <div class="des">
-        <span
-          >打包、压缩壳侦测工具，可以支持Symbian/Android/Linux/macOS/Windows等系统的可执行文件</span
-        >
+        <span>{{ itemData.intro }}</span>
       </div>
       <div class="tag">
-        <template v-for="(item, index) in tag_list" :key="item">
+        <template v-for="(item, index) in itemData.tags.split(',')" :key="item">
           <el-tag :type="tags_type[index % 5]" class="tag-item">{{
             item
           }}</el-tag>
@@ -16,17 +14,28 @@
       </div>
 
       <div class="tex">
-        <el-button type="primary">官方地址</el-button>
-        <el-button type="primary">下载地址</el-button>
+        <el-button type="primary" @click="goSite(itemData.website)"
+          >官方地址</el-button
+        >
+        <el-button type="primary" @click="goSite(itemData.download)"
+          >下载地址</el-button
+        >
       </div>
     </el-card>
   </div>
 </template>
 
 <script setup lang="ts">
+import type { ITool } from './types'
+defineProps<{
+  itemData: ITool
+}>()
+
 const tags_type = ['success', 'info', 'warning', 'danger', '']
 
-const tag_list = ['Symbian', 'Android', 'Linux', 'macOS', 'Windows']
+const goSite = (url: string) => {
+  window.open(url)
+}
 </script>
 
 <style scoped lang="less">
@@ -35,6 +44,14 @@ const tag_list = ['Symbian', 'Android', 'Linux', 'macOS', 'Windows']
   text-align: center;
   &:hover {
     cursor: pointer;
+  }
+  ::v-deep .el-card__body {
+    height: 100%;
+    min-height: 200px;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    justify-content: space-between;
   }
   .des {
     color: rgba(0, 0, 0, 0.45);

@@ -1,17 +1,17 @@
 <template>
   <div class="tool-list">
     <el-row :gutter="10">
-      <template v-for="item in 10" :key="item">
-        <el-col :span="6"> <ToolItem /></el-col>
+      <template v-for="item in toolList" :key="item">
+        <el-col :span="6"> <ToolItem :itemData="item" /></el-col>
       </template>
     </el-row>
     <div class="pagination">
       <el-pagination
         background
         layout="prev, pager, next"
-        :page-size="pageParam.size"
-        :total="pageParam.total"
-        :current-page="pageParam.currentPage"
+        :page-size="page.pageSize"
+        :total="page.total"
+        :current-page="page.currentPage"
         @current-change="currentChangeHandle"
       ></el-pagination>
     </div>
@@ -20,15 +20,17 @@
 
 <script setup lang="ts">
 import ToolItem from './ToolItem.vue'
-import { ref } from 'vue'
+import { storeToRefs } from 'pinia'
+import useIndexToolStore from '@/stores/modules/index/tools'
 
-const pageParam = ref({
-  currentPage: 1,
-  size: 10,
-  total: 0
-})
+const indexToolStore = useIndexToolStore()
 
-const currentChangeHandle = () => {}
+const { page, toolList } = storeToRefs(indexToolStore)
+
+const currentChangeHandle = (activePage: number) => {
+  page.value.currentPage = activePage
+  indexToolStore.getToolListAction()
+}
 </script>
 
 <style scoped lang="less">

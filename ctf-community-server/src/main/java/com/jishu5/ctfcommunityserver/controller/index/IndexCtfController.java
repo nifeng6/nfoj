@@ -8,6 +8,7 @@ import com.jishu5.ctfcommunityserver.service.impl.SafeDockerUserServiceImpl;
 import com.jishu5.ctfcommunityserver.service.impl.SafeLabsServiceImpl;
 import com.jishu5.ctfcommunityserver.service.impl.SafeTagsServiceImpl;
 import com.jishu5.ctfcommunityserver.service.impl.SafeTypeServiceImpl;
+import com.jishu5.ctfcommunityserver.utils.DtoUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -90,11 +91,7 @@ public class IndexCtfController {
             Map<String,Object> resultMap = new HashMap<>();
 
             // 定义页面数据
-            PageDto pageDto = new PageDto();
-            pageDto.setTotal(safeLabsPage.getTotal());
-            pageDto.setPages(safeLabsPage.getPages());
-            pageDto.setPageSize(pageSize);
-            pageDto.setCurrentPage(currentPage);
+            PageDto pageDto = DtoUtils.pageDtoHandle(safeLabsPage);
 
             resultMap.put("data",safeLabsPage.getRecords());
             resultMap.put("page",pageDto);

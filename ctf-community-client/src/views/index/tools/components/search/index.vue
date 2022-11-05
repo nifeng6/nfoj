@@ -14,10 +14,10 @@
       <span style="font-weight: bolder"> 热门标签： </span>
 
       <span
-        v-for="item in hotTags"
+        v-for="item in toolTagList"
         :key="item.name"
         :index="item.name"
-        style="margin-right: 8px; padding: 0 7px; font-size: 12px"
+        class="tag-item"
       >
         <el-tag type="info"
           ><el-link :underline="false">{{ item.name }}</el-link></el-tag
@@ -29,35 +29,26 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-const searchContent = ref('')
+import { storeToRefs } from 'pinia'
+import useIndexToolStore from '@/stores/modules/index/tools'
 
-const hotTags = [
-  {
-    id: 1,
-    name: 'sql注入'
-  },
-  {
-    id: 2,
-    name: 'xss'
-  },
-  {
-    id: 3,
-    name: 'csrf'
-  },
-  {
-    id: 4,
-    name: 'ssrf'
-  },
-  {
-    id: 5,
-    name: 'xxe'
-  }
-]
+const indexToolStore = useIndexToolStore()
+
+const { toolTagList } = storeToRefs(indexToolStore)
+const searchContent = ref('')
 </script>
 
 <style scoped lang="less">
 .search {
   margin: 0 auto;
   width: 45%;
+
+  .tag-item {
+    margin-right: 8px;
+    margin-bottom: 5px;
+    padding: 0 7px;
+    font-size: 12px;
+    display: inline-block;
+  }
 }
 </style>

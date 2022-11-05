@@ -1,8 +1,15 @@
 <template>
   <div class="sort">
-    <el-menu class="el-menu-vertical">
+    <el-menu
+      class="el-menu-vertical"
+      :default-active="currentType"
+      @select="selectHandle"
+    >
+      <el-menu-item :index="0">
+        <span>全部工具</span>
+      </el-menu-item>
       <el-menu-item
-        v-for="item in typeList"
+        v-for="item in toolTypeList"
         :key="String(item.id)"
         :index="String(item.id)"
       >
@@ -13,40 +20,17 @@
 </template>
 
 <script setup lang="ts">
-const typeList = [
-  {
-    id: 1,
-    name: '安全工具'
-  },
-  {
-    id: 2,
-    name: 'JAVA工具'
-  },
-  {
-    id: 3,
-    name: 'Python工具'
-  },
-  {
-    id: 4,
-    name: 'C++工具'
-  },
-  {
-    id: 5,
-    name: 'C#工具'
-  },
-  {
-    id: 6,
-    name: 'PHP工具'
-  },
-  {
-    id: 7,
-    name: 'Go工具'
-  },
-  {
-    id: 8,
-    name: '其他工具'
-  }
-]
+import { storeToRefs } from 'pinia'
+import useIndexToolStore from '@/stores/modules/index/tools'
+
+const indexToolStore = useIndexToolStore()
+
+const { toolTypeList, currentType } = storeToRefs(indexToolStore)
+
+const selectHandle = (index: any) => {
+  currentType.value = index
+  indexToolStore.getToolListAction()
+}
 </script>
 
 <style scoped lang="less">

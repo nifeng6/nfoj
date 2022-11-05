@@ -9,6 +9,14 @@
 <script setup lang="ts">
 import Search from './components/search/index.vue'
 import Content from './components/content/index.vue'
+
+import useIndexToolStore from '@/stores/modules/index/tools'
+
+const indexToolStore = useIndexToolStore()
+
+indexToolStore.getToolTagListAction()
+indexToolStore.getToolTypeListAction()
+indexToolStore.getToolListAction()
 </script>
 
 <style scoped lang="less">
