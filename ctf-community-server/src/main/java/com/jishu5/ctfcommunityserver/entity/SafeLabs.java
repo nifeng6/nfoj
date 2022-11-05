@@ -8,6 +8,8 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
 import java.io.Serializable;
 import java.time.LocalDateTime;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -17,7 +19,7 @@ import lombok.Setter;
  * </p>
  *
  * @author nifeng
- * @since 2022-11-04 18:43:46
+ * @since 2022-11-05 13:24:34
  */
 @Getter
 @Setter
@@ -51,6 +53,7 @@ public class SafeLabs extends Model<SafeLabs> {
     private LocalDateTime createTime;
 
     @TableField("flag")
+    @JsonProperty(access= JsonProperty.Access.WRITE_ONLY)
     private String flag;
 
     @TableField("need_coin")
@@ -58,6 +61,14 @@ public class SafeLabs extends Model<SafeLabs> {
 
     @TableField("gold_coin")
     private String goldCoin;
+
+    // 总参加人数
+    @TableField(select = false,exist = false)
+    private int count;
+
+    // 总通过人数
+    @TableField(select = false,exist = false)
+    private int successCount;
 
 
     @Override

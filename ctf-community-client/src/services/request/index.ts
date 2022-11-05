@@ -29,7 +29,7 @@ class MainRequest {
     )
   }
 
-  request(config: AxiosRequestConfig) {
+  request<T>(config: AxiosRequestConfig): Promise<T> {
     return new Promise((resolve, reject) => {
       this.instance.request(config).then(
         (res) => {
@@ -42,11 +42,11 @@ class MainRequest {
     })
   }
 
-  get(config: AxiosRequestConfig) {
+  get<T>(config: AxiosRequestConfig): Promise<T> {
     return this.request({ ...config, method: 'GET' })
   }
 
-  post(config: AxiosRequestConfig) {
+  post<T>(config: AxiosRequestConfig): Promise<T> {
     return this.request({ ...config, method: 'POST' })
   }
 }

@@ -8,7 +8,7 @@
         class="tag-item"
         :type="tag_type[Math.ceil(Math.random() * 10)]"
         effect="dark"
-        v-for="item in hotTagList"
+        v-for="item in ctfTagList"
         :key="item.id"
         >{{ item.name }}</el-tag
       >
@@ -19,130 +19,13 @@
 </template>
 
 <script lang="ts" setup>
-import { ref } from 'vue'
 
-const hotTagList = ref([
-  {
-    id: 1,
-    name: 'sql注入'
-  },
-  {
-    id: 2,
-    name: 'xss'
-  },
-  {
-    id: 3,
-    name: 'csrf'
-  },
-  {
-    id: 4,
-    name: 'ssrf'
-  },
-  {
-    id: 5,
-    name: 'xxe'
-  },
-  {
-    id: 6,
-    name: '文件上传'
-  },
-  {
-    id: 7,
-    name: '文件包含'
-  },
-  {
-    id: 8,
-    name: '命令执行'
-  },
-  {
-    id: 9,
-    name: '逻辑漏洞'
-  },
-  {
-    id: 10,
-    name: '绕过'
-  },
-  {
-    id: 11,
-    name: '绕过'
-  },
-  {
-    id: 12,
-    name: '绕过'
-  },
-  {
-    id: 13,
-    name: '绕过'
-  },
-  {
-    id: 14,
-    name: '绕过'
-  },
-  {
-    id: 15,
-    name: '绕过'
-  },
-  {
-    id: 16,
-    name: '绕过'
-  },
-  {
-    id: 17,
-    name: '绕过'
-  },
-  {
-    id: 18,
-    name: '绕过'
-  },
-  {
-    id: 19,
-    name: '绕过'
-  },
-  {
-    id: 20,
-    name: '绕过'
-  },
-  {
-    id: 21,
-    name: '绕过'
-  },
-  {
-    id: 22,
-    name: '绕过'
-  },
-  {
-    id: 23,
-    name: '绕过'
-  },
-  {
-    id: 24,
-    name: '绕过'
-  },
-  {
-    id: 25,
-    name: '绕过'
-  },
-  {
-    id: 26,
-    name: '绕过'
-  },
-  {
-    id: 27,
-    name: '绕过'
-  },
-  {
-    id: 28,
-    name: '绕过'
-  },
-  {
-    id: 29,
-    name: '绕过'
-  },
-  {
-    id: 30,
-    name: '绕过'
-  }
-])
+import { storeToRefs } from 'pinia'
+import useIndexCtfStore from '@/stores/modules/index/ctf'
+
+const indexCtfStore = useIndexCtfStore()
+
+const { ctfTagList } = storeToRefs(indexCtfStore)
 
 const tag_type = [
   '',

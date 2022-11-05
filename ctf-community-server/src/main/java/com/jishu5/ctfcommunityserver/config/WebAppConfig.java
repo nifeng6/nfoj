@@ -25,19 +25,14 @@ public class WebAppConfig implements WebMvcConfigurer {
                 .maxAge(3600);
     }
 
-    @Value("${file.upload.image}")
-    private String uploadPath;
-
-    @Value("${file.assets.image}")
-    private String assetsPath;
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        System.out.println(uploadPath);
-        registry.addResourceHandler("/upload/image/**")
-                .addResourceLocations("file:" + uploadPath);
-        registry.addResourceHandler("/static/image/**")
-                .addResourceLocations("file:" + assetsPath);
+//        System.out.println(uploadPath);
+//        registry.addResourceHandler("/upload/image/**")
+//                .addResourceLocations("file:" + uploadPath);
+//        registry.addResourceHandler("/static/image/**")
+//                .addResourceLocations("file:" + assetsPath);
     }
 
     @Bean
@@ -47,7 +42,7 @@ public class WebAppConfig implements WebMvcConfigurer {
 
     @Override
     public void addInterceptors(InterceptorRegistry registry){
-        String[] patttern = new String[]{"/upload/**","/self_sale_ad/**", "/footerGroup/**","/include/**","/index/**","/article/**","/site/**","/sort/**","/tools/**","/admin/user/login"};
+        String[] patttern = new String[]{"/index/**"};
         registry.addInterceptor(sysInterceptor())
                 .addPathPatterns("/**")
                 .excludePathPatterns(patttern);

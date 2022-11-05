@@ -1,16 +1,27 @@
 <template>
   <div class="header">
     <h3 class="title">靶场挑战</h3>
-    <el-input class="h-search">
+    <el-input class="h-search" v-model="keywords">
       <template #append>
-        <el-button>搜索</el-button>
+        <el-button @click="searchHandle">搜索</el-button>
       </template>
     </el-input>
-    <el-button round type="primary"> 随机选一题 </el-button>
+    <!-- <el-button round type="primary"> 随机选一题 </el-button> -->
   </div>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { storeToRefs } from 'pinia'
+import useIndexCtfStore from '@/stores/modules/index/ctf'
+
+const indexCtfStore = useIndexCtfStore()
+
+const { keywords } = storeToRefs(indexCtfStore)
+
+const searchHandle = () => {
+  indexCtfStore.getCtfListAction()
+}
+</script>
 
 <style scoped lang="less">
 .header {

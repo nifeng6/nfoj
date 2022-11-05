@@ -9,7 +9,7 @@
         >全部</el-button
       >
       <el-button
-        v-for="item in typeList"
+        v-for="item in ctfTypeList"
         class="btn"
         :key="item.id"
         :type="currentType == item.id ? 'primary' : ''"
@@ -23,23 +23,18 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 
-const typeList = ref([
-  { id: 1, name: 'web' },
-  { id: 2, name: 'pwn' },
-  { id: 3, name: 're' },
-  { id: 4, name: 'misc' },
-  { id: 5, name: 'crypto' },
-  { id: 6, name: 'forensics' },
-  { id: 7, name: 'reverse' },
-  { id: 8, name: 'stego' },
-  { id: 9, name: 'mobile' },
-  { id: 10, name: 'network' },
-  { id: 11, name: 'other' }
-])
-const currentType = ref(0)
+import { storeToRefs } from 'pinia'
+import useIndexCtfStore from '@/stores/modules/index/ctf'
+
+const indexCtfStore = useIndexCtfStore()
+
+const { ctfTypeList, currentType } = storeToRefs(indexCtfStore)
+
+// const currentType = ref(0)
 
 const typeHandle = (active: number) => {
   currentType.value = active
+  indexCtfStore.getCtfListAction()
 }
 </script>
 

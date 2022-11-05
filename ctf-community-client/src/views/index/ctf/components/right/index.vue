@@ -6,6 +6,7 @@
 
 <script setup lang="ts">
 import HotTag from './HotTag.vue'
+import type { ICtfTag } from './types'
 </script>
 
 <style scoped lang="less">

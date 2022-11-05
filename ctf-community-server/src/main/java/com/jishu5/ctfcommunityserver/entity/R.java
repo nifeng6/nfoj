@@ -1,20 +1,22 @@
 package com.jishu5.ctfcommunityserver.entity;
 
+import com.jishu5.ctfcommunityserver.constant.HttpStatus;
+
 import java.util.HashMap;
 import java.util.Map;
 
 public class R extends HashMap<String,Object> {
 
     public R(){
-        put("code", 0);
+        put("code", HttpStatus.SUCCESS);
     }
 
     public static R error(){
-        return error(500,"未知异常，请联系管理员");
+        return error(HttpStatus.ERROR,"未知异常，请联系管理员");
     }
 
     public static R error(String msg){
-        return error(500, msg);
+        return error(HttpStatus.ERROR, msg);
     }
 
     public static R error(int code,String msg){
