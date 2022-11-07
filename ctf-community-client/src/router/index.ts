@@ -1,4 +1,8 @@
-import { createRouter, createWebHistory } from 'vue-router'
+import {
+  createRouter,
+  createWebHistory,
+  createWebHashHistory
+} from 'vue-router'
 import type { RouteRecordRaw } from 'vue-router'
 
 const AdminRouter: Array<RouteRecordRaw> = []
@@ -95,7 +99,7 @@ const IndexRouter: Array<RouteRecordRaw> = [
 ]
 
 const router = createRouter({
-  history: createWebHistory(import.meta.env.BASE_URL),
+  history: createWebHashHistory(),
   routes: [...AdminRouter, ...IndexRouter]
 })
 

@@ -15,15 +15,18 @@
 import Left from './components/left/index.vue'
 import Right from './components/right/index.vue'
 import useIndexCtfStore from '@/stores/modules/index/ctf'
+import { onMounted } from 'vue'
 
-const indexCtfStore = useIndexCtfStore()
+onMounted(() => {
+  const indexCtfStore = useIndexCtfStore()
 
-// 获取靶场类型
-indexCtfStore.getCtfTypeListAction()
-// 获取热门标签
-indexCtfStore.getCtfTagListAction()
-// 获取表格列表
-indexCtfStore.getCtfListAction()
+  // 获取靶场类型
+  indexCtfStore.getCtfTypeListAction()
+  // 获取热门标签
+  indexCtfStore.getCtfTagListAction()
+  // 获取表格列表
+  indexCtfStore.getCtfListAction()
+})
 </script>
 
 <style scoped lang="less">

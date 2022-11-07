@@ -8,6 +8,8 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
 import java.io.Serializable;
 import java.time.LocalDateTime;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -32,6 +34,8 @@ public class User extends Model<User> {
     @TableField("username")
     private String username;
 
+    // 可接收前端的值，但不进行返回
+    @JsonProperty(access= JsonProperty.Access.WRITE_ONLY)
     @TableField("password")
     private String password;
 

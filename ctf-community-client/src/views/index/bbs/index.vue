@@ -10,6 +10,17 @@
 <script setup lang="ts">
 import Left from './components/left/index.vue'
 import Right from './components/right/index.vue'
+import useIndexBbsStore from '@/stores/modules/index/bbs'
+import { onMounted } from 'vue'
+
+onMounted(() => {
+  const indexBbsStore = useIndexBbsStore()
+
+  console.log(indexBbsStore)
+
+  indexBbsStore.getArticleTypeListAction()
+  indexBbsStore.getArticleListAction()
+})
 </script>
 
 <style scoped lang="less">

@@ -9,7 +9,7 @@ import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
-@Configuration
+//@Configuration
 public class WebAppConfig implements WebMvcConfigurer {
 
     /**
@@ -43,9 +43,9 @@ public class WebAppConfig implements WebMvcConfigurer {
     @Override
     public void addInterceptors(InterceptorRegistry registry){
         String[] patttern = new String[]{"/index/**"};
-        registry.addInterceptor(sysInterceptor())
-                .addPathPatterns("/**")
-                .excludePathPatterns(patttern);
+//        registry.addInterceptor(sysInterceptor())
+//                .addPathPatterns("/**")
+//                .excludePathPatterns(patttern);
     }
 
 

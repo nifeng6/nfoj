@@ -1,10 +1,10 @@
 <template>
-  <a href="#" class="article-item">
+  <a target="_blank" :href="`/article/${itemData.id}`" class="article-item">
     <el-card shadow="hover">
       <div class="wrapper">
         <div class="item-left">
           <div style="float: left">
-            <el-avatar :size="50" :src="itemData.avatarUrl"></el-avatar>
+            <el-avatar :size="50" :src="itemData.user.avatarUrl"></el-avatar>
           </div>
           <div
             style="
@@ -23,7 +23,7 @@
             </span>
             <div style="margin-top: 3px">
               <el-tag class="ml-2" type="info" size="small"
-                ># {{ itemData.sortName }}</el-tag
+                ># {{ itemData.typeName }}</el-tag
               >
             </div>
           </div>
@@ -46,7 +46,7 @@
             style="display: flex; flex-direction: column; align-items: center"
           >
             <el-icon :size="18" color="#a4a4a4"><View /></el-icon>
-            <span style="">{{ itemData.views }}</span>
+            <span style="">{{ itemData.view }}</span>
           </div>
         </div>
       </div>

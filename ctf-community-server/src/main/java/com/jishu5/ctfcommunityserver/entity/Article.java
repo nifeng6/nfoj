@@ -44,14 +44,24 @@ public class Article extends Model<Article> {
     @TableField("user_id")
     private Integer userId;
 
-    @TableField("views")
-    private String views;
+    @TableField("view")
+    private Integer view;
 
-    @TableField(value = "create_time", fill = FieldFill.INSERT)
+    @TableField(value = "create_time")
     private LocalDateTime createTime;
 
     @TableField("update_time")
     private LocalDateTime updateTime;
+
+    // 以下不从数据库中查找
+    @TableField(select = false,exist = false)
+    private String typeName;
+
+    @TableField(select = false,exist = false)
+    private Integer replyCount;
+
+    @TableField(select = false,exist = false)
+    private User user;
 
 
     @Override

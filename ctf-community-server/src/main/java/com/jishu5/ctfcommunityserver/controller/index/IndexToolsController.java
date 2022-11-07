@@ -7,6 +7,9 @@ import com.jishu5.ctfcommunityserver.entity.R;
 import com.jishu5.ctfcommunityserver.entity.ToolHotTags;
 import com.jishu5.ctfcommunityserver.entity.ToolList;
 import com.jishu5.ctfcommunityserver.entity.ToolType;
+import com.jishu5.ctfcommunityserver.service.ToolListService;
+import com.jishu5.ctfcommunityserver.service.ToolTagsService;
+import com.jishu5.ctfcommunityserver.service.ToolTypeService;
 import com.jishu5.ctfcommunityserver.service.impl.ToolHotTagsServiceImpl;
 import com.jishu5.ctfcommunityserver.service.impl.ToolListServiceImpl;
 import com.jishu5.ctfcommunityserver.service.impl.ToolTagsServiceImpl;
@@ -26,81 +29,30 @@ import java.util.Map;
 public class IndexToolsController {
 
     @Autowired
-    private ToolListServiceImpl toolListService;
+    private ToolListService toolListService;
 
     @Autowired
     private ToolHotTagsServiceImpl toolHotTagsService;
 
     @Autowired
-    private ToolTagsServiceImpl toolTagsService;
+    private ToolTagsService toolTagsService;
 
     @Autowired
-    private ToolTypeServiceImpl toolTypeService;
+    private ToolTypeService toolTypeService;
 
     @GetMapping("/tag/list")
-    public R TagList(){
-        try {
-            List<ToolHotTags> toolHotTagsList = toolHotTagsService.list();
-
-            Map<String,Object> resultMap = new HashMap<>();
-
-            resultMap.put("data", toolHotTagsList);
-
-            return R.ok(resultMap);
-        }catch (Exception e){
-            return R.error();
-        }
+    public R TagList() {
+        return toolTagsService.getList();
     }
 
     @GetMapping("/type/list")
-    public R typeList(){
-        try {
-            List<ToolType> toolTypeList = toolTypeService.list();
-
-            Map<String,Object> resultMap = new HashMap<>();
-
-            resultMap.put("data", toolTypeList);
-
-            return R.ok(resultMap);
-        }catch (Exception e){
-            return R.error();
-        }
+    public R typeList() {
+        return toolTypeService.getList();
     }
 
     @GetMapping("/list")
-    public R list(Integer currentPage, Integer pageSize, Integer type,String keywords){
-        try {
-            QueryWrapper<ToolList> wrapper = new QueryWrapper<>();
-
-            if(type != 0){
-                wrapper.eq("type_id", type);
-            }
-
-            if(!keywords.equals("")){
-                wrapper.like("title", keywords);
-                wrapper.or();
-                wrapper.like("intro", keywords);
-                wrapper.or();
-                wrapper.like("tags", keywords);
-            }
-
-
-            Page<ToolList> page = new Page<>(currentPage, pageSize);
-
-            Page<ToolList> toolListPage = toolListService.page(page, wrapper);
-
-            PageDto pageDto = DtoUtils.pageDtoHandle(toolListPage);
-
-            Map<String, Object> resultMap = new HashMap<>();
-
-            resultMap.put("data",toolListPage.getRecords());
-
-            resultMap.put("page", pageDto);
-
-            return R.ok(resultMap);
-        }catch (Exception e){
-            return R.error();
-        }
+    public R list(Integer currentPage, Integer pageSize, Integer type, String keywords) {
+        return toolListService.getList(currentPage, pageSize, type, keywords);
     }
 
 

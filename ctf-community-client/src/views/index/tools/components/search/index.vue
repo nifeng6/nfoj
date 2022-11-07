@@ -2,12 +2,12 @@
   <div class="search">
     <el-input
       placeholder="搜索工具..."
-      v-model="searchContent"
+      v-model="keywords"
       class="select-tools"
       size="large"
     >
       <template #append>
-        <el-button color="#1890ff"> 搜索 </el-button>
+        <el-button color="#1890ff" @click="searchHandle"> 搜索 </el-button>
       </template>
     </el-input>
     <div class="hot_tags" style="margin-top: 12px; text-align: center">
@@ -28,14 +28,16 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
 import { storeToRefs } from 'pinia'
 import useIndexToolStore from '@/stores/modules/index/tools'
 
 const indexToolStore = useIndexToolStore()
 
-const { toolTagList } = storeToRefs(indexToolStore)
-const searchContent = ref('')
+const { toolTagList, keywords } = storeToRefs(indexToolStore)
+
+const searchHandle = () => {
+  indexToolStore.getToolListAction()
+}
 </script>
 
 <style scoped lang="less">
