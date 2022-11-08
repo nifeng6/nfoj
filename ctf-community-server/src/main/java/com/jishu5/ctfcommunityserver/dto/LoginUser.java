@@ -12,6 +12,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Set;
 
 @Data
 @NoArgsConstructor
@@ -19,9 +20,9 @@ public class LoginUser implements UserDetails {
 
     private User user;
 
-    private List<String> permission;
+    private Set<String> permission;
 
-    public LoginUser(User user,List<String> permission) {
+    public LoginUser(User user, Set<String> permission) {
         this.user = user;
         this.permission=permission;
     }

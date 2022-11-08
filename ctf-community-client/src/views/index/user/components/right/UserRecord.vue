@@ -2,22 +2,28 @@
   <el-card>
     <div class="user-record">
       <div class="user-record-item">
-        <p>2</p>
+        <p>{{ record.articleCount }}</p>
         <span>文章数</span>
       </div>
       <div class="user-record-item">
-        <p>2</p>
+        <p>{{ record.safeRecordCount }}</p>
         <span>解题数</span>
       </div>
       <div class="user-record-item">
-        <p>3</p>
+        <p>{{ record.coinCount }}</p>
         <span>金币数</span>
       </div>
     </div>
   </el-card>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import useIndexUserStore from '@/stores/modules/index/user'
+import { storeToRefs } from 'pinia'
+const indexUserStore = useIndexUserStore()
+
+const { record } = storeToRefs(indexUserStore)
+</script>
 
 <style scoped lang="less">
 .user-record {

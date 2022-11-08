@@ -17,9 +17,6 @@ public class IndexAccountController {
     @Autowired
     private UserService userService;
 
-    @PostMapping("/login")
-    public R login(@RequestBody LoginDto loginDto){
-        return userService.login(loginDto);
-    }
+
 
 }

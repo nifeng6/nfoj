@@ -4,7 +4,7 @@
       <div class="wrapper">
         <div class="item-left">
           <div style="float: left">
-            <el-avatar :size="50" :src="itemData.user.avatarUrl"></el-avatar>
+            <el-avatar :size="50" :src="itemData?.user?.avatarUrl"></el-avatar>
           </div>
           <div
             style="
@@ -55,10 +55,9 @@
 </template>
 
 <script setup lang="ts">
-import {} from 'vue'
 import { ChatLineRound, View } from '@element-plus/icons-vue'
 
-const props = defineProps({
+defineProps({
   itemData: {
     type: Object,
     required: true

@@ -7,6 +7,7 @@ export {}
 
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
+    AccountDialog: typeof import('./components/index/AccountDialog/index.vue')['default']
     ArticleCard: typeof import('./components/index/ArticleCard/index.vue')['default']
     CodeMirror: typeof import('./components/comm/CodeMirror/index.vue')['default']
     ElAvatar: typeof import('element-plus/es')['ElAvatar']
@@ -20,6 +21,8 @@ declare module '@vue/runtime-core' {
     ElDropdown: typeof import('element-plus/es')['ElDropdown']
     ElDropdownItem: typeof import('element-plus/es')['ElDropdownItem']
     ElDropdownMenu: typeof import('element-plus/es')['ElDropdownMenu']
+    ElForm: typeof import('element-plus/es')['ElForm']
+    ElFormItem: typeof import('element-plus/es')['ElFormItem']
     ElIcon: typeof import('element-plus/es')['ElIcon']
     ElInput: typeof import('element-plus/es')['ElInput']
     ElLink: typeof import('element-plus/es')['ElLink']
@@ -34,6 +37,11 @@ declare module '@vue/runtime-core' {
     ElTableColumn: typeof import('element-plus/es')['ElTableColumn']
     ElTag: typeof import('element-plus/es')['ElTag']
     ElUpload: typeof import('element-plus/es')['ElUpload']
+    ForgotPassword: typeof import('./components/index/AccountDialog/components/ForgotPassword.vue')['default']
+    Login: typeof import('./components/index/AccountDialog/components/Login.vue')['default']
+    LoginDialog: typeof import('./components/index/LoginDialog/index.vue')['default']
+    Register: typeof import('./components/index/AccountDialog/components/Register.vue')['default']
+    RegisterDialog: typeof import('./components/index/RegisterDialog/index.vue')['default']
     ReplyCard: typeof import('./components/index/ReplyCard/index.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']

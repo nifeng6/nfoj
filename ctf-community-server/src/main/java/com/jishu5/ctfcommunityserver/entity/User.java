@@ -61,7 +61,7 @@ public class User extends Model<User> {
     private String nickName;
 
     @TableField("coin")
-    private String coin;
+    private Integer coin;
 
 
     @Override

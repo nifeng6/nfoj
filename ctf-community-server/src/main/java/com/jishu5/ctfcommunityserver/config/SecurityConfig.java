@@ -40,18 +40,20 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
             .and()
             .authorizeRequests()
-            // 对于登录接口 允许匿名访问
-            .antMatchers("/common/account/login").anonymous() //表示匿名可访问
+                // 表示匿名可访问，不允许已登录用户访问
+                .antMatchers("/common/account/login").anonymous()
+                // 允许所有人访问
+                .antMatchers("/index/**", "/common/account/info").permitAll()
             // 除上面外的所有请求全部需要鉴权认证
-            .anyRequest().authenticated();
-        // 开启管理跨域
-        http.cors();
+            .anyRequest()
+            .authenticated()
+            .and()
+            .cors().and()
+            .exceptionHandling()
+            .authenticationEntryPoint(authenticationEntryPoint)
+            .accessDeniedHandler(accessDeniedHandler).and()
+            .addFilterBefore(jwtAuthenticationTokenFilter, UsernamePasswordAuthenticationFilter.class);
 
-        http.exceptionHandling()
-                .authenticationEntryPoint(authenticationEntryPoint)
-                .accessDeniedHandler(accessDeniedHandler);
-
-        http.addFilterBefore(jwtAuthenticationTokenFilter, UsernamePasswordAuthenticationFilter.class);
 
     }
 

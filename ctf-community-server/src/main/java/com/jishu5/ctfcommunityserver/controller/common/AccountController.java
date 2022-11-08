@@ -16,15 +16,7 @@ public class AccountController {
 
     @PostMapping("/login")
     public R login(@RequestBody User user){
-        System.out.println(user.getUsername());
-        System.out.println(user.getPassword());
         return loginService.login(user);
-    }
-
-    @PreAuthorize("hasAuthority('test')")
-    @GetMapping("/hello")
-    public R hello(){
-        return R.ok("hello");
     }
 
     @PostMapping("/logout")
@@ -32,6 +24,16 @@ public class AccountController {
         return loginService.logout();
     }
 
+    @PostMapping("/info")
+    public R getInfo(){
+        return loginService.getInfo();
+    }
 
 
+
+    @PreAuthorize("hasAuthority('test')")
+    @GetMapping("/hello")
+    public R hello(){
+        return R.ok("hello");
+    }
 }

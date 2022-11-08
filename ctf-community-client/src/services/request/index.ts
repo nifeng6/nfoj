@@ -1,6 +1,8 @@
 import axios from 'axios'
 import type { AxiosInstance, AxiosRequestConfig } from 'axios'
 import { BASE_URL, TIMEOUT } from './config'
+import NProgress from 'nprogress'
+import 'nprogress/nprogress.css'
 
 class MainRequest {
   instance: AxiosInstance
@@ -12,6 +14,12 @@ class MainRequest {
 
     this.instance.interceptors.request.use(
       (config) => {
+        NProgress.start()
+        // 给请求添加token
+        const token = localStorage.getItem('token')
+        if (token) {
+          config.headers!.Authorization = token
+        }
         return config
       },
       (err) => {
@@ -21,6 +29,7 @@ class MainRequest {
 
     this.instance.interceptors.response.use(
       (config) => {
+        NProgress.done()
         return config
       },
       (err) => {

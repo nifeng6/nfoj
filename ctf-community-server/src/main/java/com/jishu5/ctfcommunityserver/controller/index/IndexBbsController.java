@@ -14,6 +14,7 @@ import com.jishu5.ctfcommunityserver.service.impl.ArticleSortServiceImpl;
 import com.jishu5.ctfcommunityserver.service.impl.ArticleTagsServiceImpl;
 import com.jishu5.ctfcommunityserver.utils.DtoUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -37,6 +38,7 @@ public class IndexBbsController {
     public R list(Integer currentPage, Integer pageSize, String keywords, Integer type){
         return articleService.getArticleList(currentPage,pageSize,keywords,type);
     }
+
 
     @GetMapping("/type/list")
     public R TypeList(){

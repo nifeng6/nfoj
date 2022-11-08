@@ -1,6 +1,7 @@
 package com.jishu5.ctfcommunityserver.dao.impl;
 
 import com.alibaba.fastjson.JSON;
+import com.jishu5.ctfcommunityserver.constant.SystemConstant;
 import com.jishu5.ctfcommunityserver.entity.R;
 import com.jishu5.ctfcommunityserver.utils.WebUtils;
 import org.springframework.http.HttpStatus;
@@ -17,8 +18,8 @@ import java.io.IOException;
 public class AuthenticationEntryPointImpl implements AuthenticationEntryPoint {
     @Override
     public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException e) throws IOException, ServletException {
-        response.setStatus(HttpStatus.UNAUTHORIZED.value());//401 表示没有授权
-        R result = R.error(401, "认证失败");
+        response.setStatus(SystemConstant.JWT_ERRCODE_FAIL);//4002 表示没有授权
+        R result = R.error(SystemConstant.JWT_ERRCODE_FAIL, "认证失败");
         WebUtils.renderString(response, JSON.toJSONString(result));
     }
 }

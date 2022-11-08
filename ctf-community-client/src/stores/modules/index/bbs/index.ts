@@ -2,7 +2,7 @@ import { defineStore } from 'pinia'
 import { getArticleList, getArticleTypeList } from '@/services'
 import type { IArticle, IPage, IArticleType } from './types'
 
-const useIndexBbsStore = defineStore('ctf', {
+const useIndexBbsStore = defineStore('index-bbs', {
   state: () => ({
     articleList: [] as Array<IArticle>,
     articleTypeList: [] as Array<IArticleType>,

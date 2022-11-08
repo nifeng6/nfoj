@@ -2,7 +2,7 @@ import { defineStore } from 'pinia'
 import { getToolTagList, getToolTypeList, getToolList } from '@/services'
 import type { IToolTag, IToolType, ITool, IPage } from './types'
 
-const useIndexToolStore = defineStore('tool', {
+const useIndexToolStore = defineStore('index-tool', {
   state: () => ({
     toolTagList: [] as Array<IToolTag>,
     toolTypeList: [] as Array<IToolType>,

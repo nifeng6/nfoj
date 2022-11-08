@@ -16,8 +16,6 @@ import { onMounted } from 'vue'
 onMounted(() => {
   const indexBbsStore = useIndexBbsStore()
 
-  console.log(indexBbsStore)
-
   indexBbsStore.getArticleTypeListAction()
   indexBbsStore.getArticleListAction()
 })

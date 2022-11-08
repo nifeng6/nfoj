@@ -9,4 +9,6 @@ public interface LoginService {
 
     public R logout();
 
+    public R getInfo();
+
 }

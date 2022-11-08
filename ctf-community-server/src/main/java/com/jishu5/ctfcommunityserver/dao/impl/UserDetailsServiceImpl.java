@@ -9,12 +9,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
@@ -33,8 +31,11 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         if(Objects.isNull(user)){
             throw new RuntimeException("用户名不存在");
         }
+
+        // 获取用户权限列表
         //传递用户所具有的权限
-        List<String> list = new ArrayList<>(Arrays.asList("test", "admin123"));
-        return new LoginUser(user, list);
+        Set<String> permissions = new HashSet<>();
+//        permissions.add("test");
+        return new LoginUser(user, permissions);
     }
 }

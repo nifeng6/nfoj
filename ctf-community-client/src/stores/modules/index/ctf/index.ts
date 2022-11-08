@@ -2,7 +2,7 @@ import { defineStore } from 'pinia'
 import { getCtfTypeList, getCtfTagList, getCtfList } from '@/services'
 import type { ICtfType, ICtfTag, ICtfList, IPage } from './types'
 
-const useIndexCtfStore = defineStore('ctf', {
+const useIndexCtfStore = defineStore('index-ctf', {
   state: () => ({
     ctfTypeList: [] as Array<ICtfType>,
     ctfTagList: [] as Array<ICtfTag>,

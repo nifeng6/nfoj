@@ -15,7 +15,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface UserService extends IService<User> {
 
-    public R login(LoginDto loginDto);
+    public R getUserInfo(Integer user_id);
 
-
+    public R getUserRecord(Integer user_id);
 }

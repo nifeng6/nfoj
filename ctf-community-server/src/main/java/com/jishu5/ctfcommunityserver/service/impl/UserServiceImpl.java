@@ -2,8 +2,10 @@ package com.jishu5.ctfcommunityserver.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.jishu5.ctfcommunityserver.dto.LoginDto;
-import com.jishu5.ctfcommunityserver.entity.R;
-import com.jishu5.ctfcommunityserver.entity.User;
+import com.jishu5.ctfcommunityserver.entity.*;
+import com.jishu5.ctfcommunityserver.mapper.ArticleMapper;
+import com.jishu5.ctfcommunityserver.mapper.SafeDockerMapper;
+import com.jishu5.ctfcommunityserver.mapper.SafeDockerUserMapper;
 import com.jishu5.ctfcommunityserver.mapper.UserMapper;
 import com.jishu5.ctfcommunityserver.service.UserService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -11,7 +13,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * <p>
@@ -27,30 +31,49 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     @Autowired
     private UserMapper userMapper;
 
+    @Autowired
+    private ArticleMapper articleMapper;
+
+    @Autowired
+    private SafeDockerUserMapper safeDockerUserMapper;
+
     @Override
-    public R login(LoginDto loginDto) {
-        return null;
+    public R getUserInfo(Integer user_id) {
+        try {
+            QueryWrapper<User> wrapper = new QueryWrapper<>();
+            wrapper.eq("id",user_id);
+            User user = userMapper.selectOne(wrapper);
+
+            Map<String, Object> map = new HashMap<>();
+            Map<String, Object> resultMap = new HashMap<>();
+
+            map.put("id", user.getId());
+            map.put("username", user.getUsername());
+            map.put("createTime",user.getCreateTime());
+
+            resultMap.put("data", map);
+            return R.ok(resultMap);
+        }catch (Exception e){
+            return R.error();
+        }
     }
 
-//    @Override
-//    public R login(LoginDto loginDto) {
-//        try {
-//            User resultUser = userMapper.selectOne(new QueryWrapper<User>().eq("username", user.getUsername()));
-//            if(resultUser == null){
-//                return R.error("用户不存在");
-//            }
-//            if(!resultUser.getPassword().equals(user.getPassword())){
-//                return R.error("密码错误");
-//            }
-//            String token = JwtUtils.createJWT(resultUser.getIsAdmin().toString(), user.getUsername(), SystemConstant.JWT_TTL);
-//            resultUser.setToken(token);
-//            userService.updateById(resultUser);
-//            Map<String,Object> resultMap = new HashMap<>();
-//            resultMap.put("token",token);
-//            resultMap.put("data",resultUser);
-//
-//        }catch (Exception e){
-//            return R.error();
-//        }
-//    }
+    @Override
+    public R getUserRecord(Integer user_id) {
+        try {
+
+            Integer articleCount = articleMapper.selectCount(new QueryWrapper<Article>().eq("user_id",user_id));
+            Integer coinCount = userMapper.selectOne(new QueryWrapper<User>().eq("id",user_id)).getCoin();
+            Integer safeRecordCount = safeDockerUserMapper.selectCount(new QueryWrapper<SafeDockerUser>().eq("user_id",user_id));
+            Map<String, Object> map = new HashMap<>();
+            map.put("articleCount", articleCount);
+            map.put("safeRecordCount", safeRecordCount);
+            map.put("coinCount", coinCount);
+            Map<String, Object> resultMap = new HashMap<>();
+            resultMap.put("data", map);
+            return R.ok(resultMap);
+        }catch (Exception e){
+            return R.error();
+        }
+    }
 }

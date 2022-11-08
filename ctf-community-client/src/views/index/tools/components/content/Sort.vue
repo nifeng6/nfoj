@@ -2,10 +2,10 @@
   <div class="sort">
     <el-menu
       class="el-menu-vertical"
-      :default-active="currentType"
+      :default-active="String(currentType)"
       @select="selectHandle"
     >
-      <el-menu-item :index="0">
+      <el-menu-item :index="0 + ''">
         <span>全部工具</span>
       </el-menu-item>
       <el-menu-item

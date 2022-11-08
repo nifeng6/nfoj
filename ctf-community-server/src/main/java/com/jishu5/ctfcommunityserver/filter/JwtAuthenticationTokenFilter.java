@@ -30,7 +30,7 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         //我们先拿到请求头中的token
-        String token = request.getHeader("token");
+        String token = request.getHeader("Authorization");
         if(StringUtils.isBlank(token)){
             //说明没有携带token 那么直接放行 之后的过滤器肯定会报错，那么就说明用户没有登录
             filterChain.doFilter(request,response);
@@ -53,10 +53,12 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
         }
         //存入SecurityContextHolder上下文当中  注意 这里必须得使用三个参数的authentication
         //第三个参数则为权限
-
         Authentication authentication = new UsernamePasswordAuthenticationToken(loginUser,null,loginUser.getAuthorities());
         SecurityContextHolder.getContext().setAuthentication(authentication);
         //放行
         filterChain.doFilter(request,response); //那么就正常的请求接口去啦！！！
     }
+
+
+
 }

@@ -5,22 +5,28 @@
       <div style="font-size: 14px">
         <div class="user-info-item">
           <span>用户ID：</span>
-          <span>1512</span>
+          <span>{{ user.id }}</span>
         </div>
         <div class="user-info-item">
           <span>用户昵称：</span>
-          <span>倪风</span>
+          <span>{{ user.username }}</span>
         </div>
         <div class="user-info-item">
           <span>注册时间：</span>
-          <span>2021-10-10</span>
+          <span>{{ user.createTime }}</span>
         </div>
       </div>
     </el-card>
   </div>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import useIndexUserStore from '@/stores/modules/index/user'
+import { storeToRefs } from 'pinia'
+const indexUserStore = useIndexUserStore()
+
+const { user } = storeToRefs(indexUserStore)
+</script>
 
 <style scoped lang="less">
 .user-info {

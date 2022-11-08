@@ -36,7 +36,7 @@ public class LoginServiceImpl implements LoginService {
         //手动调用方法去认证 他会自动调用UserDetailsService查 然后对比啥的
         Authentication authenticate = authenticationManager.authenticate(authentication);
         if(Objects.isNull(authenticate)){ //说明输入错误
-            throw new  RuntimeException("用户名或密码错误");
+            throw new RuntimeException("用户名或密码错误");
         }
         //拿到用户信息 然后生成jwt返回给前端，并且将用户的信息存入redis
         LoginUser loginUser = (LoginUser)authenticate.getPrincipal(); // 这个其实就是UserDetails 也就是LoginUser
@@ -44,6 +44,7 @@ public class LoginServiceImpl implements LoginService {
 
 
         String jwt = JwtUtil.createJWT(userId);
+
         redisCache.setCacheObject("login:"+userId,loginUser);//将用户信息直接存入redis
 
         Map<String, Object> map = new HashMap<>();
@@ -64,6 +65,22 @@ public class LoginServiceImpl implements LoginService {
         String userId  = loginUser.getUser().getId().toString();
         redisCache.deleteObject("login:"+userId);
         return R.ok("退出成功");
+    }
+
+    @Override
+    public R getInfo() {
+        try {
+            LoginUser loginUser = (LoginUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            Map<String,Object> resultMap = new HashMap<>();
+            Map<String,Object> map = new HashMap<>();
+            map.put("user", loginUser.getUser());
+            map.put("permission", loginUser.getPermission());
+
+            resultMap.put("data",map);
+            return R.ok(resultMap);
+        }catch (Exception e){
+            return R.error();
+        }
     }
 
 }

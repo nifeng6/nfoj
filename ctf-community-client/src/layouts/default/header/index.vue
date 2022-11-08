@@ -12,6 +12,8 @@
 import Avatar from './components/Avatar.vue'
 import Logo from './components/Logo.vue'
 import Menu from './components/Menu.vue'
+
+
 </script>
 
 <style scoped lang="less">
