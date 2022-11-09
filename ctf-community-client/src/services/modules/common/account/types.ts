@@ -27,4 +27,5 @@ export interface IUser {
   phone: string
   createTime: string
   updateTime: string
+  description: string
 }

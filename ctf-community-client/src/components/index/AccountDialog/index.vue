@@ -7,35 +7,35 @@
     >
       <template #header>
         <h2 class="title">
-          {{ menuList[currentType as keyof typeof menuList] }}
+          {{ menuList[accountDialogType as keyof typeof menuList] }}
         </h2>
       </template>
 
-      <template v-if="currentType === 'login'">
-        <Login v-model:dialogVisible="dialogVisible" />
+      <template v-if="accountDialogType === 'login'">
+        <Login v-model:dialogVisible="accountDialogVisible" />
       </template>
-      <template v-else-if="currentType === 'register'">
-        <Register v-model:dialogVisible="dialogVisible" />
+      <template v-else-if="accountDialogType === 'register'">
+        <Register v-model:dialogVisible="accountDialogVisible" />
       </template>
-      <template v-else-if="currentType === 'forgot'">
-        <ForgotPassword v-model:dialogVisible="dialogVisible" />
+      <template v-else-if="accountDialogType === 'forgot'">
+        <ForgotPassword v-model:dialogVisible="accountDialogVisible" />
       </template>
 
       <div class="dialog-footer">
-        <template v-if="currentType === 'login'">
+        <template v-if="accountDialogType === 'login'">
           <div class="login-footer">
-            <span @click="currentType = 'register'">还没账号？点击注册！</span>
-            <span @click="currentType = 'forgot'">忘记密码</span>
+            <span @click="accountDialogType = 'register'">还没账号？点击注册！</span>
+            <span @click="accountDialogType = 'forgot'">忘记密码</span>
           </div>
         </template>
-        <template v-else-if="currentType === 'register'">
+        <template v-else-if="accountDialogType === 'register'">
           <div class="register-footer">
-            <span @click="currentType = 'login'">已有账号？点击登录！</span>
+            <span @click="accountDialogType = 'login'">已有账号？点击登录！</span>
           </div>
         </template>
-        <template v-else-if="currentType === 'forgot'">
+        <template v-else-if="accountDialogType === 'forgot'">
           <div class="forgot-password">
-            <span @click="currentType = 'login'">账号记起来了？点击登录！</span>
+            <span @click="accountDialogType = 'login'">账号记起来了？点击登录！</span>
           </div>
         </template>
       </div>
@@ -44,39 +44,15 @@
 </template>
 
 <script setup lang="ts">
-import { withDefaults, computed } from 'vue'
 import Login from './components/Login.vue'
 import Register from './components/Register.vue'
 import ForgotPassword from './components/ForgotPassword.vue'
+import useCommonAccountStore from '@/stores/modules/common/account'
+import { storeToRefs } from 'pinia'
+const commonAccountStore = useCommonAccountStore()
 
-const emit = defineEmits(['update:statusType', 'update:dialogVisible'])
-// 设置props默认值
-const props = withDefaults(
-  defineProps<{
-    statusType: string
-    dialogVisible: boolean
-  }>(),
-  {
-    statusType: 'login',
-    dialogVisible: false
-  }
-)
-
-const accountDialogVisible = computed({
-  get: () => props.dialogVisible,
-  set: (val) => emit('update:dialogVisible', val)
-})
-
-const currentType = computed({
-  get() {
-    return props.statusType
-  },
-  set(val) {
-    emit('update:statusType', val)
-  }
-})
-
-// const accountDialogVisible = ref(true)
+const { accountDialogVisible, accountDialogType } =
+  storeToRefs(commonAccountStore)
 
 const menuList = {
   login: '用户登录',

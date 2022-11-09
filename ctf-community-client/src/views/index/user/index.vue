@@ -33,7 +33,8 @@ const indexUserStore = useIndexUserStore()
 
 indexUserStore.getUserInfoAction(Number.parseInt(userId as string))
 indexUserStore.getUserRecordAction(Number.parseInt(userId as string))
-
+indexUserStore.getUserArticleListAction(Number.parseInt(userId as string))
+indexUserStore.getUserCtfListAction(Number.parseInt(userId as string))
 const activeIndex = ref(0)
 </script>
 

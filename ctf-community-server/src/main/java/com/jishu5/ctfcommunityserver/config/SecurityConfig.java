@@ -44,6 +44,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/common/account/login").anonymous()
                 // 允许所有人访问
                 .antMatchers("/index/**", "/common/account/info").permitAll()
+                // 允许认证过的用户访问
+                .antMatchers().authenticated()
             // 除上面外的所有请求全部需要鉴权认证
             .anyRequest()
             .authenticated()

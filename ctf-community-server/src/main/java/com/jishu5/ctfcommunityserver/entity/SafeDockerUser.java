@@ -8,6 +8,8 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.Date;
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -42,13 +44,13 @@ public class SafeDockerUser extends Model<SafeDockerUser> {
     private String intro;
 
     @TableField(value = "create_time", fill = FieldFill.INSERT)
-    private LocalDateTime createTime;
+    private Date createTime;
 
     @TableField("container_id")
     private String containerId;
 
     @TableField("exp_time")
-    private LocalDateTime expTime;
+    private Date expTime;
 
     @TableField("docker_name")
     private String dockerName;
@@ -61,6 +63,9 @@ public class SafeDockerUser extends Model<SafeDockerUser> {
 
     @TableField("is_success")
     private String isSuccess;
+
+    @TableField(select = false,exist = false)
+    private SafeLabs lab;
 
 
     @Override

@@ -8,6 +8,8 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.Date;
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -30,10 +32,10 @@ public class CoinRecord extends Model<CoinRecord> {
     private Integer id;
 
     @TableField("amount")
-    private String amount;
+    private Integer amount;
 
     @TableField(value = "create_time", fill = FieldFill.INSERT)
-    private LocalDateTime createTime;
+    private Date createTime;
 
     @TableField("user_id")
     private Integer userId;
@@ -42,7 +44,7 @@ public class CoinRecord extends Model<CoinRecord> {
     private String remark;
 
     @TableField("count")
-    private String count;
+    private Integer count;
 
 
     @Override

@@ -71,6 +71,8 @@ public class LoginServiceImpl implements LoginService {
     public R getInfo() {
         try {
             LoginUser loginUser = (LoginUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+//            SecurityContextHolder.setContext();
             Map<String,Object> resultMap = new HashMap<>();
             Map<String,Object> map = new HashMap<>();
             map.put("user", loginUser.getUser());

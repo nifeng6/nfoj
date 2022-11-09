@@ -1,5 +1,9 @@
 import { defineStore } from 'pinia'
-import { getLogin, getUserInfo } from '@/services/modules/common/account'
+import {
+  getLogin,
+  getUserInfo,
+  updateUserInfo
+} from '@/services/modules/common/account'
 import { ElMessage, ElMessageBox } from 'element-plus'
 // 导入message的样式
 import 'element-plus/theme-chalk/el-message.css'
@@ -9,7 +13,9 @@ import type { ILoginParams, IUser } from './types'
 const useCommonAccountStore = defineStore('common-account', {
   state: () => ({
     token: localStorage.getItem('token') || '',
-    user: (JSON.parse(localStorage.getItem('user') as string) as IUser) || {}
+    user: (JSON.parse(localStorage.getItem('user') as string) as IUser) || {},
+    accountDialogVisible: false,
+    accountDialogType: 'login'
   }),
   actions: {
     async getLoginAction(data: ILoginParams) {
@@ -44,12 +50,21 @@ const useCommonAccountStore = defineStore('common-account', {
         window.localStorage.setItem('user', JSON.stringify(res.data.user))
         this.user = res.data.user
       } else {
-        ElMessageBox.alert(res.msg, '温馨提示', {
-          confirmButtonText: '重新登录',
-          callback: () => {
-            localStorage.removeItem('token')
-          }
-        })
+        ElMessage.error(res.msg)
+        localStorage.removeItem('token')
+        localStorage.removeItem('user')
+        this.token = ''
+        this.user = {} as IUser
+      }
+    },
+    async updateUserAction(data: IUser) {
+      const res = await updateUserInfo(data)
+      if (res.code === 200) {
+        this.user = data
+        window.localStorage.setItem('user', JSON.stringify(data))
+        ElMessage.success('修改成功')
+      } else {
+        ElMessage.error(res.msg)
       }
     }
   }

@@ -1,37 +1,35 @@
 <template>
   <div class="article">
-    <h1 class="title">这是文章标题</h1>
+    <h1 class="title">{{ article.title }}</h1>
 
     <div class="article-info">
       <span class="article-auth">
-        <el-avatar
-          :size="24"
-          src="https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fup.enterdesk.com%2Fedpic_source%2F34%2F93%2Ffe%2F3493fec56c307642522b2bc2fc4461e0.jpg&refer=http%3A%2F%2Fup.enterdesk.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1644938763&t=4a3558526cb7183a0e420ec367b65a72"
-        ></el-avatar>
+        <el-avatar :size="24" :src="article.user?.avatarUrl"></el-avatar>
+
         <span style="margin-left: 8px">
-          <span>倪风</span>
+          <span>{{ article.user?.username }}</span>
         </span>
       </span>
 
       <span class="create_time">
         <span style="font-weight: 600">时间：</span>
-        <span>1小时前</span>
+        <span>{{ article.createTime }}</span>
       </span>
       <span style="margin-left: 15px">
         <span style="font-weight: 600">浏览：</span>
-        <span>100</span>
+        <span>{{ article.view }}</span>
       </span>
       <span style="margin-left: 15px">
         <span style="font-weight: 600">分类：</span>
-        <span>ceshi </span>
+        <span>{{ article.sort?.name }} </span>
       </span>
-      <span style="margin-left: 15px">
+      <!-- <span style="margin-left: 15px">
         <span style="font-weight: 600">评论：</span>
         <span>1111</span>
-      </span>
+      </span> -->
     </div>
 
-    <div class="article_content">测试数据</div>
+    <div class="article-content">{{ article.content }}</div>
     <TipsCard style="font-size: 13px">
       <span>免责声明</span><br />
       <span
@@ -41,7 +39,14 @@
   </div>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import useIndexArticleStore from '@/stores/modules/index/article'
+import { storeToRefs } from 'pinia'
+
+const indexArticleStore = useIndexArticleStore()
+
+const { article } = storeToRefs(indexArticleStore)
+</script>
 
 <style scoped lang="less">
 .article {

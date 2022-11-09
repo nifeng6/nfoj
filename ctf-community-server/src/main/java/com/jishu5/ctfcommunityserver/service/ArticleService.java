@@ -17,4 +17,9 @@ import com.jishu5.ctfcommunityserver.entity.R;
 public interface ArticleService extends IService<Article> {
     public R getArticleList(Integer currentPage, Integer pageSize, String keywords, Integer type);
 
+    public R getDetail(Integer id);
+
+    public R getArticleListById(Integer currentPage, Integer pageSize, Integer id);
+
+    public R addArticle(Article article);
 }

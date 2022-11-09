@@ -1,6 +1,8 @@
 import { defineStore } from 'pinia'
-import { getArticleList, getArticleTypeList } from '@/services'
-import type { IArticle, IPage, IArticleType } from './types'
+import { addArticle, getArticleList, getArticleTypeList } from '@/services'
+import type { IArticle, IPage, IArticleType, IArticleParams } from './types'
+import { ElMessage } from 'element-plus'
+import 'element-plus/theme-chalk/el-message.css'
 
 const useIndexBbsStore = defineStore('index-bbs', {
   state: () => ({
@@ -30,6 +32,17 @@ const useIndexBbsStore = defineStore('index-bbs', {
     async getArticleTypeListAction() {
       const res = await getArticleTypeList()
       this.articleTypeList = res.data
+    },
+    async addArticleAction(data: IArticleParams) {
+      const res = await addArticle(data)
+      if (res.code === 200) {
+        this.getArticleListAction()
+        ElMessage.success('发布成功')
+        return true
+      } else {
+        ElMessage.error(res.data)
+        return false
+      }
     }
   }
 })

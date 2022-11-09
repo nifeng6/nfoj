@@ -1,29 +1,43 @@
 <template>
   <div class="ctf-list">
-    <ArticleCard style="cursor: pointer">
-      <template #other>
-        <div class="finishedmark" style="background: rgba(9, 134, 49, 0.67)">
-          已拿下
-        </div>
-      </template>
-      <template #leftTop>
-        <div class="top">sqli-libs</div>
-      </template>
-      <template #leftBottom>
-        <div class="bottom">
-          <span>创建时间:8个月前</span>
-          <span></span>
-        </div>
-      </template>
-      <template #rightBottom>
-        <div class="bottom">分类：基础技能</div>
-      </template>
-    </ArticleCard>
+    <template v-for="item in ctfList" :key="item.id">
+      <ArticleCard style="cursor: pointer; margin: 10px 0">
+        <template #other>
+          <div
+            class="finishedmark"
+            :style="{
+              background:
+                item.isSuccess == 1
+                  ? 'rgba(9, 134, 49, 0.67)'
+                  : 'rgba(255, 0, 0, 0.67)'
+            }"
+          >
+            {{ item.isSuccess == 1 ? '已完成' : '未完成' }}
+          </div>
+        </template>
+        <template #leftTop>
+          <div class="top">{{ item.lab.title }}</div>
+        </template>
+        <template #leftBottom>
+          <div class="bottom">
+            <span>创建时间:{{ item.createTime }}</span>
+            <span></span>
+          </div>
+        </template>
+        <template #rightBottom>
+          <div class="bottom">分类：{{ item.lab.type.name }}</div>
+        </template>
+      </ArticleCard>
+    </template>
   </div>
 </template>
 
 <script setup lang="ts">
 import ArticleCard from '@/components/index/ArticleCard/index.vue'
+import useIndexUserStore from '@/stores/modules/index/user'
+import { storeToRefs } from 'pinia'
+
+const { ctfList } = storeToRefs(useIndexUserStore())
 </script>
 
 <style scoped lang="less">

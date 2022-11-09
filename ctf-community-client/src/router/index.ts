@@ -1,8 +1,4 @@
-import {
-  createRouter,
-  createWebHistory,
-  createWebHashHistory
-} from 'vue-router'
+import { createRouter, createWebHistory } from 'vue-router'
 import type { RouteRecordRaw } from 'vue-router'
 
 const AdminRouter: Array<RouteRecordRaw> = []
@@ -56,6 +52,7 @@ const IndexRouter: Array<RouteRecordRaw> = [
       {
         path: 'account',
         name: 'account',
+        redirect: '/account/base',
         meta: {
           title: '账户中心'
         },
@@ -99,7 +96,7 @@ const IndexRouter: Array<RouteRecordRaw> = [
 ]
 
 const router = createRouter({
-  history: createWebHashHistory(),
+  history: createWebHistory(),
   routes: [...AdminRouter, ...IndexRouter]
 })
 

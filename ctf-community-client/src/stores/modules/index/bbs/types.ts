@@ -16,8 +16,14 @@ export interface IPage {
   pages: number
 }
 
-
 export interface IArticleType {
   id: number
   name: string
+}
+
+export interface IArticleParams {
+  title: string
+  tags: string
+  sortId: number
+  content: string
 }

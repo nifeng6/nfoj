@@ -15,9 +15,7 @@ import com.jishu5.ctfcommunityserver.service.impl.ArticleTagsServiceImpl;
 import com.jishu5.ctfcommunityserver.utils.DtoUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.List;
@@ -39,10 +37,14 @@ public class IndexBbsController {
         return articleService.getArticleList(currentPage,pageSize,keywords,type);
     }
 
-
     @GetMapping("/type/list")
     public R TypeList(){
         return articleSortService.getArticleTypeList();
+    }
+
+    @PostMapping("/add")
+    public R add(@RequestBody Article article){
+        return articleService.addArticle(article);
     }
 
 

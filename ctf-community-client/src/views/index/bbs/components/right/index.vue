@@ -1,6 +1,9 @@
 <template>
   <div class="right">
-    <el-button style="height: 44px; width: 100%" type="primary"
+    <el-button
+      style="height: 44px; width: 100%"
+      type="primary"
+      @click="publishHandle"
       >发布文章</el-button
     >
 
@@ -29,8 +32,43 @@
 
 <script setup lang="ts">
 import Sort from './Sort.vue'
-</script>
+import useCommonAccountStore from '@/stores/modules/common/account'
+import { storeToRefs } from 'pinia'
+import { ElMessage } from 'element-plus'
+import 'element-plus/theme-chalk/el-message.css'
 
+const commonAccountStore = useCommonAccountStore()
+const { token, accountDialogVisible } = storeToRefs(commonAccountStore)
+const emit = defineEmits(['update:dialogVisible'])
+const props = defineProps({
+  dialogVisible: {
+    type: Boolean,
+    default: false
+  }
+})
+
+const dialogVisible = computed({
+  get: () => props.dialogVisible,
+  set: (val) => {
+    emit('update:dialogVisible', val)
+  }
+})
+
+const publishHandle = () => {
+  if (token.value === '') {
+    ElMessage.error('请先登录')
+    accountDialogVisible.value = true
+    return
+  } else {
+    dialogVisible.value = true
+  }
+}
+</script>
+<style>
+.el-message {
+  z-index: 3000 !important;
+}
+</style>
 <style lang="less" scoped>
 .article-data {
   margin-top: 10px;

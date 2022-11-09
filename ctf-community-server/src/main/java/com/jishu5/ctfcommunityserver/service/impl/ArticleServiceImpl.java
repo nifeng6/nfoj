@@ -2,6 +2,7 @@ package com.jishu5.ctfcommunityserver.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.jishu5.ctfcommunityserver.dto.LoginUser;
 import com.jishu5.ctfcommunityserver.entity.*;
 import com.jishu5.ctfcommunityserver.mapper.ArticleMapper;
 import com.jishu5.ctfcommunityserver.mapper.ArticleReplyMapper;
@@ -10,9 +11,12 @@ import com.jishu5.ctfcommunityserver.mapper.UserMapper;
 import com.jishu5.ctfcommunityserver.service.ArticleService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.jishu5.ctfcommunityserver.utils.DtoUtils;
+import io.lettuce.core.cluster.event.RedirectionEventSupport;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -78,4 +82,62 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
             return R.error();
         }
     }
+
+    public R getDetail(Integer id){
+        try {
+            QueryWrapper<Article> wrapper = new QueryWrapper<>();
+            wrapper.eq("id",id);
+            Article article = articleMapper.selectOne(wrapper);
+            User user = userMapper.selectOne(new QueryWrapper<User>().eq("id",article.getUserId()));
+            article.setUser(user);
+            ArticleSort articleSort = articleSortMapper.selectOne(new QueryWrapper<ArticleSort>().eq("id",article.getSortId()));
+            article.setSort(articleSort);
+
+            Map<String, Object> resultMap = new HashMap<>();
+            resultMap.put("data",article);
+            return R.ok(resultMap);
+        }catch (Exception e){
+            return R.error();
+        }
+    }
+
+    @Override
+    public R getArticleListById(Integer currentPage, Integer pageSize, Integer id) {
+        try {
+            Page<Article> page = new Page<>(currentPage, pageSize);
+            QueryWrapper<Article> wrapper = new QueryWrapper<>();
+            Page<Article> pageResult = articleMapper.selectPage(page, wrapper);
+
+            for (Article article : pageResult.getRecords()){
+                ArticleSort sort = articleSortMapper.selectOne(new QueryWrapper<ArticleSort>().eq("id", article.getSortId()));
+                article.setSort(sort);
+            }
+
+            Map<String, Object> resultMap = new HashMap<>();
+            resultMap.put("page", DtoUtils.pageDtoHandle(pageResult));
+            resultMap.put("data", pageResult.getRecords());
+            return R.ok(resultMap);
+        }catch (Exception e){
+            return R.error();
+        }
+    }
+
+    @Override
+    public R addArticle(Article article) {
+        try {
+            LoginUser loginUser = (LoginUser)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+            article.setUserId(loginUser.getUser().getId());
+            // 这里之后因该需要判断一下类型id，以免部分用户上传到公告
+            article.setCreateTime(new Date());
+            article.setUpdateTime(new Date());
+            article.setId(null);
+
+            articleMapper.insert(article);
+            return R.ok("发布成功");
+        }catch (Exception e){
+            return R.error();
+        }
+    }
+
 }

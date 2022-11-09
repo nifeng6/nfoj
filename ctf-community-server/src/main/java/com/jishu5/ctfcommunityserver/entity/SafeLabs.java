@@ -8,6 +8,7 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.Date;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
@@ -50,7 +51,7 @@ public class SafeLabs extends Model<SafeLabs> {
     private Integer typeId;
 
     @TableField(value = "create_time", fill = FieldFill.INSERT)
-    private LocalDateTime createTime;
+    private Date createTime;
 
     @TableField("flag")
     @JsonProperty(access= JsonProperty.Access.WRITE_ONLY)
@@ -70,6 +71,8 @@ public class SafeLabs extends Model<SafeLabs> {
     @TableField(select = false,exist = false)
     private int successCount;
 
+    @TableField(select = false,exist = false)
+    private SafeType type;
 
     @Override
     public Serializable pkVal() {

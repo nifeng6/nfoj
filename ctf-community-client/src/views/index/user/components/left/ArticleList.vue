@@ -1,27 +1,37 @@
 <template>
   <div class="article-list">
-    <ArticleCard style="cursor: pointer">
-      <template #leftTop>
-        <div class="top">sqli-libs</div>
-      </template>
-      <template #leftBottom>
-        <div class="bottom">
-          <span>创建时间:8个月前</span>
-          <span></span>
-        </div>
-      </template>
-      <template #rightBottom>
-        <div class="bottom">分类：基础技能</div>
-      </template>
-    </ArticleCard>
+    <template v-for="item in articleList" :key="item.id">
+      <ArticleCard
+        style="cursor: pointer; margin: 10px 0"
+        @click="urlHandle(item.id)"
+      >
+        <template #leftTop>
+          <div class="top">{{ item.title }}</div>
+        </template>
+        <template #leftBottom>
+          <div class="bottom">
+            <span>创建时间:{{ item.createTime }}</span>
+            <span></span>
+          </div>
+        </template>
+        <template #rightBottom>
+          <div class="bottom">分类：{{ item.sort.name }}</div>
+        </template>
+      </ArticleCard>
+    </template>
   </div>
 </template>
 
 <script setup lang="ts">
 import ArticleCard from '@/components/index/ArticleCard/index.vue'
+import useIndexUserStore from '@/stores/modules/index/user'
+import { storeToRefs } from 'pinia'
+const indexUserStore = useIndexUserStore()
 
-const itemData = {
-  title: 'sqli-libs'
+const { articleList } = storeToRefs(indexUserStore)
+
+const urlHandle = (id: number) => {
+  window.open(`/article/${id}`)
 }
 </script>
 

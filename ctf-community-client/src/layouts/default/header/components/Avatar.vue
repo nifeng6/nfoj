@@ -49,38 +49,35 @@
       </div>
     </template>
   </div>
-  <AccountDialog
-    v-model:dialogVisible="dialogVisible"
-    v-model:status-type="dialogType"
-  />
+  <AccountDialog />
 </template>
 
 <script setup lang="ts">
 import { ref } from 'vue'
 import AccountDialog from '@/components/index/AccountDialog/index.vue'
 import useCommonAccountStore from '@/stores/modules/common/account'
+import useIndexAccountStore from '@/stores/modules/index/account'
 import { storeToRefs } from 'pinia'
 const commonAccountStore = useCommonAccountStore()
-const { token, user } = storeToRefs(commonAccountStore)
-
-const dialogVisible = ref(false)
-const dialogType = ref('login')
+const indexAccountStore = useIndexAccountStore()
+const { token, user, accountDialogVisible, accountDialogType } =
+  storeToRefs(commonAccountStore)
 
 const unloginHandle = (type: string) => {
-  dialogType.value = type
-  dialogVisible.value = true
+  accountDialogType.value = type
+  accountDialogVisible.value = true
 }
 
 const commandHandle = (key: String) => {
   switch (key) {
     case 'qiandao':
-      console.log('签到')
+      indexAccountStore.getAccountQiandaoAction()
       break
     case 'user':
-      window.location.href = '#/user/' + user.value.id
+      window.location.href = '/user/' + user.value.id
       break
     case 'account':
-      console.log('账户设置')
+      window.location.href = '/account'
       break
     case 'logout':
       logoutHandle()

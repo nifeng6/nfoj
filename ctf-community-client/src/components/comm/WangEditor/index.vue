@@ -6,7 +6,7 @@
       :defaultConfig="toolbarConfig"
     />
     <Editor
-      style="height: 150px"
+      style="height: 300px"
       v-model="valueHtml"
       :defaultConfig="editorConfig"
       @onCreated="handleCreated"
@@ -19,7 +19,6 @@ import '@wangeditor/editor/dist/css/style.css' // 引入 css
 import {
   onBeforeUnmount,
   shallowRef,
-  onMounted,
   computed,
   defineProps,
   defineEmits
@@ -75,5 +74,6 @@ const handleCreated = (editor: any) => {
 <style scoped lang="less">
 .editor {
   border: 1px solid #ccc;
+  width: 100%;
 }
 </style>

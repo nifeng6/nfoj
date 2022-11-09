@@ -34,3 +34,10 @@ export interface IArticleType {
   id: number
   name: string
 }
+
+export interface IArticleData {
+  title: string
+  tags: string
+  sortId: number
+  content: string
+}

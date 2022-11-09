@@ -18,4 +18,10 @@ public interface UserService extends IService<User> {
     public R getUserInfo(Integer user_id);
 
     public R getUserRecord(Integer user_id);
+
+    public R updateInfo(User user);
+
+    public R updatePassword(User user);
+
+    public R qiandao();
 }

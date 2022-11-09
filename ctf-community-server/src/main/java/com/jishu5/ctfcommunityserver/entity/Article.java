@@ -8,6 +8,8 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.Date;
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -48,10 +50,10 @@ public class Article extends Model<Article> {
     private Integer view;
 
     @TableField(value = "create_time")
-    private LocalDateTime createTime;
+    private Date createTime;
 
     @TableField("update_time")
-    private LocalDateTime updateTime;
+    private Date updateTime;
 
     // 以下不从数据库中查找
     @TableField(select = false,exist = false)
@@ -62,6 +64,9 @@ public class Article extends Model<Article> {
 
     @TableField(select = false,exist = false)
     private User user;
+
+    @TableField(select = false,exist = false)
+    private ArticleSort sort;
 
 
     @Override
