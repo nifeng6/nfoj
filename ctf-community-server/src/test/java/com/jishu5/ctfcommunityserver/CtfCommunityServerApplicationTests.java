@@ -1,5 +1,6 @@
 package com.jishu5.ctfcommunityserver;
 
+import com.jishu5.ctfcommunityserver.utils.QRCodeUtil;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -14,6 +15,11 @@ class CtfCommunityServerApplicationTests {
         String encode = encoder.encode("123456");
         System.out.println(encode);
         System.out.println(encoder.matches("123456", "$2a$10$UUrI9tONhIGtU9cFIWVr8ev6ZylO1Syy2b3eheLLr15Z043PvIFrq"));
+    }
+
+    @Test
+    void test2(){
+        System.out.println(QRCodeUtil.getBase64QRCode("test"));
     }
 
 }

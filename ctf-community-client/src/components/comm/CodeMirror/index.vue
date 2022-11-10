@@ -3,7 +3,7 @@
 </template>
 
 <script setup lang="ts">
-import { onBeforeUnmount, onMounted, ref, watch } from 'vue'
+import { onBeforeUnmount, onMounted, ref, watch, watchEffect } from 'vue'
 // codemirror基础资源引入
 import _CodeMirror from 'codemirror'
 import 'codemirror/lib/codemirror.css'
@@ -46,7 +46,8 @@ const props = defineProps<{
 
 const codeEditor = ref()
 let editor: any
-watch(props.modelValue, () => {
+watchEffect(() => {
+  props.modelValue
   if (
     null != editor &&
     props.modelValue &&
@@ -56,12 +57,13 @@ watch(props.modelValue, () => {
     editor.setValue(props.modelValue)
   }
 })
-watch(props.readOnly, () => {
-  if (null != editor) {
-    editor.setOption('readOnly', props.readOnly)
-  }
-})
+
 onMounted(() => {
+  watch(props.readOnly, () => {
+    if (null != editor) {
+      editor.setOption('readOnly', props.readOnly)
+    }
+  })
   editor = CodeMirror.fromTextArea(codeEditor.value, {
     value: props.modelValue,
     mime: 'text/javascript',
@@ -99,7 +101,4 @@ onBeforeUnmount(() => {
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped lang="less">
-
-
-</style>
+<style scoped lang="less"></style>
