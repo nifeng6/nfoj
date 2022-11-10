@@ -18,6 +18,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -49,7 +50,7 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
         try {
             Page<Article> page = new Page<>(currentPage, pageSize);
             QueryWrapper<Article> wrapper = new QueryWrapper<>();
-
+            wrapper.orderByDesc("id");
             if (type != 0) {
                 wrapper.eq("sort_id", type);
             }
@@ -135,6 +136,41 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
 
             articleMapper.insert(article);
             return R.ok("发布成功");
+        }catch (Exception e){
+            return R.error();
+        }
+    }
+
+    @Override
+    public R getReplyList(Integer currentPage, Integer pageSize, Integer id) {
+        try {
+            Page<ArticleReply> page = new Page<>(currentPage, pageSize);
+            QueryWrapper<ArticleReply> wrapper = new QueryWrapper<>();
+            wrapper.eq("article_id", id);
+            wrapper.eq("reply_father_id", 0);
+            wrapper.orderByDesc("id");
+            Page<ArticleReply> pageResult = articleReplyMapper.selectPage(page, wrapper);
+            for (ArticleReply articleReply : pageResult.getRecords()){
+                User user = userMapper.selectOne(new QueryWrapper<User>().eq("id", articleReply.getUserId()));
+                List<ArticleReply> replyList = articleReplyMapper.selectList(new QueryWrapper<ArticleReply>().eq("reply_father_id", articleReply.getId()));
+                // 遍历获取子评论的用户
+                for (ArticleReply articleReplyChild : replyList){
+                    User childUser = userMapper.selectOne(new QueryWrapper<User>().eq("id", articleReplyChild.getUserId()));
+                    User childReplyUser = userMapper.selectOne(new QueryWrapper<User>().eq("id", articleReplyChild.getReplyUserId()));
+                    articleReplyChild.setReplyUser(childReplyUser);
+                    articleReplyChild.setUser(childUser);
+                }
+
+                articleReply.setReplyList(replyList);
+                articleReply.setUser(user);
+            }
+
+            Map<String, Object> resultMap = new HashMap<>();
+
+            resultMap.put("data", pageResult.getRecords());
+            resultMap.put("page", DtoUtils.pageDtoHandle(pageResult));
+
+            return R.ok(resultMap);
         }catch (Exception e){
             return R.error();
         }

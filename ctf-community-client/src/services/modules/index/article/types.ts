@@ -39,3 +39,31 @@ export interface ISort {
   id: number
   name: string
 }
+
+export interface IArticleReplyParams {
+  pageSize: number
+  currentPage: number
+  id: number
+}
+
+export interface IArticleReply {
+  id: number
+  content: string
+  userId: number
+  articleId: number
+  createTime: string
+  replyId: number
+  replyUserName: string
+  user: IUser
+  replyUser: IUser
+  replyList: IArticleReply[]
+}
+
+export interface IArticleAddReplyParams {
+  content: string
+  articleId: number
+  replyId?: number
+  replyUserId?: number
+  replyFatherId?: number
+  type: number
+}

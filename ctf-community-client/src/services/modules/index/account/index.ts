@@ -13,3 +13,10 @@ export const getAccountQiandao = () => {
     url: '/index/account/qiandao'
   })
 }
+
+export const updatePassword = (data: { oldPass: string; newPass: string }) => {
+  return request.post<IDataType>({
+    url: '/index/account/password/update',
+    data
+  })
+}

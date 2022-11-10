@@ -22,4 +22,7 @@ public interface ArticleService extends IService<Article> {
     public R getArticleListById(Integer currentPage, Integer pageSize, Integer id);
 
     public R addArticle(Article article);
+
+    public R getReplyList(Integer currentPage, Integer pageSize, Integer id);
+
 }

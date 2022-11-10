@@ -6,7 +6,12 @@
         <h5>账户密码</h5>
         <p>已设置密码</p>
       </div>
-      <el-link :underline="false" type="primary">修改密码</el-link>
+      <el-link
+        :underline="false"
+        type="primary"
+        @click="passDialogVisible = true"
+        >修改密码</el-link
+      >
     </div>
     <el-divider></el-divider>
     <div class="reset-email reset-item">
@@ -19,9 +24,15 @@
       <p>*********</p>
     </div>
   </div>
+  <PassDialog v-model:dialogVisible="passDialogVisible" />
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import PassDialog from './compoenents/PassDialog.vue'
+import { ref } from 'vue'
+
+const passDialogVisible = ref(false)
+</script>
 
 <style scoped lang="less">
 .security {
@@ -44,7 +55,7 @@
       line-height: 22px;
     }
   }
-  .reset-passwd{
+  .reset-passwd {
     display: flex;
     justify-content: space-between;
   }

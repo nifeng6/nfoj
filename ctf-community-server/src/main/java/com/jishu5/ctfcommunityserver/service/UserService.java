@@ -1,6 +1,7 @@
 package com.jishu5.ctfcommunityserver.service;
 
 import com.jishu5.ctfcommunityserver.dto.LoginDto;
+import com.jishu5.ctfcommunityserver.dto.UpdatePassDto;
 import com.jishu5.ctfcommunityserver.entity.R;
 import com.jishu5.ctfcommunityserver.entity.User;
 import com.baomidou.mybatisplus.extension.service.IService;
@@ -21,7 +22,8 @@ public interface UserService extends IService<User> {
 
     public R updateInfo(User user);
 
-    public R updatePassword(User user);
+    public R updatePassword(UpdatePassDto updatePassDto);
 
     public R qiandao();
+
 }

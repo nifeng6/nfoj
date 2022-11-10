@@ -17,6 +17,7 @@ const indexArticleStore = useIndexArticleStore()
 const articleId = route.params.article_id
 
 indexArticleStore.getArticleDetailAction(Number.parseInt(articleId as string))
+indexArticleStore.getArticleReplyListAction(Number.parseInt(articleId as string))
 </script>
 
 <style scoped lang="less">

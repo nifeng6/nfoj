@@ -13,7 +13,7 @@ class CtfCommunityServerApplicationTests {
 
         String encode = encoder.encode("123456");
         System.out.println(encode);
-
+        System.out.println(encoder.matches("123456", "$2a$10$UUrI9tONhIGtU9cFIWVr8ev6ZylO1Syy2b3eheLLr15Z043PvIFrq"));
     }
 
 }

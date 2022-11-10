@@ -8,7 +8,9 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -37,6 +39,9 @@ public class ArticleReply extends Model<ArticleReply> {
     @TableField("user_id")
     private Integer userId;
 
+    @TableField("reply_father_id")
+    private Integer replyFatherId;
+
     @TableField(value = "create_time", fill = FieldFill.INSERT)
     private Date createTime;
 
@@ -58,12 +63,15 @@ public class ArticleReply extends Model<ArticleReply> {
     @TableField("reply_user_id")
     private Integer replyUserId;
 
-    /**
-     * 和reply_user_id对应，否则为空
-     */
-    @TableField("reply_user_name")
-    private String replyUserName;
 
+    @TableField(select = false,exist = false)
+    private List<ArticleReply> replyList;
+
+    @TableField(select = false,exist = false)
+    private User user;
+
+    @TableField(select = false,exist = false)
+    private User replyUser;
 
     @Override
     public Serializable pkVal() {

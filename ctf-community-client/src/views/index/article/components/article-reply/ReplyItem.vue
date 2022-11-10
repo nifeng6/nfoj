@@ -1,20 +1,20 @@
 <template>
   <el-card shadow="hover" class="reply-item">
     <div style="float: left; margin-right: 10px">
-      <el-avatar
-        :size="50"
-        src="https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fup.enterdesk.com%2Fedpic_source%2F34%2F93%2Ffe%2F3493fec56c307642522b2bc2fc4461e0.jpg&refer=http%3A%2F%2Fup.enterdesk.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1644938763&t=4a3558526cb7183a0e420ec367b65a72"
-      ></el-avatar>
+      <el-avatar :size="50" :src="itemData?.user.avatarUrl"></el-avatar>
     </div>
     <div>
       <div style="margin-top: 5px">
-        <span>{{ replyItem.nickName }}</span>
+        <span>{{ itemData?.user.nickName }}</span>
         <span style="margin-left: 15px; color: #888; font-size: 12px"
-          >时间：{{ replyItem.createTime }}</span
+          >时间：{{ itemData?.createTime }}</span
         >
       </div>
       <div style="margin-top: 15px; font-size: 14px">
-        <p>@{{ replyItem.nickName }}：{{ replyItem.content }}</p>
+        <span v-if="type === 'child'"
+          >@{{ itemData?.replyUser.nickName }}：</span
+        >
+        <span v-html="itemData?.content"></span>
       </div>
       <div
         style="
@@ -24,7 +24,7 @@
           margin-top: 10px;
         "
       >
-        <span style="cursor: pointer">回复</span>
+        <span style="cursor: pointer" @click="replyHandle">回复</span>
       </div>
     </div>
     <div class="footer">
@@ -34,12 +34,29 @@
 </template>
 
 <script lang="ts" setup>
-const replyItem = {
-  id: 1,
-  nickName: '张三',
-  content: '这是一条评论',
-  createTime: '2021-10-10 10:10:10',
-  replyId: 0
+import { withDefaults } from 'vue'
+const emit = defineEmits(['replyBtnClick'])
+
+// 设置props默认值
+const props = withDefaults(
+  defineProps<{
+    itemData: any
+    type: string
+  }>(),
+  {
+    type: 'father'
+  }
+)
+
+const replyHandle = () => {
+  const date = {
+    replyId: props.itemData.id,
+    replyFatherId: props.itemData.replyFatherId,
+    replyUserId: props.itemData.user.id,
+    type: props.type
+  }
+  console.log(props.itemData)
+  emit('replyBtnClick', date)
 }
 </script>
 

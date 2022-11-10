@@ -6,7 +6,7 @@
       :defaultConfig="toolbarConfig"
     />
     <Editor
-      style="height: 300px"
+      :style="{ height }"
       v-model="valueHtml"
       :defaultConfig="editorConfig"
       @onCreated="handleCreated"
@@ -38,6 +38,14 @@ const props = defineProps({
   placeholder: {
     type: String,
     default: '请输入内容...'
+  },
+  width: {
+    type: String,
+    default: '100%'
+  },
+  height: {
+    type: String,
+    default: '300px'
   }
 })
 

@@ -1,6 +1,7 @@
 package com.jishu5.ctfcommunityserver.controller.index;
 
 import com.jishu5.ctfcommunityserver.dto.LoginDto;
+import com.jishu5.ctfcommunityserver.dto.UpdatePassDto;
 import com.jishu5.ctfcommunityserver.entity.R;
 import com.jishu5.ctfcommunityserver.entity.User;
 import com.jishu5.ctfcommunityserver.service.CoinRecordService;
@@ -27,6 +28,11 @@ public class IndexAccountController {
     @PostMapping("/qiandao")
     public R getQiandao(){
         return userService.qiandao();
+    }
+
+    @PostMapping("/password/update")
+    public R changePassword(@RequestBody UpdatePassDto updatePassDto){
+        return userService.updatePassword(updatePassDto);
     }
 
 

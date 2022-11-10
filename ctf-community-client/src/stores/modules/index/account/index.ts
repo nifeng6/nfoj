@@ -1,7 +1,8 @@
 import { defineStore } from 'pinia'
 import {
   getAccountCoinRecordList,
-  getAccountQiandao
+  getAccountQiandao,
+  updatePassword
 } from '@/services/modules/index/account'
 import type { ICoinRecord, IPage } from './types'
 import { ElMessage } from 'element-plus'
@@ -30,6 +31,16 @@ const useIndexAccountStore = defineStore('index-account', {
         ElMessage.success('签到成功')
       } else {
         ElMessage.error(res.msg)
+      }
+    },
+    async updatePasswordAction(data: { oldPass: string; newPass: string }) {
+      const res = await updatePassword(data)
+      if (res.code === 200) {
+        ElMessage.success('修改成功')
+        return true
+      } else {
+        ElMessage.error(res.msg)
+        return false
       }
     }
   }

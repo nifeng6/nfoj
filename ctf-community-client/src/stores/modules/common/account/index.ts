@@ -55,6 +55,7 @@ const useCommonAccountStore = defineStore('common-account', {
         localStorage.removeItem('user')
         this.token = ''
         this.user = {} as IUser
+        window.location.reload()
       }
     },
     async updateUserAction(data: IUser) {

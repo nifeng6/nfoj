@@ -3,14 +3,20 @@ package com.jishu5.ctfcommunityserver.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.jishu5.ctfcommunityserver.dto.LoginDto;
 import com.jishu5.ctfcommunityserver.dto.LoginUser;
+import com.jishu5.ctfcommunityserver.dto.UpdatePassDto;
 import com.jishu5.ctfcommunityserver.entity.*;
 import com.jishu5.ctfcommunityserver.mapper.*;
 import com.jishu5.ctfcommunityserver.service.UserService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.jishu5.ctfcommunityserver.utils.JwtUtil;
 import com.jishu5.ctfcommunityserver.utils.RedisCache;
 import org.apache.commons.lang3.time.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.interceptor.TransactionAspectSupport;
@@ -42,6 +48,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
     @Autowired
     private CoinRecordMapper coinRecordMapper;
+
 
     @Override
     public R getUserInfo(Integer user_id) {
@@ -105,10 +112,25 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     }
 
     @Override
-    public R updatePassword(User user) {
+    public R updatePassword(UpdatePassDto updatePassDto) {
         try {
+            LoginUser loginUser = (LoginUser)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            User user = userMapper.selectOne(new QueryWrapper<User>().eq("id", loginUser.getUser().getId()));
 
-            return R.ok();
+            BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+
+            if (!encoder.matches(updatePassDto.getOldPass(), user.getPassword())){
+                return R.error("旧密码错误");
+            }
+            user.setPassword(JwtUtil.generalPass(updatePassDto.getNewPass()));
+            if(userMapper.updateById(user) == 1){
+                // 更新redis信息
+                user.setPassword(encoder.encode(updatePassDto.getNewPass()));
+                loginUser.setUser(user);
+                redisCache.setCacheObject("login:"+user.getId(), loginUser);//将用户信息直接存入redis
+                return R.ok("密码修改成功");
+            }
+            return R.error("密码修改失败");
         }catch (Exception e){
             return R.error();
         }
