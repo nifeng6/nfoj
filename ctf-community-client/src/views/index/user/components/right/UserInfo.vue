@@ -13,7 +13,7 @@
         </div>
         <div class="user-info-item">
           <span>注册时间：</span>
-          <span>{{ user.createTime }}</span>
+          <span>{{ formatTime(user.createTime, false) }}</span>
         </div>
       </div>
     </el-card>
@@ -23,6 +23,7 @@
 <script setup lang="ts">
 import useIndexUserStore from '@/stores/modules/index/user'
 import { storeToRefs } from 'pinia'
+import { formatTime } from '@/utils/format-time'
 const indexUserStore = useIndexUserStore()
 
 const { user } = storeToRefs(indexUserStore)

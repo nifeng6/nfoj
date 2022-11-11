@@ -1,6 +1,20 @@
 import { defineStore } from 'pinia'
-import { getCtfTypeList, getCtfTagList, getCtfList } from '@/services'
-import type { ICtfType, ICtfTag, ICtfList, IPage } from './types'
+import {
+  getCtfTypeList,
+  getCtfTagList,
+  getCtfList,
+  startCtfLab,
+  getCtfLabDetail,
+  closeCtfLab,
+  submitFlag
+} from '@/services'
+import type {
+  ICtfType,
+  ICtfTag,
+  ICtfList,
+  IPage
+} from '@/types/index/ctf/index'
+import { ElMessage } from 'element-plus'
 
 const useIndexCtfStore = defineStore('index-ctf', {
   state: () => ({
@@ -14,7 +28,17 @@ const useIndexCtfStore = defineStore('index-ctf', {
       pages: 0
     } as IPage,
     currentType: 0,
-    keywords: ''
+    keywords: '',
+    labInfo: {
+      intro: '',
+      expTime: 0,
+      isExist: 0,
+      isSuccess: 0,
+      labId: 0
+    },
+    startLabLoading: false,
+    closeLabLoading: false,
+    labDetailLoading: false
   }),
   actions: {
     async getCtfTypeListAction() {
@@ -35,6 +59,68 @@ const useIndexCtfStore = defineStore('index-ctf', {
       const res = await getCtfList(params)
       this.ctfList = res.data
       this.page = { ...res.page } as IPage
+    },
+    async startCtfLabAction(labId: number) {
+      this.startLabLoading = true
+      this.labInfo.labId = labId
+      const res = await startCtfLab(labId)
+      if (res.code === 200) {
+        this.labInfo.intro = res.data.intro
+        this.labInfo.expTime = res.data.expTime
+        this.labInfo.isSuccess = res.data.isSuccess
+        this.labInfo.isExist = res.data.isExist
+        ElMessage.success('开启成功')
+        this.startLabLoading = false
+        return true
+      } else {
+        ElMessage.error('开启失败')
+        this.startLabLoading = false
+        return false
+      }
+    },
+    async closeCtfLabAction(labId: number) {
+      this.closeLabLoading = true
+      this.labInfo.labId = labId
+      const res = await closeCtfLab(labId)
+      if (res.code === 200) {
+        this.labInfo.intro = ''
+        this.labInfo.expTime = 0
+        this.labInfo.isExist = 0
+        ElMessage.success('关闭成功')
+        this.closeLabLoading = false
+        return true
+      } else {
+        ElMessage.error('关闭失败')
+        this.closeLabLoading = false
+        return false
+      }
+    },
+    async getCtfLabDetailAction(labId: number) {
+      this.labDetailLoading = true
+      this.labInfo.labId = labId
+      const res = await getCtfLabDetail(labId)
+      if (res.code === 200) {
+        this.labInfo.intro = res.data.intro
+        this.labInfo.isExist = res.data.isExist
+        this.labInfo.expTime = res.data.expTime
+        this.labInfo.isSuccess = res.data.isSuccess
+        this.labDetailLoading = false
+        return true
+      } else {
+        this.labDetailLoading = false
+        return false
+      }
+    },
+    // 提交flag
+    async submitFlagAction(flag: string) {
+      const res = await submitFlag(this.labInfo.labId, flag)
+      if (res.code === 200) {
+        ElMessage.success(res.msg)
+        return true
+      } else {
+        ElMessage.error(res.msg)
+        return false
+      }
     }
   }
 })

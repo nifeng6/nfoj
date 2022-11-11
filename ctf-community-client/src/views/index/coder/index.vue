@@ -26,7 +26,9 @@
                     :value="item"
                   ></el-option>
                 </el-select>
-                <el-button @click="shareCodeHandler">分享代码</el-button>
+                <el-button @click="shareCodeHandler" :loading="shareCodeLoading"
+                  >分享代码</el-button
+                >
               </div>
             </div>
             <div class="run-edit">
@@ -98,7 +100,7 @@ const route = useRoute()
 const key = route.query.key
 
 const indexCoderStore = useIndexCoderStore()
-const { loading, runResult, shareResult, shareCode } =
+const { loading, runResult, shareResult, shareCode, shareCodeLoading } =
   storeToRefs(indexCoderStore)
 const { token, accountDialogVisible } = storeToRefs(commonAccountStore)
 

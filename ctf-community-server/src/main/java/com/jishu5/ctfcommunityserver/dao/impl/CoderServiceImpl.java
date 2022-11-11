@@ -4,15 +4,15 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.jishu5.ctfcommunityserver.dao.CoderService;
-import com.jishu5.ctfcommunityserver.dto.CoderParamsDto;
+import com.jishu5.ctfcommunityserver.dto.params.index.CoderParamsDto;
 import com.jishu5.ctfcommunityserver.dto.LoginUser;
 import com.jishu5.ctfcommunityserver.dto.ShareCodeDto;
 import com.jishu5.ctfcommunityserver.entity.CodeShare;
 import com.jishu5.ctfcommunityserver.entity.R;
 import com.jishu5.ctfcommunityserver.mapper.CodeShareMapper;
 import com.jishu5.ctfcommunityserver.utils.QRCodeUtil;
+import com.jishu5.ctfcommunityserver.utils.RedisCache;
 import com.jishu5.ctfcommunityserver.utils.StringUtil;
-import io.lettuce.core.cluster.event.RedirectionEventSupport;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -24,6 +24,7 @@ import java.net.Socket;
 import java.util.Base64;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 @Service
 public class CoderServiceImpl implements CoderService {
@@ -42,6 +43,9 @@ public class CoderServiceImpl implements CoderService {
 
     @Value("${coder.share-address}")
     private String shareAddress;
+
+    @Autowired
+    private RedisCache redisCache;
 
 
     @Override
@@ -77,6 +81,13 @@ public class CoderServiceImpl implements CoderService {
     public R shareCode(ShareCodeDto shareCodeDto){
         try {
             LoginUser loginUser = (LoginUser)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+            // 获取redis数据，如果存在则不允许生成
+            Object isExistShare = redisCache.getCacheObject("coder:share:" + loginUser.getUser().getId());
+            if(isExistShare != null){
+                return R.error("很抱歉，一分钟只能生成一次二维码呢~");
+            }
+
             // 生成唯一的键值，用来比对分享代码
             String key = StringUtil.getUUID();
 
@@ -91,6 +102,8 @@ public class CoderServiceImpl implements CoderService {
                 String base64QRCode = QRCodeUtil.getBase64QRCode(url);
                 Map<String,Object> resultMap = new HashMap<>();
                 Map<String,Object> map = new HashMap<>();
+                // redis记录用户生成二维码，一分钟只能生成一次
+                redisCache.setCacheObject("coder:share:"+loginUser.getUser().getId(),true,60, TimeUnit.SECONDS);
                 map.put("qrcode", base64QRCode);
                 map.put("key", key);
                 resultMap.put("data", map);
@@ -104,7 +117,6 @@ public class CoderServiceImpl implements CoderService {
 
     public R getShareCode(String key){
         try {
-            System.out.println(key);
             QueryWrapper<CodeShare> wrapper = new QueryWrapper<>();
             wrapper.eq("only_key",key);
             CodeShare codeShare = codeShareMapper.selectOne(wrapper);

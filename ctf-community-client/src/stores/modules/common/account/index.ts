@@ -15,18 +15,22 @@ const useCommonAccountStore = defineStore('common-account', {
     token: localStorage.getItem('token') || '',
     user: (JSON.parse(localStorage.getItem('user') as string) as IUser) || {},
     accountDialogVisible: false,
-    accountDialogType: 'login'
+    accountDialogType: 'login',
+    loginLoading: false
   }),
   actions: {
     async getLoginAction(data: ILoginParams) {
+      this.loginLoading = true
       const res = await getLogin(data)
       if (res.code === 200) {
+        this.loginLoading = false
         this.getUserInfoAction()
         ElMessage.success('登录成功')
         this.token = res.data.token
         window.localStorage.setItem('token', res.data.token)
         return true
       } else {
+        this.loginLoading = false
         ElMessage.error(res.msg)
         return false
       }

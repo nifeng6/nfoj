@@ -1,12 +1,20 @@
 <template>
   <div class="tool-list">
     <el-row :gutter="10">
-      <template v-for="item in toolList" :key="item">
+      <template
+        v-for="item in toolList"
+        :key="item"
+        v-if="toolList.length !== 0"
+      >
         <el-col :span="6"> <ToolItem :itemData="item" /></el-col>
+      </template>
+      <template v-else>
+        <el-empty class="empty" description="暂无数据" />
       </template>
     </el-row>
     <div class="pagination">
       <el-pagination
+        v-if="toolList.length !== 0"
         background
         layout="prev, pager, next"
         :page-size="page.pageSize"
@@ -39,6 +47,10 @@ const currentChangeHandle = (activePage: number) => {
     display: flex;
     justify-content: right;
     margin-top: 10px;
+  }
+  .empty{
+    text-align: center;
+    width: 100%;
   }
 }
 </style>

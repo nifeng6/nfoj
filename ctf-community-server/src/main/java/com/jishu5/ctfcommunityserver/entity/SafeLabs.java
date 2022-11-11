@@ -58,10 +58,10 @@ public class SafeLabs extends Model<SafeLabs> {
     private String flag;
 
     @TableField("need_coin")
-    private String needCoin;
+    private Integer needCoin;
 
     @TableField("gold_coin")
-    private String goldCoin;
+    private Integer goldCoin;
 
     // 总参加人数
     @TableField(select = false,exist = false)

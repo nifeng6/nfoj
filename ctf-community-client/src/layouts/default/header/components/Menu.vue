@@ -30,12 +30,24 @@
 <style scoped lang="less">
 .menu {
   flex: 1;
-
-  .iconnav{
+  color: #495060;
+  .iconnav {
     margin-right: 5px;
   }
-  .el-menu--horizontal{
+  .el-menu--horizontal {
     border-bottom: 0;
+  }
+  .el-menu-item {
+    padding: 15px;
+    &.is-active {
+      background: linear-gradient(270deg, #f2f7fc, #fefefe) !important;
+    }
+  }
+  .el-menu-item:hover,
+  .el-menu-item:focus {
+    background: linear-gradient(270deg, #f2f7fc, #fefefe) !important;
+    border-bottom: 2px solid var(--el-menu-active-color);
+    transition: all 0.2s ease;
   }
 }
 </style>

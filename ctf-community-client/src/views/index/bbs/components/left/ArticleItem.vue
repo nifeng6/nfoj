@@ -16,9 +16,11 @@
           >
             <div style="">{{ itemData.title }}</div>
             <span style="font-size: 13px; color: #999">
-              <span>{{ itemData.nickName }}</span>
+              <span>{{ itemData.user.nickName }}</span>
               <span style="margin-left: 15px">
-                <span>发布于：{{ itemData.createTime }}</span>
+                <span
+                  >发布于：{{ timeBeautifulFormat(itemData.createTime) }}</span
+                >
               </span>
             </span>
             <div style="margin-top: 3px">
@@ -56,6 +58,7 @@
 
 <script setup lang="ts">
 import { ChatLineRound, View } from '@element-plus/icons-vue'
+import { timeBeautifulFormat } from '@/utils/format-time'
 
 defineProps({
   itemData: {

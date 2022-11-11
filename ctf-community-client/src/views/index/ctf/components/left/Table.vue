@@ -1,6 +1,12 @@
 <template>
   <div class="table">
-    <el-table :data="ctfList" ref="slectLabRef" stripe style="width: 100%">
+    <el-table
+      :data="ctfList"
+      ref="slectLabRef"
+      stripe
+      style="width: 100%"
+      @row-click="rowClickHandle"
+    >
       <el-table-column prop="id" label="ID" />
       <el-table-column prop="title" label="题目" />
       <el-table-column prop="needCoin" label="需要金币" />
@@ -36,23 +42,50 @@
         @current-change="currentChangeHandle"
       ></el-pagination>
     </div>
+    <TableDialog
+      v-model:dialogVisible="dialogVisible"
+      :activeItem="activeItem"
+    />
   </div>
 </template>
 
 <script setup lang="ts">
 import { storeToRefs } from 'pinia'
 import useIndexCtfStore from '@/stores/modules/index/ctf'
+import TableDialog from './TableDialog.vue'
+import { ref } from 'vue'
+import useCommonAccountStore from '@/stores/modules/common/account'
+import { ElMessage } from 'element-plus'
 
+const commonAccountStore = useCommonAccountStore()
+const { token, accountDialogVisible } = storeToRefs(commonAccountStore)
 const indexCtfStore = useIndexCtfStore()
-
+const dialogVisible = ref(false)
+const activeItem = ref()
 const { ctfList, page } = storeToRefs(indexCtfStore)
 
 const currentChangeHandle = (clickPage: any) => {
   page.value.currentPage = clickPage
   indexCtfStore.getCtfListAction()
 }
-</script>
 
+const rowClickHandle = (item: any) => {
+  // 判断用户是否登录
+  if (!token.value) {
+    accountDialogVisible.value = true
+    ElMessage.error('请先登录后再进行操作')
+    return
+  }
+
+  activeItem.value = item
+  dialogVisible.value = true
+}
+</script>
+<style>
+.el-table__row {
+  cursor: pointer;
+}
+</style>
 <style scoped lang="less">
 .table {
   .pagination {

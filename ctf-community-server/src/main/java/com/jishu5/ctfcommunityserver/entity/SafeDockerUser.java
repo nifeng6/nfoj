@@ -59,10 +59,10 @@ public class SafeDockerUser extends Model<SafeDockerUser> {
     private String port;
 
     @TableField("is_exist")
-    private String isExist;
+    private Integer isExist;
 
     @TableField("is_success")
-    private String isSuccess;
+    private Integer isSuccess;
 
     @TableField(select = false,exist = false)
     private SafeLabs lab;

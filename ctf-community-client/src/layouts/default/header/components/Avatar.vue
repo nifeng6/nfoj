@@ -4,7 +4,7 @@
     <template v-if="!!token">
       <div class="logon">
         <el-dropdown @command="commandHandle">
-          <span style="height: 65px; line-height: 65px">
+          <span class="avatar-text">
             <el-avatar
               :size="28"
               :src="user.avatarUrl"
@@ -105,6 +105,10 @@ const logoutHandle = () => {
     height: 100%;
     display: flex;
     align-items: center;
+  }
+  .avatar-text {
+    height: 55px;
+    line-height: 55px;
   }
 }
 </style>

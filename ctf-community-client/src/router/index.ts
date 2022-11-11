@@ -1,5 +1,9 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import type { RouteRecordRaw } from 'vue-router'
+import Home from '@/views/index/home/index.vue'
+import Ctf from '@/views/index/ctf/index.vue'
+import Tools from '@/views/index/tools/index.vue'
+import Coder from '@/views/index/coder/index.vue'
 
 const AdminRouter: Array<RouteRecordRaw> = []
 
@@ -15,7 +19,7 @@ const IndexRouter: Array<RouteRecordRaw> = [
         meta: {
           title: '首页'
         },
-        component: () => import('@/views/index/home/index.vue')
+        component: Home
       },
       {
         path: 'ctf',
@@ -23,7 +27,7 @@ const IndexRouter: Array<RouteRecordRaw> = [
         meta: {
           title: '安全靶场'
         },
-        component: () => import('@/views/index/ctf/index.vue')
+        component: () => Ctf
       },
       {
         path: 'tools',
@@ -31,7 +35,7 @@ const IndexRouter: Array<RouteRecordRaw> = [
         meta: {
           title: '在线工具'
         },
-        component: () => import('@/views/index/tools/index.vue')
+        component: Tools
       },
       {
         path: 'coder',
@@ -39,7 +43,7 @@ const IndexRouter: Array<RouteRecordRaw> = [
         meta: {
           title: '在线编程'
         },
-        component: () => import('@/views/index/coder/index.vue')
+        component: Coder
       },
       {
         path: 'user/:user_id',

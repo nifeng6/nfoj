@@ -9,7 +9,13 @@
         </el-input>
       </el-form-item>
       <el-form-item prop="password">
-        <el-input size="large" v-model="ruleForm.password" placeholder="密码">
+        <el-input
+          type="password"
+          show-password
+          size="large"
+          v-model="ruleForm.password"
+          placeholder="密码"
+        >
           <template #prefix>
             <el-icon class="el-input__icon"><Lock /></el-icon>
           </template>
@@ -21,6 +27,7 @@
           type="primary"
           size="large"
           @click="loginHandle"
+          :loading="loginLoading"
           >登录</el-button
         >
       </el-form-item>
@@ -33,8 +40,10 @@ import { ref, computed } from 'vue'
 import { User, Lock } from '@element-plus/icons-vue'
 import type { FormInstance } from 'element-plus'
 import useCommonAccountStore from '@/stores/modules/common/account'
+import { storeToRefs } from 'pinia'
 
 const commonAccountStore = useCommonAccountStore()
+const { loginLoading } = storeToRefs(commonAccountStore)
 const ruleFormRef = ref<FormInstance>()
 
 const emit = defineEmits(['update:dialogVisible'])

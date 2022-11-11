@@ -46,6 +46,7 @@ const useIndexCoderStore = defineStore('index-coder', {
       if (res.code === 200) {
         this.shareResult = res.data
         ElMessage.success('二维码生成成功，可以分享给好友了！')
+        this.shareCodeLoading = false
         return true
       } else {
         this.shareCodeLoading = false

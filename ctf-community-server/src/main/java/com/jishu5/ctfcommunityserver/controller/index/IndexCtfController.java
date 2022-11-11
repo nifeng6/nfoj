@@ -2,7 +2,11 @@ package com.jishu5.ctfcommunityserver.controller.index;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.jishu5.ctfcommunityserver.dto.params.index.CloseLabParamsDto;
+import com.jishu5.ctfcommunityserver.dto.params.index.LabDetailParamsDto;
 import com.jishu5.ctfcommunityserver.dto.PageDto;
+import com.jishu5.ctfcommunityserver.dto.params.index.StartLabParamsDto;
+import com.jishu5.ctfcommunityserver.dto.params.index.SubmitFlagParamsDto;
 import com.jishu5.ctfcommunityserver.entity.*;
 import com.jishu5.ctfcommunityserver.service.impl.SafeDockerUserServiceImpl;
 import com.jishu5.ctfcommunityserver.service.impl.SafeLabsServiceImpl;
@@ -10,11 +14,8 @@ import com.jishu5.ctfcommunityserver.service.impl.SafeTagsServiceImpl;
 import com.jishu5.ctfcommunityserver.service.impl.SafeTypeServiceImpl;
 import com.jishu5.ctfcommunityserver.utils.DtoUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import java.awt.geom.RectangularShape;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -102,6 +103,24 @@ public class IndexCtfController {
         }
     }
 
+    @PostMapping("/start/lab")
+    public R startLab(@RequestBody StartLabParamsDto startLabParamsDto){
+        return safeLabsService.startLab(startLabParamsDto);
+    }
 
+    @PostMapping("/lab/detail")
+    public R getLabDetail(@RequestBody LabDetailParamsDto labDetailParamsDto){
+        return safeDockerUserService.getDetailById(labDetailParamsDto);
+    }
+
+    @PostMapping("/close/lab")
+    public R closeLab(@RequestBody CloseLabParamsDto closeLabParamsDto){
+        return safeDockerUserService.closeLab(closeLabParamsDto);
+    }
+
+    @PostMapping("/submit/flag")
+    public R submitFlag(@RequestBody SubmitFlagParamsDto submitFlagParamsDto){
+        return safeLabsService.submitFlag(submitFlagParamsDto);
+    }
 
 }

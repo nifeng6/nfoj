@@ -1,7 +1,24 @@
+export interface ICtf {
+  count: number
+  createTime: string
+  dockerId: string
+  goldCoin: string
+  id: number
+  intro: string
+  label: string
+  level: number
+  needCoin: string
+  successCount: number
+  title: string
+  type: string
+  typeId: number
+}
+
 // 响应参数
 export interface IDataType<T = any> {
   data: T
   code: number
+  msg: string
   page?: IPage
 }
 

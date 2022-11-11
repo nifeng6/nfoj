@@ -18,6 +18,8 @@ import ToolList from './ToolList.vue'
 
 <style scoped lang="less">
 .content {
+  max-width: 1250px;
+  margin: 20px auto;
   margin-top: 30px;
 }
 </style>

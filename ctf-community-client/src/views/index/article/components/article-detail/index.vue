@@ -13,7 +13,7 @@
 
       <span class="create_time">
         <span style="font-weight: 600">时间：</span>
-        <span>{{ article.createTime }}</span>
+        <span>{{ formatTime(article.createTime, false) }}</span>
       </span>
       <span style="margin-left: 15px">
         <span style="font-weight: 600">浏览：</span>
@@ -23,13 +23,9 @@
         <span style="font-weight: 600">分类：</span>
         <span>{{ article.sort?.name }} </span>
       </span>
-      <!-- <span style="margin-left: 15px">
-        <span style="font-weight: 600">评论：</span>
-        <span>1111</span>
-      </span> -->
     </div>
 
-    <div class="article-content">{{ article.content }}</div>
+    <div class="article-content" v-html="article.content"></div>
     <TipsCard style="font-size: 13px">
       <span>免责声明</span><br />
       <span
@@ -42,6 +38,7 @@
 <script setup lang="ts">
 import useIndexArticleStore from '@/stores/modules/index/article'
 import { storeToRefs } from 'pinia'
+import { formatTime } from '@/utils/format-time'
 
 const indexArticleStore = useIndexArticleStore()
 

@@ -44,7 +44,6 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
     @Autowired
     private UserMapper userMapper;
 
-
     @Override
     public R getArticleList(Integer currentPage, Integer pageSize, String keywords, Integer type) {
         try {
@@ -93,7 +92,8 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
             article.setUser(user);
             ArticleSort articleSort = articleSortMapper.selectOne(new QueryWrapper<ArticleSort>().eq("id",article.getSortId()));
             article.setSort(articleSort);
-
+            article.setView(article.getView()+1);
+            articleMapper.updateById(article);
             Map<String, Object> resultMap = new HashMap<>();
             resultMap.put("data",article);
             return R.ok(resultMap);

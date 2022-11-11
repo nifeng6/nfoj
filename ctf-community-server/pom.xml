@@ -106,7 +106,12 @@
             <artifactId>hutool-crypto</artifactId>
             <version>5.7.21</version>
         </dependency>
-
+        <!-- SSH连接工具 -->
+        <dependency>
+            <groupId>com.jcraft</groupId>
+            <artifactId>jsch</artifactId>
+            <version>0.1.55</version>
+        </dependency>
 
 
         <!--mybatis-plus代码生成器-->

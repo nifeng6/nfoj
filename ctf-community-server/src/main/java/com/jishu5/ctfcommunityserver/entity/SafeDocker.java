@@ -33,6 +33,12 @@ public class SafeDocker extends Model<SafeDocker> {
     @TableField("flag_addr")
     private String flagAddr;
 
+    @TableField("nginx_shell")
+    private String nginxShell;
+
+    @TableField("intro_text")
+    private String introText;
+
     @TableField("intro")
     private String intro;
 

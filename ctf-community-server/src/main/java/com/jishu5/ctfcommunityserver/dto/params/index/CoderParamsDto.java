@@ -1,4 +1,4 @@
-package com.jishu5.ctfcommunityserver.dto;
+package com.jishu5.ctfcommunityserver.dto.params.index;
 
 import lombok.Data;
 

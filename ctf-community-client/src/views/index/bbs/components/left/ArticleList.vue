@@ -1,7 +1,14 @@
 <template>
   <div class="article-list">
-    <template v-for="item in articleList" :key="item.id">
+    <template
+      v-for="item in articleList"
+      :key="item.id"
+      v-if="articleList.length"
+    >
       <ArticleItem :itemData="item" />
+    </template>
+    <template v-else>
+      <el-empty description="暂无数据"></el-empty>
     </template>
 
     <div class="pagination">
@@ -25,12 +32,10 @@ import useIndexBbsStore from '@/stores/modules/index/bbs'
 const indexBbsStore = useIndexBbsStore()
 const { articleList, page } = storeToRefs(indexBbsStore)
 
-
 const currentChangeHandle = (currentPage: number) => {
   indexBbsStore.page.currentPage = currentPage
   indexBbsStore.getArticleListAction()
 }
-
 </script>
 
 <style lang="less" scoped></style>

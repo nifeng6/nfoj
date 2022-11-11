@@ -1,7 +1,7 @@
 package com.jishu5.ctfcommunityserver.controller.index;
 
 import com.jishu5.ctfcommunityserver.dao.CoderService;
-import com.jishu5.ctfcommunityserver.dto.CoderParamsDto;
+import com.jishu5.ctfcommunityserver.dto.params.index.CoderParamsDto;
 import com.jishu5.ctfcommunityserver.dto.ShareCodeDto;
 import com.jishu5.ctfcommunityserver.entity.R;
 import org.springframework.beans.factory.annotation.Autowired;
