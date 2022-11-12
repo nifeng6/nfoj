@@ -46,6 +46,14 @@ const IndexRouter: Array<RouteRecordRaw> = [
         component: Coder
       },
       {
+        path: 'reset-password',
+        name: 'reset-password',
+        meta: {
+          title: '重置密码'
+        },
+        component: () => import('@/views/index/reset-password/index.vue')
+      },
+      {
         path: 'user/:user_id',
         name: 'user',
         meta: {
@@ -103,7 +111,5 @@ const router = createRouter({
   history: createWebHistory(),
   routes: [...AdminRouter, ...IndexRouter]
 })
-
-
 
 export default router

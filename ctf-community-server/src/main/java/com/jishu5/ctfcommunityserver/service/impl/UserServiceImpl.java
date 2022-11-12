@@ -7,6 +7,7 @@ import com.jishu5.ctfcommunityserver.dao.LoginService;
 import com.jishu5.ctfcommunityserver.dto.LoginDto;
 import com.jishu5.ctfcommunityserver.dto.LoginUser;
 import com.jishu5.ctfcommunityserver.dto.UpdatePassDto;
+import com.jishu5.ctfcommunityserver.dto.params.index.ResetPasswordParams;
 import com.jishu5.ctfcommunityserver.entity.*;
 import com.jishu5.ctfcommunityserver.mapper.*;
 import com.jishu5.ctfcommunityserver.service.UserService;
@@ -209,6 +210,9 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
             userMapper.insert(user);
 
+            // 删除redis中的验证码
+            redisCache.deleteObject("user:email:verify:" + user.getEmail());
+
             return R.ok("账号注册成功，请登录~");
         }catch (Exception e){
             System.out.println(e);
@@ -241,5 +245,30 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         return R.ok("签到成功");
     }
 
+    public R resetPassword(ResetPasswordParams resetPasswordParams){
+        try {
+            User user = userMapper.selectOne(new QueryWrapper<User>().eq("username",resetPasswordParams.getUsername()));
+            if(user == null){
+                return R.error("该用户不存在");
+            }
+            String code = redisCache.getCacheObject("user:email:reset:verify:" + user.getEmail());
+
+            System.out.println(code);
+            System.out.println(resetPasswordParams.getEmailCode());
+
+            if(!resetPasswordParams.getEmailCode().equals(code)){
+                return R.error("验证码错误");
+            }
+            // 加密密码并存入数据库
+            BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+            user.setPassword(encoder.encode(resetPasswordParams.getPassword()));
+            userMapper.updateById(user);
+            // 删除redis验证码，以免被重复利用
+            redisCache.deleteObject("user:email:reset:verify:" + user.getEmail());
+            return R.ok("重置成功");
+        }catch (Exception e){
+            return R.error("重置失败");
+        }
+    }
 
 }

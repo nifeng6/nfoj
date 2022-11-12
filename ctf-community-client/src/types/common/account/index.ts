@@ -49,3 +49,9 @@ export interface IRegisterForm {
   emailCode: string
   repassword: string
 }
+
+export interface IResetPasswordParams {
+  password: string
+  emailCode: string
+  username: string
+}

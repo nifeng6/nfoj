@@ -80,28 +80,6 @@ public class UtilController {
 
     }
 
-    // 注册邮箱验证码发送
-    @PostMapping("/register/email")
-    public R registerEmailSend(@RequestBody EmailSendParams emailSendParams){
-        try {
-            // 判断是否存在
-            Object isNull = redisCache.getCacheObject("user:email:verify:" + emailSendParams.getEmail());
-            if(isNull != null){
-                return R.error("请勿频繁发送验证码，耐心等待120秒后重试...");
-            }
-            String code = StringUtil.getRandomString(5);
-
-            String content = "请在5分钟内完成验证，验证码为：" + code;
-
-            emailUtil.sendMail(emailSendParams.getEmail(),"NFOJ的注册通知",content);
-
-            redisCache.setCacheObject("user:email:verify:"+emailSendParams.getEmail(), code,5, TimeUnit.MINUTES);
-            return R.ok();
-        }catch (Exception e){
-            return R.error();
-        }
-    }
-
     // 找回密码验证码发送
     public R resetEmailSend(@RequestBody EmailSendParams emailSendParams){
         try {

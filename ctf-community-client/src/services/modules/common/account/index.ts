@@ -5,7 +5,8 @@ import type {
   ILogin,
   IDataContent,
   IUser,
-  IRegisterParams
+  IRegisterParams,
+  IResetPasswordParams
 } from '@/types/common/account/index'
 
 export const getLogin = (data: ILoginParams) => {
@@ -38,6 +39,20 @@ export const registerUser = (data: IRegisterParams) => {
 export const registerEmailSend = (data: { email: string }) => {
   return request.post<IDataType>({
     url: '/common/account/register/email',
+    data
+  })
+}
+
+export const resetPasswordEmailSend = (data: { email: string }) => {
+  return request.post<IDataType>({
+    url: '/common/account/reset/password/email',
+    data
+  })
+}
+
+export const resetPassword = (data: IResetPasswordParams) => {
+  return request.post<IDataType>({
+    url: '/common/account/reset/password',
     data
   })
 }

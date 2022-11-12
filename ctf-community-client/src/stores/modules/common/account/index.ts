@@ -4,7 +4,9 @@ import {
   getUserInfo,
   updateUserInfo,
   registerUser,
-  registerEmailSend
+  registerEmailSend,
+  resetPasswordEmailSend,
+  resetPassword
 } from '@/services/modules/common/account'
 import { ElMessage, ElMessageBox } from 'element-plus'
 // 导入message的样式
@@ -13,7 +15,8 @@ import 'element-plus/theme-chalk/el-message-box.css'
 import type {
   ILoginParams,
   IUser,
-  IRegisterParams
+  IRegisterParams,
+  IResetPasswordParams
 } from '@/types/common/account/index'
 
 const useCommonAccountStore = defineStore('common-account', {
@@ -97,6 +100,26 @@ const useCommonAccountStore = defineStore('common-account', {
         ElMessage.success('发送成功')
       } else {
         ElMessage.error(res.msg)
+      }
+    },
+    async resetPasswordEmailSendAction(data: { email: string }) {
+      const res = await resetPasswordEmailSend(data)
+      if (res.code === 200) {
+        ElMessage.success('发送成功')
+        return true
+      } else {
+        ElMessage.error(res.msg)
+        return false
+      }
+    },
+    async resetPasswordAction(data: IResetPasswordParams) {
+      const res = await resetPassword(data)
+      if (res.code === 200) {
+        ElMessage.success('重置成功')
+        return true
+      } else {
+        ElMessage.error(res.msg)
+        return false
       }
     }
   }

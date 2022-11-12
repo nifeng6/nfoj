@@ -6,6 +6,14 @@
       <el-row>
         <el-col :span="16">
           <div style="margin-bottom: 20px">
+            <div style="margin-bottom: 10px">用户名（登录账号）</div>
+            <el-input
+              style="width: 85%"
+              disabled
+              v-model="userInfo.username"
+            ></el-input>
+          </div>
+          <div style="margin-bottom: 20px">
             <div style="margin-bottom: 10px">昵称</div>
             <el-input style="width: 85%" v-model="userInfo.nickName"></el-input>
           </div>
@@ -30,7 +38,7 @@
         </el-col>
         <el-col :span="8">
           <div style="text-align: center">
-            <el-avatar :src="userInfo.avatarUrl" :size="200"></el-avatar>
+            <el-avatar :src="userInfo.avatarUrl" :size="200"> </el-avatar>
           </div>
           <div style="text-align: center; margin-top: 20px">
             <el-upload>

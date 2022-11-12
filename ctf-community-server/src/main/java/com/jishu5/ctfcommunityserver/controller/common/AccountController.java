@@ -3,6 +3,7 @@ package com.jishu5.ctfcommunityserver.controller.common;
 import com.jishu5.ctfcommunityserver.dao.EmailService;
 import com.jishu5.ctfcommunityserver.dao.LoginService;
 import com.jishu5.ctfcommunityserver.dto.params.index.EmailSendParams;
+import com.jishu5.ctfcommunityserver.dto.params.index.ResetPasswordParams;
 import com.jishu5.ctfcommunityserver.entity.R;
 import com.jishu5.ctfcommunityserver.entity.User;
 import com.jishu5.ctfcommunityserver.service.UserService;
@@ -54,10 +55,21 @@ public class AccountController {
         return userService.updateInfo(user);
     }
 
+    @PostMapping("/reset/password")
+    public R resetPassword(@RequestBody ResetPasswordParams resetPasswordParams){
+        return userService.resetPassword(resetPasswordParams);
+    }
+
     // 注册邮箱验证码发送
     @PostMapping("/register/email")
     public R registerEmailSend(@RequestBody EmailSendParams emailSendParams){
         return emailService.registerEmail(emailSendParams);
+    }
+
+
+    @PostMapping("/reset/password/email")
+    public R resetPasswordEmail(@RequestBody EmailSendParams emailSendParams){
+        return emailService.resetPasswordEmail(emailSendParams);
     }
 
 

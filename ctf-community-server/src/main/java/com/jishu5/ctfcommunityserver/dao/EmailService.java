@@ -7,4 +7,6 @@ public interface EmailService {
 
     public R registerEmail(EmailSendParams emailSendParams);
 
+    public R resetPasswordEmail(EmailSendParams emailSendParams);
+
 }

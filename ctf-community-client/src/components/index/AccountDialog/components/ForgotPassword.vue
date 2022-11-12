@@ -14,7 +14,11 @@
       </el-form-item>
 
       <el-form-item>
-        <el-button style="width: 100%" type="primary" size="large"
+        <el-button
+          style="width: 100%"
+          type="primary"
+          size="large"
+          @click="resetHandle"
           >点击发送重置密码邮件</el-button
         >
       </el-form-item>
@@ -26,7 +30,9 @@
 import { ref, computed } from 'vue'
 import { Message } from '@element-plus/icons-vue'
 import type { FormInstance } from 'element-plus'
+import useCommonAccountStore from '@/stores/modules/common/account'
 
+const commonAccountStore = useCommonAccountStore()
 const ruleForm = reactive({
   email: ''
 })
@@ -44,6 +50,17 @@ const dialogVisible = computed({
     emit('update:dialogVisible', val)
   }
 })
+
+const resetHandle = () => {
+  const data = {
+    email: ruleForm.email
+  }
+  commonAccountStore.resetPasswordEmailSendAction(data).then((status) => {
+    if (status) {
+      // dialogVisible.value = false
+    }
+  })
+}
 
 const rules = reactive({
   email: [{ required: true, message: '请输入邮箱号', trigger: 'blur' }]
