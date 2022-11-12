@@ -16,7 +16,10 @@ import Right from './components/right/index.vue'
 import useIndexBbsStore from '@/stores/modules/index/bbs'
 import editArticleDialog from './components/article-edit/index.vue'
 import { onMounted, ref } from 'vue'
+import usecommonRootStore from '@/stores/modules/common/root'
 
+const commonRootStore = usecommonRootStore()
+commonRootStore.changeDomTitle()
 const dialogVisible = ref(false)
 
 onMounted(() => {

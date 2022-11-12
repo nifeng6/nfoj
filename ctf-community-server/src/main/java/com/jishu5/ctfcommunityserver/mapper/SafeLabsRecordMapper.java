@@ -1,6 +1,6 @@
 package com.jishu5.ctfcommunityserver.mapper;
 
-import com.jishu5.ctfcommunityserver.entity.SafeSuccessRecord;
+import com.jishu5.ctfcommunityserver.entity.SafeLabsRecord;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
 /**
@@ -11,6 +11,6 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  * @author nifeng
  * @since 2022-11-05 13:24:34
  */
-public interface SafeSuccessRecordMapper extends BaseMapper<SafeSuccessRecord> {
+public interface SafeLabsRecordMapper extends BaseMapper<SafeLabsRecord> {
 
 }

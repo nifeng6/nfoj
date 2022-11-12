@@ -9,7 +9,7 @@ const useIndexToolStore = defineStore('index-tool', {
     toolList: [] as Array<ITool>,
     page: {
       currentPage: 1,
-      pageSize: 5,
+      pageSize: 16,
       total: 0,
       pages: 0
     } as IPage,

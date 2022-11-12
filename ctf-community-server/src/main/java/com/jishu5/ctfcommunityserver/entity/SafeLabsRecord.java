@@ -7,7 +7,6 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
 import java.io.Serializable;
-import java.time.LocalDateTime;
 import java.util.Date;
 
 import lombok.Getter;
@@ -23,8 +22,8 @@ import lombok.Setter;
  */
 @Getter
 @Setter
-@TableName("safe_success_record")
-public class SafeSuccessRecord extends Model<SafeSuccessRecord> {
+@TableName("safe_labs_record")
+public class SafeLabsRecord extends Model<SafeLabsRecord> {
 
     private static final long serialVersionUID = 1L;
 
@@ -34,11 +33,20 @@ public class SafeSuccessRecord extends Model<SafeSuccessRecord> {
     @TableField(value = "create_time", fill = FieldFill.INSERT)
     private Date createTime;
 
+    @TableField(value = "end_time", fill = FieldFill.INSERT)
+    private Date endTime;
+
+    @TableField("docker_name")
+    private String dockerName;
+
     @TableField("user_id")
     private Integer userId;
 
     @TableField("lab_id")
     private Integer labId;
+
+    @TableField("is_success")
+    private Integer isSuccess;
 
 
     @Override

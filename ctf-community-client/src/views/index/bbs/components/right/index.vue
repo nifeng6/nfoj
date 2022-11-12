@@ -25,8 +25,9 @@
         </el-row>
       </el-card>
     </div>
-
-    <Sort></Sort>
+    <el-affix :offset="10">
+      <Sort></Sort>
+    </el-affix>
   </div>
 </template>
 

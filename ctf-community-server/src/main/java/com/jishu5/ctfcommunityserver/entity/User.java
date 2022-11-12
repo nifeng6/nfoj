@@ -43,8 +43,8 @@ public class User extends Model<User> {
     @TableField("avatar_url")
     private String avatarUrl;
 
-    @TableField("is_exist")
-    private String isExist;
+    @TableField("status")
+    private Integer status;
 
     @TableField(value = "create_time", fill = FieldFill.INSERT)
     private Date createTime;
@@ -63,6 +63,16 @@ public class User extends Model<User> {
 
     @TableField("coin")
     private Integer coin;
+
+    // 可接收前端的值，但不进行返回
+    @JsonProperty(access= JsonProperty.Access.WRITE_ONLY)
+    @TableField(select = false,exist = false)
+    private String captchaCode;
+
+    // 可接收前端的值，但不进行返回
+    @JsonProperty(access= JsonProperty.Access.WRITE_ONLY)
+    @TableField(select = false,exist = false)
+    private String emailCode;
 
 
     @Override

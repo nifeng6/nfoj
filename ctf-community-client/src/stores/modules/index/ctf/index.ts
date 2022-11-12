@@ -23,7 +23,7 @@ const useIndexCtfStore = defineStore('index-ctf', {
     ctfList: [] as Array<ICtfList>,
     page: {
       currentPage: 1,
-      pageSize: 5,
+      pageSize: 10,
       total: 0,
       pages: 0
     } as IPage,

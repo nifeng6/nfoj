@@ -2,7 +2,9 @@
   <div class="content">
     <el-row :gutter="20">
       <el-col :xs="24" :sm="5" :md="5" :lg="5" :xl="5">
-        <Sort></Sort>
+        <el-affix :offset="10">
+          <Sort></Sort>
+        </el-affix>
       </el-col>
       <el-col :xs="24" :sm="19" :md="19" :lg="19" :xl="19">
         <ToolList></ToolList>

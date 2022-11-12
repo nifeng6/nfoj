@@ -94,7 +94,10 @@ import useCommonAccountStore from '@/stores/modules/common/account'
 import { storeToRefs } from 'pinia'
 import { useRoute } from 'vue-router'
 import { ElMessage } from 'element-plus'
+import usecommonRootStore from '@/stores/modules/common/root'
 
+const commonRootStore = usecommonRootStore()
+commonRootStore.changeDomTitle()
 const commonAccountStore = useCommonAccountStore()
 const route = useRoute()
 const key = route.query.key

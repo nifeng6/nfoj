@@ -10,6 +10,7 @@ declare module '@vue/runtime-core' {
     AccountDialog: typeof import('./components/index/AccountDialog/index.vue')['default']
     ArticleCard: typeof import('./components/index/ArticleCard/index.vue')['default']
     CodeMirror: typeof import('./components/comm/CodeMirror/index.vue')['default']
+    ElAffix: typeof import('element-plus/es')['ElAffix']
     ElAvatar: typeof import('element-plus/es')['ElAvatar']
     ElBreadcrumb: typeof import('element-plus/es')['ElBreadcrumb']
     ElBreadcrumbItem: typeof import('element-plus/es')['ElBreadcrumbItem']

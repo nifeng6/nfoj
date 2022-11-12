@@ -12,10 +12,17 @@
       </template>
 
       <template v-if="accountDialogType === 'login'">
-        <Login v-model:dialogVisible="accountDialogVisible" />
+        <Login
+          v-model:login-form="loginForm"
+          v-model:dialog-visible="accountDialogVisible"
+        />
       </template>
       <template v-else-if="accountDialogType === 'register'">
-        <Register v-model:dialogVisible="accountDialogVisible" />
+        <Register
+          @registerHandle="registerHandle"
+          v-model:register-form="registerForm"
+          v-model:dialogVisible="accountDialogVisible"
+        />
       </template>
       <template v-else-if="accountDialogType === 'forgot'">
         <ForgotPassword v-model:dialogVisible="accountDialogVisible" />
@@ -24,18 +31,24 @@
       <div class="dialog-footer">
         <template v-if="accountDialogType === 'login'">
           <div class="login-footer">
-            <span @click="accountDialogType = 'register'">还没账号？点击注册！</span>
+            <span @click="accountDialogType = 'register'"
+              >还没账号？点击注册！</span
+            >
             <span @click="accountDialogType = 'forgot'">忘记密码</span>
           </div>
         </template>
         <template v-else-if="accountDialogType === 'register'">
           <div class="register-footer">
-            <span @click="accountDialogType = 'login'">已有账号？点击登录！</span>
+            <span @click="accountDialogType = 'login'"
+              >已有账号？点击登录！</span
+            >
           </div>
         </template>
         <template v-else-if="accountDialogType === 'forgot'">
           <div class="forgot-password">
-            <span @click="accountDialogType = 'login'">账号记起来了？点击登录！</span>
+            <span @click="accountDialogType = 'login'"
+              >账号记起来了？点击登录！</span
+            >
           </div>
         </template>
       </div>
@@ -49,6 +62,21 @@ import Register from './components/Register.vue'
 import ForgotPassword from './components/ForgotPassword.vue'
 import useCommonAccountStore from '@/stores/modules/common/account'
 import { storeToRefs } from 'pinia'
+import { reactive } from 'vue'
+
+const loginForm = reactive({
+  username: '',
+  password: '',
+  captchaCode: '',
+  emailCode: ''
+})
+const registerForm = reactive({
+  username: '',
+  password: '',
+  repassword: '',
+  email: ''
+})
+
 const commonAccountStore = useCommonAccountStore()
 
 const { accountDialogVisible, accountDialogType } =
@@ -58,6 +86,17 @@ const menuList = {
   login: '用户登录',
   register: '用户注册',
   forgot: '忘记密码'
+}
+
+// 用户注册处理
+const registerHandle = () => {
+  commonAccountStore.registerAction(registerForm).then((status) => {
+    if (status) {
+      accountDialogType.value = 'login'
+      loginForm.username = registerForm.username
+      loginForm.password = registerForm.password
+    }
+  })
 }
 
 const closeHandle = () => {

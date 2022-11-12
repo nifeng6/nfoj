@@ -1,7 +1,11 @@
 <template>
   <div class="index">
     <Header />
-    <router-view></router-view>
+    <router-view v-slot="{ Component }">
+      <transition name="el-fade-in-linear">
+        <component :is="Component" />
+      </transition>
+    </router-view>
     <Footer />
   </div>
 </template>

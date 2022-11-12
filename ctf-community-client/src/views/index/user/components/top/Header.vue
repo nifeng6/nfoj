@@ -8,17 +8,24 @@
       <el-avatar
         :size="70"
         style="border: 2px solid #fff"
-        src="https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fup.enterdesk.com%2Fedpic_source%2F34%2F93%2Ffe%2F3493fec56c307642522b2bc2fc4461e0.jpg&refer=http%3A%2F%2Fup.enterdesk.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1644938763&t=4a3558526cb7183a0e420ec367b65a72"
+        :src="user.avatarUrl"
       />
       <div class="info-text">
-        <span class="nickname">用户名</span>
-        <span class="des">个性签名...</span>
+        <span class="nickname">{{ user.nickName }}</span>
+        <span class="des">{{ user.description }}</span>
       </div>
     </div>
   </div>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import useIndexUserStore from '@/stores/modules/index/user'
+import { storeToRefs } from 'pinia'
+
+const indexUserStore = useIndexUserStore()
+
+const { user } = storeToRefs(indexUserStore)
+</script>
 
 <style scoped lang="less">
 .header {

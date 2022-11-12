@@ -2,13 +2,19 @@ import { defineStore } from 'pinia'
 import {
   getLogin,
   getUserInfo,
-  updateUserInfo
+  updateUserInfo,
+  registerUser,
+  registerEmailSend
 } from '@/services/modules/common/account'
 import { ElMessage, ElMessageBox } from 'element-plus'
 // 导入message的样式
 import 'element-plus/theme-chalk/el-message.css'
 import 'element-plus/theme-chalk/el-message-box.css'
-import type { ILoginParams, IUser } from './types'
+import type {
+  ILoginParams,
+  IUser,
+  IRegisterParams
+} from '@/types/common/account/index'
 
 const useCommonAccountStore = defineStore('common-account', {
   state: () => ({
@@ -16,7 +22,8 @@ const useCommonAccountStore = defineStore('common-account', {
     user: (JSON.parse(localStorage.getItem('user') as string) as IUser) || {},
     accountDialogVisible: false,
     accountDialogType: 'login',
-    loginLoading: false
+    loginLoading: false,
+    registerLoading: false
   }),
   actions: {
     async getLoginAction(data: ILoginParams) {
@@ -68,6 +75,26 @@ const useCommonAccountStore = defineStore('common-account', {
         this.user = data
         window.localStorage.setItem('user', JSON.stringify(data))
         ElMessage.success('修改成功')
+      } else {
+        ElMessage.error(res.msg)
+      }
+    },
+    async registerAction(data: IRegisterParams) {
+      const res = await registerUser(data)
+      if (res.code === 200) {
+        this.registerLoading = false
+        ElMessage.success('注册成功')
+        return true
+      } else {
+        this.registerLoading = false
+        ElMessage.error(res.msg)
+        return false
+      }
+    },
+    async registerEmailSendAction(data: { email: string }) {
+      const res = await registerEmailSend(data)
+      if (res.code === 200) {
+        ElMessage.success('发送成功')
       } else {
         ElMessage.error(res.msg)
       }

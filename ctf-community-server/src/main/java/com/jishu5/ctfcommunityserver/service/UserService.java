@@ -26,4 +26,6 @@ public interface UserService extends IService<User> {
 
     public R qiandao();
 
+    public R register(User user);
+
 }

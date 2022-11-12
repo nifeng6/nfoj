@@ -142,6 +142,7 @@ watchEffect(() => {
   if (dialogVisible.value === true) {
     indexCtfStore.getCtfLabDetailAction(props.activeItem.id).then((res) => {
       if (res) {
+        clearInterval(expTimekey)
         expTimeCountDown()
       }
     })
@@ -154,6 +155,7 @@ watchEffect(() => {
 const startLabHandle = () => {
   indexCtfStore.startCtfLabAction(props.activeItem.id).then((res) => {
     if (res) {
+      clearInterval(expTimekey)
       expTimeCountDown()
     }
   })

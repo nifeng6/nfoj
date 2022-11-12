@@ -13,6 +13,10 @@
 
 <script setup lang="ts">
 import Menu from './components/menu/index.vue'
+import usecommonRootStore from '@/stores/modules/common/root'
+
+const commonRootStore = usecommonRootStore()
+commonRootStore.changeDomTitle()
 </script>
 
 <style lang="less" scoped>

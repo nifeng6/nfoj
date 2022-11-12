@@ -1,6 +1,6 @@
 package com.jishu5.ctfcommunityserver.service;
 
-import com.jishu5.ctfcommunityserver.entity.SafeSuccessRecord;
+import com.jishu5.ctfcommunityserver.entity.SafeLabsRecord;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 /**
@@ -11,6 +11,6 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * @author nifeng
  * @since 2022-11-05 13:24:34
  */
-public interface SafeSuccessRecordService extends IService<SafeSuccessRecord> {
+public interface SafeLabsRecordService extends IService<SafeLabsRecord> {
 
 }

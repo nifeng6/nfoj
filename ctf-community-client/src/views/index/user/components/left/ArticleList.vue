@@ -1,23 +1,28 @@
 <template>
   <div class="article-list">
-    <template v-for="item in articleList" :key="item.id">
-      <ArticleCard
-        style="cursor: pointer; margin: 10px 0"
-        @click="urlHandle(item.id)"
-      >
-        <template #leftTop>
-          <div class="top">{{ item.title }}</div>
-        </template>
-        <template #leftBottom>
-          <div class="bottom">
-            <span>创建时间:{{ item.createTime }}</span>
-            <span></span>
-          </div>
-        </template>
-        <template #rightBottom>
-          <div class="bottom">分类：{{ item.sort.name }}</div>
-        </template>
-      </ArticleCard>
+    <template v-if="articleList.length !== 0">
+      <template v-for="item in articleList" :key="item.id">
+        <ArticleCard
+          style="cursor: pointer; margin: 10px 0"
+          @click="urlHandle(item.id)"
+        >
+          <template #leftTop>
+            <div class="top">{{ item.title }}</div>
+          </template>
+          <template #leftBottom>
+            <div class="bottom">
+              <span>创建时间:{{ item.createTime }}</span>
+              <span></span>
+            </div>
+          </template>
+          <template #rightBottom>
+            <div class="bottom">分类：{{ item.sort.name }}</div>
+          </template>
+        </ArticleCard>
+      </template>
+    </template>
+    <template v-else>
+      <el-empty description="当前用户还未发表过文章~" />
     </template>
   </div>
 </template>

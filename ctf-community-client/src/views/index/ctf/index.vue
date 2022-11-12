@@ -16,7 +16,10 @@ import Left from './components/left/index.vue'
 import Right from './components/right/index.vue'
 import useIndexCtfStore from '@/stores/modules/index/ctf'
 import { onMounted } from 'vue'
+import usecommonRootStore from '@/stores/modules/common/root'
 
+const commonRootStore = usecommonRootStore()
+commonRootStore.changeDomTitle()
 onMounted(() => {
   const indexCtfStore = useIndexCtfStore()
 

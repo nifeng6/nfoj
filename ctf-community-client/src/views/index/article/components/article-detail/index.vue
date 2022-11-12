@@ -39,10 +39,21 @@
 import useIndexArticleStore from '@/stores/modules/index/article'
 import { storeToRefs } from 'pinia'
 import { formatTime } from '@/utils/format-time'
+import { watch } from 'vue'
+import usecommonRootStore from '@/stores/modules/common/root'
+
+const commonRootStore = usecommonRootStore()
 
 const indexArticleStore = useIndexArticleStore()
 
 const { article } = storeToRefs(indexArticleStore)
+
+watch(
+  () => article.value.title,
+  (title) => {
+    commonRootStore.changeDomTitle(title)
+  }
+)
 </script>
 
 <style scoped lang="less">

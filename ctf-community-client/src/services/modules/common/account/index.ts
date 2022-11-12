@@ -4,8 +4,9 @@ import type {
   ILoginParams,
   ILogin,
   IDataContent,
-  IUser
-} from './types'
+  IUser,
+  IRegisterParams
+} from '@/types/common/account/index'
 
 export const getLogin = (data: ILoginParams) => {
   return request.post<IDataType<ILogin>>({
@@ -23,6 +24,20 @@ export const getUserInfo = () => {
 export const updateUserInfo = (data: IUser) => {
   return request.post<IDataType>({
     url: '/common/account/update',
+    data
+  })
+}
+
+export const registerUser = (data: IRegisterParams) => {
+  return request.post<IDataType>({
+    url: '/common/account/register',
+    data
+  })
+}
+
+export const registerEmailSend = (data: { email: string }) => {
+  return request.post<IDataType>({
+    url: '/common/account/register/email',
     data
   })
 }

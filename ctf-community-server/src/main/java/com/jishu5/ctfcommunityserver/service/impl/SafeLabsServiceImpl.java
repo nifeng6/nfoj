@@ -1,11 +1,13 @@
 package com.jishu5.ctfcommunityserver.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.jishu5.ctfcommunityserver.dto.LoginUser;
 import com.jishu5.ctfcommunityserver.dto.params.index.StartLabParamsDto;
 import com.jishu5.ctfcommunityserver.dto.params.index.SubmitFlagParamsDto;
 import com.jishu5.ctfcommunityserver.entity.*;
 import com.jishu5.ctfcommunityserver.mapper.*;
+import com.jishu5.ctfcommunityserver.service.SafeLabsRecordService;
 import com.jishu5.ctfcommunityserver.service.SafeLabsService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.jishu5.ctfcommunityserver.utils.DateUtil;
@@ -35,6 +37,10 @@ import java.util.concurrent.TimeUnit;
 @Service
 public class SafeLabsServiceImpl extends ServiceImpl<SafeLabsMapper, SafeLabs> implements SafeLabsService {
 
+
+    @Autowired
+    private SafeLabsRecordService safeLabsRecordService;
+
     @Autowired
     private SSHBackUtil sshBackUtil;
 
@@ -56,6 +62,7 @@ public class SafeLabsServiceImpl extends ServiceImpl<SafeLabsMapper, SafeLabs> i
     @Autowired
     private CoinRecordMapper coinRecordMapper;
 
+
     @Value("${ctf.nginx-address}")
     private String nginxAddress;
 
@@ -70,9 +77,11 @@ public class SafeLabsServiceImpl extends ServiceImpl<SafeLabsMapper, SafeLabs> i
           LoginUser loginUser = (LoginUser)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
           // 获取靶场数据
           SafeLabs safeLabs = safeLabsMapper.selectOne(new QueryWrapper<SafeLabs>().eq("id", startLabParamsDto.getLabId()));
+
           // 判断靶场是否存在
           SafeDockerUser safeDockerUser = safeDockerUserMapper.selectOne(new QueryWrapper<SafeDockerUser>().eq("user_id", loginUser.getUser().getId()).eq("lab_id",startLabParamsDto.getLabId()));
-          if(safeDockerUser.getIsExist() == 1){
+          System.out.println(safeDockerUser);
+          if(safeDockerUser != null && safeDockerUser.getIsExist() == 1){
               return R.error("靶场已存在，等等待过期后重新创建...");
           }
           // 扣除用户金币
@@ -88,6 +97,7 @@ public class SafeLabsServiceImpl extends ServiceImpl<SafeLabsMapper, SafeLabs> i
           coinRecord.setCreateTime(new Date());
           coinRecord.setCount(user.getCoin());
           coinRecordMapper.insert(coinRecord);
+
 
           // 获取靶场创建代码
           SafeDocker safeDocker = safeDockerMapper.selectOne(new QueryWrapper<SafeDocker>().eq("id",safeLabs.getDockerId()));
@@ -148,8 +158,22 @@ public class SafeLabsServiceImpl extends ServiceImpl<SafeLabsMapper, SafeLabs> i
               sfu.setDockerId(safeDocker.getId());
               sfu.setIsExist(1);
               sfu.setIsSuccess(0);
+              sfu.setExpTime(DateUtil.getAfterDate(new Date(),0,0,0,0,expireTime,0));
+
               safeDockerUserMapper.insert(sfu);
           }
+
+
+          // 增加靶场记录
+          SafeLabsRecord safeLabsRecord = new SafeLabsRecord();
+          safeLabsRecord.setCreateTime(new Date());
+          safeLabsRecord.setEndTime(DateUtil.getAfterDate(new Date(),0,0,0,0,expireTime,0));
+          safeLabsRecord.setUserId(loginUser.getUser().getId());
+          safeLabsRecord.setLabId(safeLabs.getId());
+          safeLabsRecord.setIsSuccess(0);
+          safeLabsRecord.setDockerName(uuid);
+          safeLabsRecordService.save(safeLabsRecord);
+
           map.put("intro", introText);
           map.put("expTime", expireTime * 60);
           map.put("isExist",1);
@@ -174,6 +198,8 @@ public class SafeLabsServiceImpl extends ServiceImpl<SafeLabsMapper, SafeLabs> i
             // 查看历史记录，决定是否增加金币
             SafeDockerUser safeDockerUser = safeDockerUserMapper.selectOne(new QueryWrapper<SafeDockerUser>().eq("user_id", loginUser.getUser().getId()).eq("lab_id",safeLabs.getId()));
             if(safeDockerUser.getIsSuccess() == 1){
+                // 修改靶场记录
+                updateSuccessLabRecord(safeDockerUser.getDockerName());
                 return R.ok("Flag正确，但您已解出过这道题了，所以此次不增加金币~");
             }else{
                 // 增加金币
@@ -183,6 +209,8 @@ public class SafeLabsServiceImpl extends ServiceImpl<SafeLabsMapper, SafeLabs> i
                 // 修改成功状态
                 safeDockerUser.setIsSuccess(1);
                 safeDockerUserMapper.updateById(safeDockerUser);
+                // 修改靶场记录
+                updateSuccessLabRecord(safeDockerUser.getDockerName());
                 return R.ok("恭喜你，成功解出这道题~");
             }
 
@@ -190,5 +218,20 @@ public class SafeLabsServiceImpl extends ServiceImpl<SafeLabsMapper, SafeLabs> i
             return R.error();
         }
     }
+
+    // 增加挑战成功记录
+    public R updateSuccessLabRecord(String dockerName){
+        try {
+            // 修改靶场记录
+            UpdateWrapper<SafeLabsRecord> safeLabsRecordUpdateWrapper = new UpdateWrapper<>();
+            safeLabsRecordUpdateWrapper.eq("docker_name", dockerName);
+            safeLabsRecordUpdateWrapper.set("is_success", 1);
+            safeLabsRecordService.update(safeLabsRecordUpdateWrapper);
+            return R.ok();
+        }catch (Exception e){
+            return R.error();
+        }
+    }
+
 
 }

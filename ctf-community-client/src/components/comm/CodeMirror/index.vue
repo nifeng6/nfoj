@@ -3,7 +3,14 @@
 </template>
 
 <script setup lang="ts">
-import { onBeforeUnmount, onMounted, ref, watch, watchEffect } from 'vue'
+import {
+  onBeforeUnmount,
+  onUnmounted,
+  onMounted,
+  ref,
+  watch,
+  watchEffect
+} from 'vue'
 // codemirror基础资源引入
 import _CodeMirror from 'codemirror'
 import 'codemirror/lib/codemirror.css'
@@ -92,9 +99,8 @@ onMounted(() => {
     editor.setValue(props.defaultValue)
   }
 })
-onBeforeUnmount(() => {
+onUnmounted(() => {
   if (null !== editor) {
-    editor.toTextArea()
     editor = null
   }
 })

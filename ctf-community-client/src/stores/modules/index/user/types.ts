@@ -8,6 +8,9 @@ export interface IUser {
   id: number
   username: string
   createTime: string
+  nickName: string
+  description: string
+  avatarUrl: string
 }
 
 export interface IUserRecord {

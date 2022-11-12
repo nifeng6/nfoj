@@ -15,6 +15,10 @@ import Search from './components/search/index.vue'
 import Content from './components/content/index.vue'
 import { onMounted } from 'vue'
 import useIndexToolStore from '@/stores/modules/index/tools'
+import usecommonRootStore from '@/stores/modules/common/root'
+
+const commonRootStore = usecommonRootStore()
+commonRootStore.changeDomTitle()
 
 onMounted(() => {
   const indexToolStore = useIndexToolStore()

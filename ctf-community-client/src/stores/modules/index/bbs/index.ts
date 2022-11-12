@@ -10,7 +10,7 @@ const useIndexBbsStore = defineStore('index-bbs', {
     articleTypeList: [] as Array<IArticleType>,
     page: {
       currentPage: 1,
-      pageSize: 5,
+      pageSize: 10,
       total: 0,
       pages: 0
     } as IPage,

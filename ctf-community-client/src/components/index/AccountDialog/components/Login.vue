@@ -1,8 +1,12 @@
 <template>
   <div class="login">
-    <el-form ref="ruleFormRef" :model="ruleForm" status-icon :rules="rules">
+    <el-form ref="ruleFormRef" :model="loginForm" status-icon :rules="rules">
       <el-form-item prop="username">
-        <el-input size="large" v-model="ruleForm.username" placeholder="用户名">
+        <el-input
+          size="large"
+          v-model="loginForm.username"
+          placeholder="用户名"
+        >
           <template #prefix>
             <el-icon class="el-input__icon"><User /></el-icon>
           </template>
@@ -13,13 +17,27 @@
           type="password"
           show-password
           size="large"
-          v-model="ruleForm.password"
+          v-model="loginForm.password"
           placeholder="密码"
         >
           <template #prefix>
             <el-icon class="el-input__icon"><Lock /></el-icon>
           </template>
         </el-input>
+      </el-form-item>
+      <el-form-item prop="captchaCode">
+        <div class="captcha">
+          <el-input
+            size="large"
+            v-model="loginForm.captchaCode"
+            placeholder="验证码"
+          >
+            <template #prefix>
+              <el-icon class="el-input__icon"><Lock /></el-icon>
+            </template>
+          </el-input>
+          <img :src="captchaURL" alt="验证码" @click="flushCaptcha" />
+        </div>
       </el-form-item>
       <el-form-item>
         <el-button
@@ -41,14 +59,17 @@ import { User, Lock } from '@element-plus/icons-vue'
 import type { FormInstance } from 'element-plus'
 import useCommonAccountStore from '@/stores/modules/common/account'
 import { storeToRefs } from 'pinia'
+import type { ILoginForm } from '@/types/common/account'
 
 const commonAccountStore = useCommonAccountStore()
 const { loginLoading } = storeToRefs(commonAccountStore)
 const ruleFormRef = ref<FormInstance>()
 
-const emit = defineEmits(['update:dialogVisible'])
+const captchaURL = ref(import.meta.env.VITE_CAPTCHA_URL)
+const emit = defineEmits(['update:dialogVisible', 'update:loginForm'])
 const props = defineProps<{
   dialogVisible: boolean
+  loginForm: ILoginForm
 }>()
 
 const dialogVisible = computed({
@@ -60,20 +81,29 @@ const dialogVisible = computed({
   }
 })
 
-const ruleForm = reactive({
-  username: '',
-  password: ''
+const loginForm = computed({
+  get() {
+    return props.loginForm
+  },
+  set(val) {
+    emit('update:loginForm', val)
+  }
 })
-
+// 刷新验证码
+const flushCaptcha = () => {
+  captchaURL.value =
+    import.meta.env.VITE_CAPTCHA_URL + '?time=' + new Date().getTime()
+}
 const rules = reactive({
-  username: [{ required: true, message: '用输入用户名', trigger: 'blur' }],
-  password: [{ required: true, message: '用输入密码', trigger: 'blur' }]
+  username: [{ required: true, message: '请输入用户名', trigger: 'blur' }],
+  password: [{ required: true, message: '请输入密码', trigger: 'blur' }],
+  captchaCode: [{ required: true, message: '请输入验证码', trigger: 'blur' }]
 })
 
 const loginHandle = () => {
   ruleFormRef.value?.validate((valid) => {
     if (valid) {
-      commonAccountStore.getLoginAction(ruleForm).then((res) => {
+      commonAccountStore.getLoginAction(loginForm.value).then((res) => {
         if (res) {
           dialogVisible.value = false
         }
@@ -85,5 +115,12 @@ const loginHandle = () => {
 
 <style scoped lang="less">
 .login {
+  .captcha {
+    display: flex;
+    img {
+      width: 35%;
+      margin-left: 10px;
+    }
+  }
 }
 </style>

@@ -1,33 +1,38 @@
 <template>
   <div class="ctf-list">
-    <template v-for="item in ctfList" :key="item.id">
-      <ArticleCard style="cursor: pointer; margin: 10px 0">
-        <template #other>
-          <div
-            class="finishedmark"
-            :style="{
-              background:
-                item.isSuccess == 1
-                  ? 'rgba(9, 134, 49, 0.67)'
-                  : 'rgba(255, 0, 0, 0.67)'
-            }"
-          >
-            {{ item.isSuccess == 1 ? '已完成' : '未完成' }}
-          </div>
-        </template>
-        <template #leftTop>
-          <div class="top">{{ item.lab.title }}</div>
-        </template>
-        <template #leftBottom>
-          <div class="bottom">
-            <span>创建时间:{{ item.createTime }}</span>
-            <span></span>
-          </div>
-        </template>
-        <template #rightBottom>
-          <div class="bottom">分类：{{ item.lab.type.name }}</div>
-        </template>
-      </ArticleCard>
+    <template v-if="ctfList.length !== 0">
+      <template v-for="item in ctfList" :key="item.id">
+        <ArticleCard style="cursor: pointer; margin: 10px 0">
+          <template #other>
+            <div
+              class="finishedmark"
+              :style="{
+                background:
+                  item.isSuccess == 1
+                    ? 'rgba(9, 134, 49, 0.67)'
+                    : 'rgba(255, 0, 0, 0.67)'
+              }"
+            >
+              {{ item.isSuccess == 1 ? '已完成' : '未完成' }}
+            </div>
+          </template>
+          <template #leftTop>
+            <div class="top">{{ item.lab.title }}</div>
+          </template>
+          <template #leftBottom>
+            <div class="bottom">
+              <span>创建时间:{{ item.createTime }}</span>
+              <span></span>
+            </div>
+          </template>
+          <template #rightBottom>
+            <div class="bottom">分类：{{ item.lab.type.name }}</div>
+          </template>
+        </ArticleCard>
+      </template>
+    </template>
+    <template v-else>
+      <el-empty description="当前用户暂无成功打靶记录~" />
     </template>
   </div>
 </template>

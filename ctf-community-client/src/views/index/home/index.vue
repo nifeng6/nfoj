@@ -13,7 +13,12 @@
   </div>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import usecommonRootStore from '@/stores/modules/common/root'
+
+const commonRootStore = usecommonRootStore()
+commonRootStore.changeDomTitle()
+</script>
 
 <style scoped lang="less">
 .home {

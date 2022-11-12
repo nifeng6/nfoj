@@ -1,17 +1,17 @@
 package com.jishu5.ctfcommunityserver.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.jishu5.ctfcommunityserver.dto.params.index.CloseLabParamsDto;
 import com.jishu5.ctfcommunityserver.dto.params.index.LabDetailParamsDto;
 import com.jishu5.ctfcommunityserver.dto.LoginUser;
-import com.jishu5.ctfcommunityserver.entity.R;
-import com.jishu5.ctfcommunityserver.entity.SafeDockerUser;
-import com.jishu5.ctfcommunityserver.entity.SafeLabs;
-import com.jishu5.ctfcommunityserver.entity.SafeType;
+import com.jishu5.ctfcommunityserver.entity.*;
 import com.jishu5.ctfcommunityserver.mapper.SafeDockerUserMapper;
+import com.jishu5.ctfcommunityserver.mapper.SafeLabsRecordMapper;
 import com.jishu5.ctfcommunityserver.service.SafeDockerUserService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.jishu5.ctfcommunityserver.service.SafeLabsRecordService;
 import com.jishu5.ctfcommunityserver.service.SafeLabsService;
 import com.jishu5.ctfcommunityserver.service.SafeTypeService;
 import com.jishu5.ctfcommunityserver.utils.DtoUtils;
@@ -52,13 +52,17 @@ public class SafeDockerUserServiceImpl extends ServiceImpl<SafeDockerUserMapper,
     @Autowired
     private SSHBackUtil sshBackUtil;
 
+    @Autowired
+    private SafeLabsRecordService  safeLabsRecordService;
+
     @Value("${ctf.nginx-address}")
     private String nginxAddress;
 
-    public R getListById(Integer currentPage, Integer pageSize, Integer id){
+    public R getListById(Integer currentPage, Integer pageSize, Integer userId){
         try {
             Page<SafeDockerUser> page = new Page<>(currentPage, pageSize);
             QueryWrapper<SafeDockerUser> wrapper = new QueryWrapper<>();
+            wrapper.eq("user_id", userId);
             Page<SafeDockerUser> pageResult = safeDockerUserMapper.selectPage(page, wrapper);
 
             for (SafeDockerUser safeDockerUser : pageResult.getRecords()){
@@ -109,6 +113,13 @@ public class SafeDockerUserServiceImpl extends ServiceImpl<SafeDockerUserMapper,
         try {
             LoginUser loginUser = (LoginUser)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
             SafeDockerUser safeDockerUser = safeDockerUserMapper.selectOne(new QueryWrapper<SafeDockerUser>().eq("lab_id",closeLabParamsDto.getLabId()).eq("user_id",loginUser.getUser().getId()));
+
+            // 主动摧毁，修改靶场记录
+            UpdateWrapper<SafeLabsRecord> safeLabsRecordUpdateWrapper = new UpdateWrapper<>();
+            safeLabsRecordUpdateWrapper.eq("docker_name", safeDockerUser.getDockerName());
+            safeLabsRecordUpdateWrapper.set("end_time", new Date());
+            safeLabsRecordService.update(safeLabsRecordUpdateWrapper);
+
 
             // 删除redis倒计时
             redisCache.deleteObject("codetip:safe:labs:"+safeDockerUser.getDockerName());

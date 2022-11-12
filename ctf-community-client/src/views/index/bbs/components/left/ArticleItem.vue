@@ -16,7 +16,7 @@
           >
             <div style="">{{ itemData.title }}</div>
             <span style="font-size: 13px; color: #999">
-              <span>{{ itemData.user.nickName }}</span>
+              <span>{{ itemData.user?.nickName }}</span>
               <span style="margin-left: 15px">
                 <span
                   >发布于：{{ timeBeautifulFormat(itemData.createTime) }}</span

@@ -29,3 +29,23 @@ export interface IUser {
   updateTime: string
   description: string
 }
+
+export interface IRegisterParams {
+  username: string
+  password: string
+  email: string
+}
+
+export interface ILoginForm {
+  username: string
+  password: string
+  captchaCode: string
+}
+
+export interface IRegisterForm {
+  username: string
+  password: string
+  email: string
+  emailCode: string
+  repassword: string
+}

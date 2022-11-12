@@ -1,5 +1,6 @@
 package com.jishu5.ctfcommunityserver.config;
 
+import com.jishu5.ctfcommunityserver.constant.FilePathConstant;
 import com.jishu5.ctfcommunityserver.filter.JwtAuthenticationTokenFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -7,6 +8,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -15,6 +17,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+
+import java.io.File;
 
 //@Configuration
 @EnableWebSecurity
@@ -32,6 +36,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 
     @Override
+    public void configure(WebSecurity web) throws Exception {
+        web.ignoring().antMatchers(FilePathConstant.AVATAR_PATH + "**");
+    }
+
+    @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
             //关闭csrf
@@ -41,9 +50,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             .and()
             .authorizeRequests()
                 // 表示匿名可访问，不允许已登录用户访问
-                .antMatchers("/common/account/login").anonymous()
+                .antMatchers("/common/account/login", "/common/account/register","/common/account/register/email").anonymous()
                 // 允许所有人访问
-                .antMatchers("/index/**", "/common/account/info").permitAll()
+                .antMatchers( "/index/**", "/common/account/info","/common/util/captcha").permitAll()
                 // 允许认证过的用户访问
                 .antMatchers().authenticated()
             // 除上面外的所有请求全部需要鉴权认证

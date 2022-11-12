@@ -23,7 +23,7 @@ const indexArticleStore = useIndexArticleStore()
 const route = useRoute()
 const toolbarKeys = ['emotion', 'insertImage', 'redo', 'undo']
 
-const valueHtml = ref('test')
+const valueHtml = ref('')
 console.log(route.params.article_id)
 const submitReplyHandle = () => {
   const data = {

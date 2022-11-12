@@ -1,6 +1,9 @@
 package com.jishu5.ctfcommunityserver.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.jishu5.ctfcommunityserver.constant.DefaultConstant;
+import com.jishu5.ctfcommunityserver.constant.FilePathConstant;
+import com.jishu5.ctfcommunityserver.dao.LoginService;
 import com.jishu5.ctfcommunityserver.dto.LoginDto;
 import com.jishu5.ctfcommunityserver.dto.LoginUser;
 import com.jishu5.ctfcommunityserver.dto.UpdatePassDto;
@@ -12,6 +15,7 @@ import com.jishu5.ctfcommunityserver.utils.JwtUtil;
 import com.jishu5.ctfcommunityserver.utils.RedisCache;
 import org.apache.commons.lang3.time.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -49,6 +53,12 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     @Autowired
     private CoinRecordMapper coinRecordMapper;
 
+    @Autowired
+    private LoginService loginService;
+
+    @Value("${static-url}")
+    private String staticURL;
+
 
     @Override
     public R getUserInfo(Integer user_id) {
@@ -63,6 +73,9 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
             map.put("id", user.getId());
             map.put("username", user.getUsername());
             map.put("createTime",user.getCreateTime());
+            map.put("description",user.getDescription());
+            map.put("nickName",user.getNickName());
+            map.put("avatarUrl",user.getAvatarUrl());
 
             resultMap.put("data", map);
             return R.ok(resultMap);
@@ -74,7 +87,6 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     @Override
     public R getUserRecord(Integer user_id) {
         try {
-
             Integer articleCount = articleMapper.selectCount(new QueryWrapper<Article>().eq("user_id",user_id));
             Integer coinCount = userMapper.selectOne(new QueryWrapper<User>().eq("id",user_id)).getCoin();
             Integer safeRecordCount = safeDockerUserMapper.selectCount(new QueryWrapper<SafeDockerUser>().eq("user_id",user_id));
@@ -156,6 +168,51 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         }catch (Exception e){
             // 事务回滚
             TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
+            return R.error();
+        }
+    }
+
+    @Override
+    public R register(User user) {
+        try {
+            // 判断邮箱验证码是否正确
+            String code = redisCache.getCacheObject("user:email:verify:" + user.getEmail());
+            if(!user.getEmailCode().equals(code)){
+                return R.error("邮箱验证码错误");
+            }
+
+            // 判断用户是否被注册过
+            User confirmUser = userMapper.selectOne(new QueryWrapper<User>().eq("username",user.getUsername()));
+            if(confirmUser != null){
+                return R.error("用户名已被注册，请重新选择用户名！");
+            }
+            // 判断用户账号密码邮箱长度/格式等是否标准
+            if(user.getUsername().length() > 15 || user.getUsername().length() < 2){
+                return R.error("用户名应该在2~15位！");
+            }
+            if(user.getPassword().length() > 20 || user.getPassword().length() <6){
+                return R.error("密码应该在6~20位！");
+            }
+            if (!user.getEmail().matches("^\\w+(\\w|[.]\\w+)+@\\w+([.]\\w+){1,3}")){
+                return R.error("邮箱格式不正确！");
+            }
+
+            // 加密密码
+            BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+            user.setPassword(encoder.encode(user.getPassword()));
+            user.setNickName(user.getUsername());
+            user.setCreateTime(new Date());
+            user.setAvatarUrl(staticURL + DefaultConstant.DEFAULT_AVATAR_PATH);
+            user.setStatus(DefaultConstant.DEFAULT_USER_STATUS);
+            user.setCoin(DefaultConstant.DEFAULT_USER_COIN);
+            user.setDescription(DefaultConstant.DEFAULT_USER_DESCRIPTION);
+
+            userMapper.insert(user);
+
+            return R.ok("账号注册成功，请登录~");
+        }catch (Exception e){
+            System.out.println(e);
+            System.out.println(e.getMessage());
             return R.error();
         }
     }

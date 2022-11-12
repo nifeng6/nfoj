@@ -103,10 +103,11 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
     }
 
     @Override
-    public R getArticleListById(Integer currentPage, Integer pageSize, Integer id) {
+    public R getArticleListById(Integer currentPage, Integer pageSize, Integer userId) {
         try {
             Page<Article> page = new Page<>(currentPage, pageSize);
             QueryWrapper<Article> wrapper = new QueryWrapper<>();
+            wrapper.eq("user_id", userId);
             Page<Article> pageResult = articleMapper.selectPage(page, wrapper);
 
             for (Article article : pageResult.getRecords()){
