@@ -1,50 +1,89 @@
 <template>
   <div class="footer">
-    <div class="footer-top">
-      <div class="footer-text">
-        <a href="#">了解CodeTip</a>
-        <a href="#">加入CodeTip</a>
-        <a href="#">帮助文档</a>
-        <a href="#">用户协议</a>
-        <a href="#">合作申请</a>
-      </div>
-    </div>
     <div class="wrapper">
-      <p style="lineheight: normal; paddingtop: 20px; paddingbottom: 5px">
-        <span>copyright </span>
-        <span>倪风 ©2022</span>
-      </p>
-      <p style="lineheight: normal; paddingbottom: 5px">
-        备案号：xxxxxxxxxxxxx
-      </p>
-      <p></p>
+      <div class="footer-top">
+        <div class="footer-top-item">
+          <div class="footer-top-item-title">NFOJ</div>
+          <ul>
+            <li>
+              <a href="#" target="_blank">NFOJ</a>
+            </li>
+          </ul>
+        </div>
+        <div class="footer-top-item">
+          <div class="footer-top-item-title">服务</div>
+          <ul>
+            <li>
+              <a href="#" target="_blank">系统信息</a>
+            </li>
+            <li>
+              <a href="#" target="_blank">用户投稿</a>
+            </li>
+          </ul>
+        </div>
+        <div class="footer-top-item">
+          <div class="footer-top-item-title">开发</div>
+          <ul>
+            <li>
+              <a href="#" target="_blank">Github</a>
+            </li>
+            <li>
+              <a href="#" target="_blank">Gitee</a>
+            </li>
+          </ul>
+        </div>
+        <div class="footer-top-item">
+          <div class="footer-top-item-title">支持</div>
+          <ul>
+            <li>
+              <a href="#" target="_blank">关于</a>
+            </li>
+            <li>
+              <a href="#" target="_blank">帮助</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>
+          <span>copyright </span>
+          <span>倪风 ©2022</span>
+          <span>备案号：xxxxxxxxxxxxx</span>
+        </p>
+      </div>
     </div>
   </div>
 </template>
 
 <style scoped lang="less">
 .footer {
-  margin: auto;
-  background: #2c2f34;
-  text-align: center;
-  color: white;
-  bottom: 0;
-  padding: 15px;
-}
+  background-color: #fff;
+  .wrapper {
+    width: 1250px;
+    margin: 0 auto;
+    padding: 20px 0;
+    .footer-top {
+      display: flex;
+      justify-content: space-between;
+      text-align: center;
+      margin-bottom: 30px;
 
-.footer-text {
-  margin: 26px auto;
-}
-
-.footer-top {
-  border-bottom: 1px solid #4d515a;
-}
-
-.footer-text > a {
-  color: #fff;
-  margin-right: 36px;
-}
-.wrapper p {
-  margin: 10px 0;
+      .footer-top-item-title {
+        font-size: 18px;
+        font-weight: 700;
+      }
+      ul {
+        margin-top: 10px;
+        li {
+          margin-bottom: 10px;
+        }
+      }
+    }
+    .footer-bottom {
+      text-align: center;
+      color: #999;
+      font-size: 12px;
+    }
+  }
 }
 </style>

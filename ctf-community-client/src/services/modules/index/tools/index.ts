@@ -5,7 +5,7 @@ import type {
   IToolType,
   ITool,
   IToolListParams
-} from './types'
+} from '@/types/index/tools/index'
 
 export const getToolTagList = () => {
   return request.get<IDataType<IToolTag[]>>({

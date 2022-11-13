@@ -1,5 +1,10 @@
 import request from '@/services/request'
-import type { IDataType, IUser, IUserRecord, ICtfRecord } from './types'
+import type {
+  IDataType,
+  IUser,
+  IUserRecord,
+  ICtfRecord
+} from '@/types/index/user/index'
 
 export const getUserInfo = (params: object) => {
   return request.get<IDataType<IUser>>({

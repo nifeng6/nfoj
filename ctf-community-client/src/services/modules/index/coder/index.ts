@@ -5,7 +5,7 @@ import type {
   ICodeRun,
   ICodeShare,
   ICodeShareParams
-} from './types'
+} from '@/types/index/coder/index'
 
 export const codeRun = (data: ICodeRunParams) => {
   return request.post<IDataType<ICodeRun>>({

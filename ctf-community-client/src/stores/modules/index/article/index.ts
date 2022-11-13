@@ -4,7 +4,7 @@ import type {
   IPage,
   IArticleReply,
   IArticleAddReplyParams
-} from './types'
+} from '@/types/index/article'
 import {
   getArticleDetail,
   getArticleReplyList,

@@ -11,10 +11,6 @@ export interface IPage {
   pages: number
 }
 
-export interface IArticleParams {
-  id: number
-}
-
 export interface IArticle {
   id: number
   title: string
@@ -40,6 +36,12 @@ export interface ISort {
   name: string
 }
 
+export interface IArticleReplyParams {
+  pageSize: number
+  currentPage: number
+  id: number
+}
+
 export interface IArticleReply {
   id: number
   content: string
@@ -60,4 +62,11 @@ export interface IArticleAddReplyParams {
   replyUserId?: number
   replyFatherId?: number
   type: number
+}
+
+export interface IArticleParams {
+  title: string
+  tags: string
+  sortId: number
+  content: string
 }

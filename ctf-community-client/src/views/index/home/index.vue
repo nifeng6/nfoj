@@ -1,20 +1,20 @@
 <template>
   <div class="home">
-    <div>
-      <img
-        style="max-width: 75%; padding: 3rem; max-height: 18rem"
-        src="~@/assets/image/home.jpg"
-      />
-    </div>
-    <h3 style="font-size: 1.75rem; text-align: center">
-      欢迎访问<br />
-      NFOJ
-    </h3>
+    <el-row :gutter="20">
+      <el-col :span="16">
+        <Left />
+      </el-col>
+      <el-col :span="8">
+        <Right />
+      </el-col>
+    </el-row>
   </div>
 </template>
 
 <script setup lang="ts">
 import usecommonRootStore from '@/stores/modules/common/root'
+import Right from './components/right/index.vue'
+import Left from './components/left/index.vue'
 
 const commonRootStore = usecommonRootStore()
 commonRootStore.changeDomTitle()
@@ -22,10 +22,7 @@ commonRootStore.changeDomTitle()
 
 <style scoped lang="less">
 .home {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  margin: 30px 0;
+  width: 1250px;
+  margin: 20px auto;
 }
 </style>

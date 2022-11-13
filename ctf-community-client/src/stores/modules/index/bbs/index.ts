@@ -1,6 +1,11 @@
 import { defineStore } from 'pinia'
 import { addArticle, getArticleList, getArticleTypeList } from '@/services'
-import type { IArticle, IPage, IArticleType, IArticleParams } from './types'
+import type {
+  IArticle,
+  IPage,
+  IArticleType,
+  IArticleAddParams
+} from '@/types/index/bbs/index'
 import { ElMessage } from 'element-plus'
 import 'element-plus/theme-chalk/el-message.css'
 
@@ -33,7 +38,7 @@ const useIndexBbsStore = defineStore('index-bbs', {
       const res = await getArticleTypeList()
       this.articleTypeList = res.data
     },
-    async addArticleAction(data: IArticleParams) {
+    async addArticleAction(data: IArticleAddParams) {
       const res = await addArticle(data)
       if (res.code === 200) {
         this.getArticleListAction()

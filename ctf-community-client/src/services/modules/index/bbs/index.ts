@@ -4,8 +4,8 @@ import type {
   IDataType,
   IArticleParams,
   IArticleType,
-  IArticleData
-} from './types'
+  IArticleAddParams
+} from '@/types/index/bbs/index'
 
 export const getArticleList = (params: IArticleParams) => {
   return request.get<IDataType<IArticle[]>>({
@@ -20,7 +20,7 @@ export const getArticleTypeList = () => {
   })
 }
 
-export const addArticle = (data: IArticleData) => {
+export const addArticle = (data: IArticleAddParams) => {
   return request.post<IDataType>({
     url: '/index/bbs/add',
     data

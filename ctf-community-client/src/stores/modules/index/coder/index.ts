@@ -4,7 +4,7 @@ import type {
   ICodeRun,
   ICodeShare,
   ICodeShareParams
-} from './types'
+} from '@/types/index/coder/index'
 import {
   codeRun,
   shareCode,

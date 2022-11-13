@@ -6,9 +6,9 @@ import type {
   IArticleReplyParams,
   IArticleReply,
   IArticleAddReplyParams
-} from './types'
+} from '@/types/index/article'
 
-export const getArticleDetail = (params: IArticleParams) => {
+export const getArticleDetail = (params: { id: number }) => {
   return request.get<IDataType<IArticle>>({
     url: '/index/article/detail',
     params

@@ -1,5 +1,11 @@
 import { defineStore } from 'pinia'
-import type { IUser, IUserRecord, IPage, IArticle, ICtfRecord } from './types'
+import type {
+  IUser,
+  IUserRecord,
+  IPage,
+  IArticle,
+  ICtfRecord
+} from '@/types/index/user/index'
 import {
   getUserInfo,
   getUserRecord,

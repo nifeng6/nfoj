@@ -3,14 +3,7 @@
 </template>
 
 <script setup lang="ts">
-import {
-  onBeforeUnmount,
-  onUnmounted,
-  onMounted,
-  ref,
-  watch,
-  watchEffect
-} from 'vue'
+import { onUnmounted, onMounted, ref, watch, watchEffect } from 'vue'
 // codemirror基础资源引入
 import _CodeMirror from 'codemirror'
 import 'codemirror/lib/codemirror.css'

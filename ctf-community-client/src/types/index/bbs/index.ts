@@ -35,7 +35,7 @@ export interface IArticleType {
   name: string
 }
 
-export interface IArticleData {
+export interface IArticleAddParams {
   title: string
   tags: string
   sortId: number

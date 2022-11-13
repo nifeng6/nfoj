@@ -1,6 +1,11 @@
 import { defineStore } from 'pinia'
 import { getToolTagList, getToolTypeList, getToolList } from '@/services'
-import type { IToolTag, IToolType, ITool, IPage } from './types'
+import type {
+  IToolTag,
+  IToolType,
+  ITool,
+  IPage
+} from '@/types/index/tools/index'
 
 const useIndexToolStore = defineStore('index-tool', {
   state: () => ({

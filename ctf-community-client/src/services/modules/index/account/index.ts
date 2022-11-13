@@ -1,5 +1,5 @@
 import request from '@/services/request'
-import type { IDataType, ICoinRecord, IPage } from './types'
+import type { IDataType, ICoinRecord, IPage } from '@/types/index/account/index'
 
 export const getAccountCoinRecordList = (params: IPage) => {
   return request.get<IDataType<ICoinRecord[]>>({

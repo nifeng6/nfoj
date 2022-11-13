@@ -4,7 +4,7 @@ import {
   getAccountQiandao,
   updatePassword
 } from '@/services/modules/index/account'
-import type { ICoinRecord, IPage } from './types'
+import type { ICoinRecord, IPage } from '@/types/index/account/index'
 import { ElMessage } from 'element-plus'
 
 const useIndexAccountStore = defineStore('index-account', {
