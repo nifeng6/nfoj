@@ -9,6 +9,15 @@
           </span>
         </div>
       </template>
+      <div class="friendly-content">
+        <el-row>
+          <el-col :span="8">
+            <a href="http://chengyi.jmu.edu.cn/" target="_blank">
+              <img src="@/assets/image/cyxy.png" alt="集美大学诚毅学院" />
+            </a>
+          </el-col>
+        </el-row>
+      </div>
     </el-card>
   </div>
 </template>
@@ -19,7 +28,7 @@ import { Link } from '@element-plus/icons-vue'
 
 <style scoped lang="less">
 .friendly-link {
-    margin: 15px 0;
+  margin: 15px 0;
   ::v-deep .el-card__header {
     padding: 10px 20px;
   }
@@ -34,6 +43,17 @@ import { Link } from '@element-plus/icons-vue'
       align-items: center;
       span {
         margin-left: 5px;
+      }
+    }
+  }
+  .friendly-content {
+    a {
+      border-radius: 3px;
+      border: 1px solid #409eff;
+      display: block;
+      padding: 5px 10px;
+      img {
+        width: 100%;
       }
     }
   }

@@ -5,11 +5,11 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed, withDefaults } from 'vue'
 import BaseEchart from './Base.vue'
+
+// 设置props 默认值
 const props = defineProps<{
-  width: String
-  height: String
   values: Array<{ name: string; data: Array<number> }>
   xData: Array<string>
 }>()
@@ -35,44 +35,46 @@ const legendData = computed(() => {
   })
 })
 
-const option = {
-  tooltip: {
-    trigger: 'axis',
-    axisPointer: {
-      type: 'cross',
-      label: {
-        backgroundColor: '#6a7985'
+const option = computed(() => {
+  return {
+    tooltip: {
+      trigger: 'axis',
+      axisPointer: {
+        type: 'cross',
+        label: {
+          backgroundColor: '#6a7985'
+        }
       }
-    }
-  },
-  legend: {
-    data: legendData
-  },
-  toolbox: {
-    feature: {
-      saveAsImage: {}
-    }
-  },
-  grid: {
-    left: '3%',
-    right: '4%',
-    bottom: '3%',
-    containLabel: true
-  },
-  xAxis: [
-    {
-      type: 'category',
-      boundaryGap: false,
-      data: props.xData
-    }
-  ],
-  yAxis: [
-    {
-      type: 'value'
-    }
-  ],
-  series: seriesData
-}
+    },
+    legend: {
+      data: legendData.value
+    },
+    toolbox: {
+      feature: {
+        saveAsImage: {}
+      }
+    },
+    grid: {
+      left: '3%',
+      right: '4%',
+      bottom: '3%',
+      containLabel: true
+    },
+    xAxis: [
+      {
+        type: 'category',
+        boundaryGap: false,
+        data: props.xData
+      }
+    ],
+    yAxis: [
+      {
+        type: 'value'
+      }
+    ],
+    series: seriesData.value
+  }
+})
 </script>
 
 <style scoped lang="less"></style>

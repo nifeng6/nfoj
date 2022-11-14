@@ -2,6 +2,7 @@ package com.jishu5.ctfcommunityserver.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.jishu5.ctfcommunityserver.dto.LoginUser;
 import com.jishu5.ctfcommunityserver.dto.params.index.StartLabParamsDto;
 import com.jishu5.ctfcommunityserver.dto.params.index.SubmitFlagParamsDto;
@@ -10,10 +11,7 @@ import com.jishu5.ctfcommunityserver.mapper.*;
 import com.jishu5.ctfcommunityserver.service.SafeLabsRecordService;
 import com.jishu5.ctfcommunityserver.service.SafeLabsService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.jishu5.ctfcommunityserver.utils.DateUtil;
-import com.jishu5.ctfcommunityserver.utils.RedisCache;
-import com.jishu5.ctfcommunityserver.utils.SSHBackUtil;
-import com.jishu5.ctfcommunityserver.utils.StringUtil;
+import com.jishu5.ctfcommunityserver.utils.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -61,7 +59,6 @@ public class SafeLabsServiceImpl extends ServiceImpl<SafeLabsMapper, SafeLabs> i
 
     @Autowired
     private CoinRecordMapper coinRecordMapper;
-
 
     @Value("${ctf.nginx-address}")
     private String nginxAddress;
@@ -214,6 +211,23 @@ public class SafeLabsServiceImpl extends ServiceImpl<SafeLabsMapper, SafeLabs> i
                 return R.ok("恭喜你，成功解出这道题~");
             }
 
+        }catch (Exception e){
+            return R.error();
+        }
+    }
+
+    @Override
+    public R getList(Integer currentPage, Integer pageSize) {
+        try {
+            Page<SafeLabs> page = new Page<>(currentPage, pageSize);
+            QueryWrapper<SafeLabs> wrapper = new QueryWrapper<>();
+
+            Page<SafeLabs> safeLabsPage = safeLabsMapper.selectPage(page, wrapper);
+            Map<String, Object> resultMap = new HashMap<>();
+            resultMap.put("data", safeLabsPage.getRecords());
+            resultMap.put("page", DtoUtils.pageDtoHandle(page));
+
+            return R.ok(resultMap);
         }catch (Exception e){
             return R.error();
         }

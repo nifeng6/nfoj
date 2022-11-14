@@ -48,6 +48,12 @@ public class SafeLabsRecord extends Model<SafeLabsRecord> {
     @TableField("is_success")
     private Integer isSuccess;
 
+    @TableField(select = false,exist = false)
+    private User user;
+
+    @TableField(select = false,exist = false)
+    private SafeLabs safeLabs;
+
 
     @Override
     public Serializable pkVal() {

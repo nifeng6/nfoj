@@ -25,4 +25,6 @@ public interface ArticleService extends IService<Article> {
 
     public R getReplyList(Integer currentPage, Integer pageSize, Integer id);
 
+    public R getNoticeList(Integer currentPage, Integer pageSize);
+
 }

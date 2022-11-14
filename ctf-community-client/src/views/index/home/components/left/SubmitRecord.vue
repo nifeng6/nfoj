@@ -9,12 +9,41 @@
           </span>
         </div>
       </template>
+
+      <div class="submit-content">
+        <MoreLineEchart :values="values" :xData="xData" />
+      </div>
     </el-card>
   </div>
 </template>
 
 <script setup lang="ts">
 import { DataLine } from '@element-plus/icons-vue'
+import MoreLineEchart from '@/components/comm/Echart/MoreLineEchart.vue'
+import { storeToRefs } from 'pinia'
+import useIndexHomeStore from '@/stores/modules/index/home'
+
+const indexHomeStore = useIndexHomeStore()
+
+const { weekRecord } = storeToRefs(indexHomeStore)
+
+const values = computed(() => {
+  console.log(weekRecord.value)
+  return [
+    {
+      name: '通过次数',
+      data: weekRecord.value.success
+    },
+    {
+      name: '提交次数',
+      data: weekRecord.value.total
+    }
+  ]
+})
+
+const xData = computed(() => {
+  return weekRecord.value.time
+})
 </script>
 
 <style scoped lang="less">

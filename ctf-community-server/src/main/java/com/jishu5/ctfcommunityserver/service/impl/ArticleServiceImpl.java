@@ -177,4 +177,29 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
         }
     }
 
+    @Override
+    public R getNoticeList(Integer currentPage, Integer pageSize) {
+        try {
+            Page<Article> page = new Page<>(currentPage, pageSize);
+
+            QueryWrapper<Article> wrapper = new QueryWrapper<>();
+            wrapper.eq("sort_id", 4);
+            Page<Article> articlePage = articleMapper.selectPage(page, wrapper);
+            Map<String, Object> resultMap = new HashMap<>();
+
+            for (Article article : articlePage.getRecords()){
+                User user = userMapper.selectOne(new QueryWrapper<User>().eq("id", article.getUserId()));
+                article.setUser(user);
+
+            }
+
+            resultMap.put("data", articlePage.getRecords());
+            resultMap.put("page", DtoUtils.pageDtoHandle(articlePage));
+
+            return R.ok(resultMap);
+        }catch (Exception e){
+            return R.error();
+        }
+    }
+
 }

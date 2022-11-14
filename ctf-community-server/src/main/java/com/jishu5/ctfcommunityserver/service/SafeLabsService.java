@@ -18,4 +18,6 @@ public interface SafeLabsService extends IService<SafeLabs> {
     public R startLab(StartLabParamsDto startLabParamsDto);
 
     public R submitFlag(SubmitFlagParamsDto submitFlagParamsDto);
+
+    public R getList(Integer currentPage, Integer pageSize);
 }

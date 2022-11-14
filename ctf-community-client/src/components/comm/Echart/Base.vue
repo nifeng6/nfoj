@@ -20,6 +20,7 @@ const props = defineProps({
     type: Object
   }
 })
+
 onMounted(() => {
   const { setOption } = echartHook(divRef.value)
   // 指定图表的配置项和数据

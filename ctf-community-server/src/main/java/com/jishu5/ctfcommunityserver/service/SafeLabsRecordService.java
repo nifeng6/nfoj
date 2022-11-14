@@ -1,5 +1,6 @@
 package com.jishu5.ctfcommunityserver.service;
 
+import com.jishu5.ctfcommunityserver.entity.R;
 import com.jishu5.ctfcommunityserver.entity.SafeLabsRecord;
 import com.baomidou.mybatisplus.extension.service.IService;
 
@@ -13,4 +14,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface SafeLabsRecordService extends IService<SafeLabsRecord> {
 
+    public R getList(Integer currentPage, Integer pageSize);
+
+    public R getWeekRecord();
 }

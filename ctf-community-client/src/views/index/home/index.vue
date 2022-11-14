@@ -15,8 +15,14 @@
 import usecommonRootStore from '@/stores/modules/common/root'
 import Right from './components/right/index.vue'
 import Left from './components/left/index.vue'
+import useIndexHomeStore from '@/stores/modules/index/home'
 
+const indexHomeStore = useIndexHomeStore()
 const commonRootStore = usecommonRootStore()
+indexHomeStore.getNoticeListAction()
+indexHomeStore.getNoticePageAction()
+indexHomeStore.getNewLabListAction()
+indexHomeStore.getWeekRecordAction()
 commonRootStore.changeDomTitle()
 </script>
 

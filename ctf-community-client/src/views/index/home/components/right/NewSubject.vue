@@ -9,17 +9,40 @@
           </span>
         </div>
       </template>
+      <div class="subject-content">
+        <el-timeline>
+          <el-timeline-item v-for="item in newLabList" :key="item.id">
+            <div class="subject-item">
+              <span>
+                <span>上线了</span>
+                <span>{{ item.title }}</span>
+                <span>题目</span>
+              </span>
+              <span class="subject-item-time"
+                >{{ timeBeautifulFormat(item.createTime) }}
+              </span>
+            </div>
+          </el-timeline-item>
+        </el-timeline>
+      </div>
     </el-card>
   </div>
 </template>
 
 <script setup lang="ts">
 import { CollectionTag } from '@element-plus/icons-vue'
+import useIndexHomeStore from '@/stores/modules/index/home'
+import { storeToRefs } from 'pinia'
+import { timeBeautifulFormat } from '@/utils/format-time'
+
+const indexHomeStore = useIndexHomeStore()
+
+const { newLabList } = storeToRefs(indexHomeStore)
 </script>
 
 <style scoped lang="less">
 .new-subject {
-//   margin-bottom: 15px;
+  //   margin-bottom: 15px;
   ::v-deep .el-card__header {
     padding: 10px 20px;
   }
@@ -35,6 +58,18 @@ import { CollectionTag } from '@element-plus/icons-vue'
       span {
         margin-left: 5px;
       }
+    }
+  }
+
+  .subject-item {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    font-size: 14px;
+
+    .subject-item-time {
+      font-size: 13px;
+      color: #909399;
     }
   }
 }
