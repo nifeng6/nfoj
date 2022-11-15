@@ -55,6 +55,9 @@ public class ToolList extends Model<ToolList> {
     @TableField("avatar_url")
     private String avatarUrl;
 
+    @TableField(select = false,exist = false)
+    private ToolType type;
+
 
     @Override
     public Serializable pkVal() {

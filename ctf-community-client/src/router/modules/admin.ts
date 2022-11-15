@@ -31,6 +31,14 @@ const AdminRouter: Array<RouteRecordRaw> = [
         component: () => import('@/views/admin/labs/index.vue')
       },
       {
+        path: 'labs',
+        name: 'admin-labs-docker',
+        meta: {
+          title: '容器规则'
+        },
+        component: () => import('@/views/admin/labs-docker/index.vue')
+      },
+      {
         path: 'tools',
         name: 'admin-tools',
         meta: {

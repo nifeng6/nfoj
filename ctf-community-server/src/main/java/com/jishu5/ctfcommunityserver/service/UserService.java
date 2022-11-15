@@ -31,4 +31,10 @@ public interface UserService extends IService<User> {
 
     public R resetPassword(ResetPasswordParams resetPasswordParams);
 
+    // 后台部分
+    public R getList(Integer currentPage, Integer pageSize, String keywords, Integer type);
+
+    public R deleteById(Integer id);
+
+    public R deleteListById(String ids);
 }

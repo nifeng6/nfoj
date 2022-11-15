@@ -12,7 +12,7 @@
         <span>仪表盘</span>
       </el-menu-item>
 
-      <el-sub-menu>
+      <el-sub-menu class="bbs">
         <template #title>
           <el-icon><Comment /></el-icon>
           <span>社区管理</span>
@@ -27,10 +27,25 @@
         </el-menu-item>
       </el-sub-menu>
 
-      <el-menu-item index="/admin/labs">
-        <el-icon><Flag /></el-icon>
-        <span>靶场管理</span>
-      </el-menu-item>
+      <el-sub-menu index="labs">
+        <template #title>
+          <el-icon><Flag /></el-icon>
+          <span>靶场管理</span>
+        </template>
+        <el-menu-item index="/admin/labs">
+          <el-icon><Orange /></el-icon>
+          <span>靶场配置</span>
+        </el-menu-item>
+        <!-- <el-menu-item index="/admin/labs">
+          <el-icon><TakeawayBox /></el-icon>
+          <span>容器管理</span>
+        </el-menu-item> -->
+        <el-menu-item index="/admin/labs">
+          <el-icon><Guide /></el-icon>
+          <span>容器规则</span>
+        </el-menu-item>
+      </el-sub-menu>
+
       <el-menu-item index="/admin/tools">
         <el-icon><Tools /></el-icon>
         <span>工具管理</span>
@@ -52,7 +67,10 @@ import {
   Flag,
   Comment,
   Document,
-  ChatLineRound
+  ChatLineRound,
+  Orange,
+  Guide,
+  TakeawayBox
 } from '@element-plus/icons-vue'
 
 defineProps({

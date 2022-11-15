@@ -27,4 +27,14 @@ public interface ArticleService extends IService<Article> {
 
     public R getNoticeList(Integer currentPage, Integer pageSize);
 
+
+    // 以下为后台部分
+    public R getArticleList(Integer currentPage, Integer pageSize, String keywords, Integer type, String createTime);
+
+    public R deleteArticleById(Integer id);
+
+    public R deleteArticleListById(String ids);
+
+    public R addArticle();
+
 }

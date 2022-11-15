@@ -248,4 +248,55 @@ public class SafeLabsServiceImpl extends ServiceImpl<SafeLabsMapper, SafeLabs> i
     }
 
 
+    // 后台部分
+
+    @Override
+    public R getList(Integer currentPage, Integer pageSize, String keywords, Integer type) {
+        try {
+            QueryWrapper<SafeLabs> wrapper = new QueryWrapper<>();
+            Page<SafeLabs> page = new Page<>(currentPage, pageSize);
+            if(keywords != null){
+                wrapper.like("title", keywords);
+            }
+            if(type != null){
+                wrapper.eq("sort_id", type);
+            }
+
+            Page<SafeLabs> labsPage = safeLabsMapper.selectPage(page, wrapper);
+
+
+            Map<String, Object> resultMap = new HashMap<>();
+
+            resultMap.put("data", labsPage.getRecords());
+            resultMap.put("page", DtoUtils.pageDtoHandle(labsPage));
+            return R.ok(resultMap);
+        }catch (Exception e){
+            return R.error();
+        }
+    }
+
+    @Override
+    public R deleteById(Integer id) {
+        try {
+            QueryWrapper<SafeLabs> wrapper = new QueryWrapper<>();
+            wrapper.eq("id", id);
+            safeLabsMapper.delete(wrapper);
+            return R.ok("删除成功");
+        }catch (Exception e){
+            return R.error("删除失败");
+        }
+    }
+
+    @Override
+    public R deleteListById(String ids) {
+        try {
+            QueryWrapper<SafeLabs> wrapper = new QueryWrapper<>();
+            wrapper.in("id", ids.split(","));
+            safeLabsMapper.delete(wrapper);
+            return R.ok("删除成功");
+        }catch (Exception e){
+            return R.error("删除失败");
+        }
+    }
+
 }

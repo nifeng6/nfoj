@@ -1,6 +1,7 @@
 package com.jishu5.ctfcommunityserver.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.jishu5.ctfcommunityserver.constant.DefaultConstant;
 import com.jishu5.ctfcommunityserver.constant.FilePathConstant;
 import com.jishu5.ctfcommunityserver.dao.LoginService;
@@ -12,6 +13,7 @@ import com.jishu5.ctfcommunityserver.entity.*;
 import com.jishu5.ctfcommunityserver.mapper.*;
 import com.jishu5.ctfcommunityserver.service.UserService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.jishu5.ctfcommunityserver.utils.DtoUtils;
 import com.jishu5.ctfcommunityserver.utils.JwtUtil;
 import com.jishu5.ctfcommunityserver.utils.RedisCache;
 import org.apache.commons.lang3.time.DateUtils;
@@ -268,6 +270,58 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
             return R.ok("重置成功");
         }catch (Exception e){
             return R.error("重置失败");
+        }
+    }
+
+    // 后台部分
+
+    @Override
+    public R getList(Integer currentPage, Integer pageSize, String keywords, Integer type) {
+        try {
+            QueryWrapper<User> wrapper = new QueryWrapper<>();
+            Page<User> page = new Page<>(currentPage, pageSize);
+            if(keywords != null){
+                wrapper.like("title", keywords);
+            }
+            if(type != null){
+                wrapper.eq("sort_id", type);
+            }
+
+            Page<User> userPage = userMapper.selectPage(page, wrapper);
+
+
+
+            Map<String, Object> resultMap = new HashMap<>();
+
+            resultMap.put("data", userPage.getRecords());
+            resultMap.put("page", DtoUtils.pageDtoHandle(userPage));
+            return R.ok(resultMap);
+        }catch (Exception e){
+            return R.error();
+        }
+    }
+
+    @Override
+    public R deleteById(Integer id) {
+        try {
+            QueryWrapper<User> wrapper = new QueryWrapper<>();
+            wrapper.eq("id", id);
+            userMapper.delete(wrapper);
+            return R.ok("删除成功");
+        }catch (Exception e){
+            return R.error("删除失败");
+        }
+    }
+
+    @Override
+    public R deleteListById(String ids) {
+        try {
+            QueryWrapper<User> wrapper = new QueryWrapper<>();
+            wrapper.in("id", ids.split(","));
+            userMapper.delete(wrapper);
+            return R.ok("删除成功");
+        }catch (Exception e){
+            return R.error("删除失败");
         }
     }
 

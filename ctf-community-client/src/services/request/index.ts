@@ -55,6 +55,10 @@ class MainRequest {
     return this.request({ ...config, method: 'GET' })
   }
 
+  delete<T>(config: AxiosRequestConfig): Promise<T> {
+    return this.request({ ...config, method: 'DELETE' })
+  }
+
   post<T>(config: AxiosRequestConfig): Promise<T> {
     return this.request({ ...config, method: 'POST' })
   }

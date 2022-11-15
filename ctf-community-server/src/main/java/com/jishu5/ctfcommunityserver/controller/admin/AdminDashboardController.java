@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/admin/dashboard")
-public class Dashboard {
+public class AdminDashboardController {
 
 
 

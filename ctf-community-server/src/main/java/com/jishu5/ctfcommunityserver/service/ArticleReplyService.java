@@ -17,4 +17,14 @@ public interface ArticleReplyService extends IService<ArticleReply> {
 
     public R addReply(AddReplyDto addReplyDto);
 
+
+    // 以下为后台部分
+
+    public R getReplyList(Integer currentPage, Integer pageSize, String keywords, Integer type);
+
+    public R deleteReplyById(Integer id);
+
+    public R deleteReplyListById(String ids);
+
+
 }

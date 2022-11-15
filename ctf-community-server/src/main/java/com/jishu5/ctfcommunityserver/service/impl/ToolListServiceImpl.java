@@ -3,10 +3,9 @@ package com.jishu5.ctfcommunityserver.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.jishu5.ctfcommunityserver.dto.PageDto;
-import com.jishu5.ctfcommunityserver.entity.R;
-import com.jishu5.ctfcommunityserver.entity.ToolHotTags;
-import com.jishu5.ctfcommunityserver.entity.ToolList;
+import com.jishu5.ctfcommunityserver.entity.*;
 import com.jishu5.ctfcommunityserver.mapper.ToolListMapper;
+import com.jishu5.ctfcommunityserver.mapper.ToolTypeMapper;
 import com.jishu5.ctfcommunityserver.service.ToolListService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.jishu5.ctfcommunityserver.utils.DtoUtils;
@@ -30,6 +29,9 @@ public class ToolListServiceImpl extends ServiceImpl<ToolListMapper, ToolList> i
 
     @Autowired
     private ToolListMapper toolListMapper;
+
+    @Autowired
+    private ToolTypeMapper toolTypeMapper;
 
     @Override
     public R getList(Integer currentPage, Integer pageSize, Integer type, String keywords) {
@@ -64,4 +66,60 @@ public class ToolListServiceImpl extends ServiceImpl<ToolListMapper, ToolList> i
             return R.error();
         }
     }
+
+    // 后台部分
+
+    @Override
+    public R getList(Integer currentPage, Integer pageSize, String keywords, Integer type) {
+        try {
+            QueryWrapper<ToolList> wrapper = new QueryWrapper<>();
+            Page<ToolList> page = new Page<>(currentPage, pageSize);
+            if(keywords != null){
+                wrapper.like("title", keywords);
+            }
+            if(type != null){
+                wrapper.eq("sort_id", type);
+            }
+
+            Page<ToolList> toolPage = toolListMapper.selectPage(page, wrapper);
+
+            for (ToolList toolList : toolPage.getRecords()){
+                ToolType toolType = toolTypeMapper.selectOne(new QueryWrapper<ToolType>().eq("id", toolList.getTypeId()));
+                toolList.setType(toolType);
+            }
+
+            Map<String, Object> resultMap = new HashMap<>();
+
+            resultMap.put("data", toolPage.getRecords());
+            resultMap.put("page", DtoUtils.pageDtoHandle(toolPage));
+            return R.ok(resultMap);
+        }catch (Exception e){
+            return R.error();
+        }
+    }
+
+    @Override
+    public R deleteById(Integer id) {
+        try {
+            QueryWrapper<ToolList> wrapper = new QueryWrapper<>();
+            wrapper.eq("id", id);
+            toolListMapper.delete(wrapper);
+            return R.ok("删除成功");
+        }catch (Exception e){
+            return R.error("删除失败");
+        }
+    }
+
+    @Override
+    public R deleteListById(String ids) {
+        try {
+            QueryWrapper<ToolList> wrapper = new QueryWrapper<>();
+            wrapper.in("id", ids.split(","));
+            toolListMapper.delete(wrapper);
+            return R.ok("删除成功");
+        }catch (Exception e){
+            return R.error("删除失败");
+        }
+    }
+
 }

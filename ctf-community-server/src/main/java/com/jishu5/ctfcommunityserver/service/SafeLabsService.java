@@ -20,4 +20,12 @@ public interface SafeLabsService extends IService<SafeLabs> {
     public R submitFlag(SubmitFlagParamsDto submitFlagParamsDto);
 
     public R getList(Integer currentPage, Integer pageSize);
+
+    // 后台部分
+
+    public R getList(Integer currentPage, Integer pageSize, String keywords, Integer type);
+
+    public R deleteById(Integer id);
+
+    public R deleteListById(String ids);
 }

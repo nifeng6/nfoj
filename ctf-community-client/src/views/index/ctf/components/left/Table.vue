@@ -81,17 +81,16 @@ const rowClickHandle = (item: any) => {
   dialogVisible.value = true
 }
 </script>
-<style>
-.el-table__row {
-  cursor: pointer;
-}
-</style>
 <style scoped lang="less">
 .table {
   .pagination {
     display: flex;
     justify-content: right;
     margin-top: 10px;
+  }
+
+  ::v-deep .el-table__row {
+    cursor: pointer;
   }
 }
 </style>

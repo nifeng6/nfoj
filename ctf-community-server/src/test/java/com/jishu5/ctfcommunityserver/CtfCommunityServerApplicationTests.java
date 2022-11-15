@@ -31,6 +31,13 @@ class CtfCommunityServerApplicationTests {
         wrapper.le("create_time",new Date());
         int count = safeLabsRecordService.count(wrapper);
         System.out.println(count);
+
+
     }
 
+
+    @Test
+    void test4(){
+        System.out.println(new Date("2022-11-18"));
+    }
 }

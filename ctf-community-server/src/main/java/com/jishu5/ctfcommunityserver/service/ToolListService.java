@@ -16,4 +16,12 @@ public interface ToolListService extends IService<ToolList> {
 
     public R getList(Integer currentPage, Integer pageSize, Integer type, String keywords);
 
+
+    // 后台部分
+
+    public R getList(Integer currentPage, Integer pageSize, String keywords, Integer type);
+
+    public R deleteById(Integer id);
+
+    public R deleteListById(String ids);
 }

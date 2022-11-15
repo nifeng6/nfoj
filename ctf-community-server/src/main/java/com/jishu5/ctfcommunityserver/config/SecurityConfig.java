@@ -52,7 +52,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 // 表示匿名可访问，不允许已登录用户访问
                 .antMatchers("/common/account/login", "/common/account/register","/common/account/register/email","/common/account/reset/password/email", "/common/account/reset/password").anonymous()
                 // 允许所有人访问
-                .antMatchers( "/index/**", "/common/account/info","/common/util/captcha").permitAll()
+                .antMatchers( "/index/**", "/admin/**", "/common/account/info","/common/util/captcha").permitAll()
                 // 允许认证过的用户访问
                 .antMatchers().authenticated()
             // 除上面外的所有请求全部需要鉴权认证

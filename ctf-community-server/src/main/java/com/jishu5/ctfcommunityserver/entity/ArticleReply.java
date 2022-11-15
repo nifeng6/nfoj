@@ -71,6 +71,9 @@ public class ArticleReply extends Model<ArticleReply> {
     private User user;
 
     @TableField(select = false,exist = false)
+    private Article article;
+
+    @TableField(select = false,exist = false)
     private User replyUser;
 
     @Override

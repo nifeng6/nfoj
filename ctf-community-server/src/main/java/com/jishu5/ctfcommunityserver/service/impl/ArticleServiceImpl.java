@@ -15,6 +15,7 @@ import io.lettuce.core.cluster.event.RedirectionEventSupport;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.DeleteMapping;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -200,6 +201,71 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
         }catch (Exception e){
             return R.error();
         }
+    }
+
+    // 以下为后台部分
+
+    @Override
+    public R getArticleList(Integer currentPage, Integer pageSize, String keywords, Integer type, String createTime) {
+        try {
+            QueryWrapper<Article> wrapper = new QueryWrapper<>();
+            Page<Article> page = new Page<>(currentPage, pageSize);
+            if(keywords != null){
+                wrapper.like("title", keywords);
+            }
+            if(type != null){
+                wrapper.eq("sort_id", type);
+            }
+            if(createTime != null){
+            }
+
+            Page<Article> articlePage = articleMapper.selectPage(page, wrapper);
+
+            // 遍历添加信息
+            for(Article article : articlePage.getRecords()){
+                User user = userMapper.selectOne(new QueryWrapper<User>().eq("id", article.getUserId()));
+                ArticleSort articleSort = articleSortMapper.selectOne(new QueryWrapper<ArticleSort>().eq("id", article.getSortId()));
+                article.setSort(articleSort);
+                article.setUser(user);
+            }
+
+            Map<String, Object> resultMap = new HashMap<>();
+
+            resultMap.put("data", articlePage.getRecords());
+            resultMap.put("page", DtoUtils.pageDtoHandle(articlePage));
+            return R.ok(resultMap);
+        }catch (Exception e){
+            return R.error();
+        }
+    }
+
+    @Override
+    public R deleteArticleById(Integer id) {
+        try {
+            QueryWrapper<Article> wrapper = new QueryWrapper<>();
+            wrapper.eq("id", id);
+            articleMapper.delete(wrapper);
+            return R.ok("删除成功");
+        }catch (Exception e){
+            return R.error("删除失败");
+        }
+    }
+
+    @Override
+    public R deleteArticleListById(String ids) {
+        try {
+            QueryWrapper<Article> wrapper = new QueryWrapper<>();
+            wrapper.in("id", ids.split(","));
+            articleMapper.delete(wrapper);
+            return R.ok("删除成功");
+        }catch (Exception e){
+            return R.error("删除失败");
+        }
+    }
+
+    @Override
+    public R addArticle() {
+        return null;
     }
 
 }
