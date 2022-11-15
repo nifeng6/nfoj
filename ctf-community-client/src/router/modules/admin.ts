@@ -51,9 +51,9 @@ const AdminRouter: Array<RouteRecordRaw> = [
         path: 'bbs-article',
         name: 'admin-bbs-article',
         meta: {
-          title: '社区管理'
+          title: '社区文章管理'
         },
-        component: () => import('@/views/admin/bbs/index.vue')
+        component: () => import('@/views/admin/bbs-article/index.vue')
       }
     ]
   }

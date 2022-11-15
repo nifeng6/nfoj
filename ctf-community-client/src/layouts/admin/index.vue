@@ -1,8 +1,8 @@
 <template>
   <div class="admin">
     <el-container>
-      <el-aside width="200px">
-        <Menu />
+      <el-aside width="auto">
+        <Menu :isFold="isFold" />
       </el-aside>
       <el-container>
         <el-header>
@@ -19,6 +19,12 @@
 <script setup lang="ts">
 import Menu from './menu/index.vue'
 import Header from './header/index.vue'
+import useAdminGlobalStore from '@/stores/modules/admin/global/index'
+import { storeToRefs } from 'pinia'
+
+const adminGlobalStore = useAdminGlobalStore()
+
+const { isFold } = storeToRefs(adminGlobalStore)
 </script>
 
 <style scoped lang="less">

@@ -1,6 +1,11 @@
 <template>
   <div class="menu">
-    <el-menu :default-active="$route.path" class="el-menu-vertical-demo" router>
+    <el-menu
+      :default-active="$route.path"
+      class="el-menu-vertical-demo"
+      router
+      :collapse="isFold"
+    >
       <h1>NFOJ</h1>
       <el-menu-item index="/admin/dashboard">
         <el-icon><Histogram /></el-icon>
@@ -34,6 +39,7 @@
         <el-icon><UserFilled /></el-icon>
         <span>用户管理</span>
       </el-menu-item>
+      <div style="width: 200px"></div>
     </el-menu>
   </div>
 </template>
@@ -48,6 +54,13 @@ import {
   Document,
   ChatLineRound
 } from '@element-plus/icons-vue'
+
+defineProps({
+  isFold: {
+    type: Boolean,
+    default: false
+  }
+})
 </script>
 
 <style scoped lang="less">
