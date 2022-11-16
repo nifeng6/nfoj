@@ -1,9 +1,16 @@
 import { defineStore } from 'pinia'
-import type { ILabsDockerData, IPage } from '@/types/admin/labs-docker'
+import type {
+  ILabsDockerData,
+  ILabsDockerParams,
+  IPage,
+  IUpdateLabsDockerParams
+} from '@/types/admin/labs-docker'
 import {
   getList,
   deleteById,
-  deleteList
+  deleteList,
+  addLabsDocker,
+  updateLabsDocker
 } from '@/services/modules/admin/labs-docker/index'
 import { ElNotification } from 'element-plus'
 import 'element-plus/theme-chalk/el-message.css'
@@ -89,6 +96,54 @@ const useAdminLabsDockerStore = defineStore('admin-labs-docker', {
           ElNotification.error({
             title: '失败',
             message: '删除失败，请稍后重试'
+          })
+        })
+    },
+    async addLabsDockerAction(data: ILabsDockerParams) {
+      return addLabsDocker(data)
+        .then((res) => {
+          if (res.code === 200) {
+            ElNotification.success({
+              title: '成功',
+              message: '规则添加成功'
+            })
+            this.addDialogVisible = false
+            this.getListAction()
+          } else {
+            ElNotification.error({
+              title: '失败',
+              message: res.msg
+            })
+          }
+        })
+        .catch(() => {
+          ElNotification.error({
+            title: '失败',
+            message: '添加失败，请稍后重试'
+          })
+        })
+    },
+    async updateLabsDockerAction(data: IUpdateLabsDockerParams) {
+      return updateLabsDocker(data)
+        .then((res) => {
+          if (res.code === 200) {
+            ElNotification.success({
+              title: '成功',
+              message: '规则更新成功'
+            })
+            this.editDialogVisible = false
+            this.getListAction()
+          } else {
+            ElNotification.error({
+              title: '失败',
+              message: res.msg
+            })
+          }
+        })
+        .catch(() => {
+          ElNotification.error({
+            title: '失败',
+            message: '更新失败，请稍后重试'
           })
         })
     }

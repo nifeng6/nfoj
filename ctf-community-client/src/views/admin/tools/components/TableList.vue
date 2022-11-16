@@ -10,16 +10,23 @@
       <el-table-column
         show-overflow-tooltip
         prop="title"
-        label="靶场标题"
+        label="工具名"
         width="180"
       />
+
+
 
       <el-table-column
         show-overflow-tooltip
         prop="intro"
-        label="靶场介绍"
+        label="工具介绍"
         width="300"
       />
+
+      
+      <el-table-column show-overflow-tooltip prop="website" label="网站地址" />
+
+      <el-table-column show-overflow-tooltip prop="download" label="下载地址" />
 
       <el-table-column show-overflow-tooltip label="创建时间">
         <template #default="scope">
@@ -27,9 +34,6 @@
         </template>
       </el-table-column>
 
-      <el-table-column show-overflow-tooltip prop="needCoin" label="需要金币" />
-
-      <el-table-column show-overflow-tooltip prop="goldCoin" label="获得金币" />
 
       <el-table-column label="操作" width="200">
         <template #default="scope">
@@ -61,19 +65,19 @@
 import { Delete, Edit } from '@element-plus/icons-vue'
 import { formatTime } from '@/utils/format-time'
 import { storeToRefs } from 'pinia'
-import useAdminLabsStore from '@/stores/modules/admin/labs/index'
-import type { ILabsData } from '@/types/admin/labs'
+import useAdminToolsStore from '@/stores/modules/admin/tools/index'
+import type { IToolsData } from '@/types/admin/tools'
 
-const adminLabsStore = useAdminLabsStore()
+const adminToolsStore = useAdminToolsStore()
 
 const { replyList, selectList, editDialogVisible, editActiveItem } =
-  storeToRefs(adminLabsStore)
+  storeToRefs(adminToolsStore)
 
 const handleDelete = (id: number) => {
-  adminLabsStore.deleteAction(id)
+  adminToolsStore.deleteAction(id)
 }
 
-const editClickHandle = (item: ILabsData) => {
+const editClickHandle = (item: IToolsData) => {
   editActiveItem.value = item
   editDialogVisible.value = true
 }

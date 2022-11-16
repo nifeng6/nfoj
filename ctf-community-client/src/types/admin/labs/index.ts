@@ -22,11 +22,64 @@ export interface ILabsListParams {
 export interface ILabsData {
   id: number
   title: string
-  content: string
+  intro: string
+  level: number
+  label: string
+  flag: string
+  dockerId: number
+  typeId: number
+  needCoin: number
+  goldCoin: number
+  createTime: string
+}
+
+export interface IAddLabsListParams {
+  title: string
+  intro: string
   level: number
   label: string
   flag: string
   needCoin: number
   goldCoin: number
-  createTime: string
+  typeId: number
+  dockerId: number
+}
+
+export interface ILabsTypeData {
+  id: number
+  name: string
+}
+
+export interface ILabsDockerData {
+  id: number
+  name: string
+  createShell: string
+  flagAddr: string
+  intro: string
+  nginxShell: string
+}
+
+export interface IAddLabsParams {
+  title: string
+  intro: string
+  level: number
+  label: string
+  dockerId: number
+  typeId: number
+  flag: string
+  needCoin: number
+  goldCoin: number
+}
+
+export interface IUpdateLabsParams {
+  id: number
+  title: string
+  intro: string
+  level: number
+  label: string
+  dockerId: number
+  typeId: number
+  flag: string
+  needCoin: number
+  goldCoin: number
 }

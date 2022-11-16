@@ -45,3 +45,8 @@ export interface IUser {
   createTime: string
   avatarUrl: string
 }
+
+export interface IUpdateReplyParams {
+  id: number
+  content: string
+}

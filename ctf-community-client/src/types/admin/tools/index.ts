@@ -29,6 +29,7 @@ export interface IToolsData {
   download: string
   avatarUrl: string
   type: IToolsType
+  typeId: number
 }
 
 export interface IToolsType {
@@ -36,3 +37,23 @@ export interface IToolsType {
   name: string
 }
 
+export interface IAddToolsParams {
+  title: string
+  intro: string
+  tags: string
+  website: string
+  download: string
+  avatarUrl: string
+  typeId: number
+}
+
+export interface IUpdateToolsParams {
+  id: number
+  title: string
+  intro: string
+  tags: string
+  website: string
+  download: string
+  avatarUrl: string
+  typeId: number
+}

@@ -35,6 +35,8 @@ public interface ArticleService extends IService<Article> {
 
     public R deleteArticleListById(String ids);
 
-    public R addArticle();
+//    public R addArticle();
+    public R updateArticle(Article article);
+
 
 }

@@ -1,10 +1,18 @@
 import { defineStore } from 'pinia'
-import type { IPage } from '@/types/admin/bbs-article'
+import type {
+  IArticleParams,
+  IArticleType,
+  IPage,
+  IUpdateArticleParams
+} from '@/types/admin/bbs-article'
 import type { IArticleData } from '@/types/admin/bbs-article'
 import {
   getArticleList,
   deleteArticle,
-  deleteArticleList
+  deleteArticleList,
+  getArticleTypeList,
+  addArticle,
+  updateArticle
 } from '@/services/modules/admin/bbs-article'
 import { ElNotification } from 'element-plus'
 import 'element-plus/theme-chalk/el-message.css'
@@ -13,7 +21,8 @@ import 'element-plus/theme-chalk/el-notification.css'
 const useAdminBbsArticleStore = defineStore('admin-bbs-article', {
   state: () => ({
     articleList: [] as IArticleData[],
-    editForm: {} as IArticleData,
+    articleTypeList: [] as IArticleType[],
+    // editForm: {} as IArticleData,
     editDialogVisible: false,
     // 被选中的那个文章
     editActiveItem: {} as IArticleData,
@@ -90,6 +99,63 @@ const useAdminBbsArticleStore = defineStore('admin-bbs-article', {
           ElNotification.error({
             title: '失败',
             message: '删除失败，请稍后重试'
+          })
+        })
+    },
+    async getArticleTypeListAction() {
+      return getArticleTypeList().then((res) => {
+        if (res.code === 200) {
+          this.articleTypeList = res.data
+        } else {
+          ElNotification.error('文章类型获取失败')
+        }
+      })
+    },
+    async addArticleAction(data: IArticleParams) {
+      return addArticle(data)
+        .then((res) => {
+          if (res.code === 200) {
+            ElNotification.success({
+              title: '成功',
+              message: '文章添加成功'
+            })
+            this.getArticleListAction()
+            this.addDialogVisible = false
+          } else {
+            ElNotification.error({
+              title: '错误',
+              message: '文章添加失败'
+            })
+          }
+        })
+        .catch(() => {
+          ElNotification.error({
+            title: '错误',
+            message: '文章添加失败'
+          })
+        })
+    },
+    async updateArticleAction(data: IUpdateArticleParams) {
+      return updateArticle(data)
+        .then((res) => {
+          if (res.code === 200) {
+            ElNotification.success({
+              title: '成功',
+              message: '文章更新成功'
+            })
+            this.editDialogVisible = false
+            this.getArticleListAction()
+          } else {
+            ElNotification.error({
+              title: '错误',
+              message: '文章更新失败'
+            })
+          }
+        })
+        .catch(() => {
+          ElNotification.error({
+            title: '错误',
+            message: '文章更新失败'
           })
         })
     }

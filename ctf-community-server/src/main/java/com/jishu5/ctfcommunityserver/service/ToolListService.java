@@ -24,4 +24,8 @@ public interface ToolListService extends IService<ToolList> {
     public R deleteById(Integer id);
 
     public R deleteListById(String ids);
+
+    public R addTools(ToolList toolList);
+
+    public R updateTools(ToolList toolList);
 }

@@ -264,8 +264,19 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
     }
 
     @Override
-    public R addArticle() {
-        return null;
+    public R updateArticle(Article article) {
+        try {
+            article.setUpdateTime(new Date());
+            articleMapper.updateById(article);
+            return R.ok("更新成功");
+        }catch (Exception e){
+            return R.error("更新失败");
+        }
     }
+
+//    @Override
+//    public R addArticle() {
+//        return null;
+//    }
 
 }

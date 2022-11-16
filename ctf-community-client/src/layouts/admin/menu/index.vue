@@ -40,7 +40,7 @@
           <el-icon><TakeawayBox /></el-icon>
           <span>容器管理</span>
         </el-menu-item> -->
-        <el-menu-item index="/admin/labs">
+        <el-menu-item index="/admin/labs-docker">
           <el-icon><Guide /></el-icon>
           <span>容器规则</span>
         </el-menu-item>

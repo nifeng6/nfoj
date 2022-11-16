@@ -1,9 +1,18 @@
 import { defineStore } from 'pinia'
-import type { IToolsData, IPage } from '@/types/admin/tools'
+import type {
+  IToolsData,
+  IPage,
+  IAddToolsParams,
+  IUpdateToolsParams,
+  IToolsType
+} from '@/types/admin/tools'
 import {
   getList,
   deleteById,
-  deleteList
+  deleteList,
+  addTools,
+  updateTools,
+  getToolsTypeList
 } from '@/services/modules/admin/tools/index'
 import { ElNotification } from 'element-plus'
 import 'element-plus/theme-chalk/el-message.css'
@@ -13,6 +22,7 @@ const useAdminToolsStore = defineStore('admin-tools', {
   state: () => ({
     replyList: [] as IToolsData[],
     editForm: {} as IToolsData,
+    toolsTypeList: [] as IToolsType[],
     editDialogVisible: false,
     // 被选中的那条回复
     editActiveItem: {} as IToolsData,
@@ -91,6 +101,61 @@ const useAdminToolsStore = defineStore('admin-tools', {
             message: '删除失败，请稍后重试'
           })
         })
+    },
+    async addToolsAction(data: IAddToolsParams) {
+      return addTools(data)
+        .then((res) => {
+          if (res.code === 200) {
+            ElNotification.success({
+              title: '成功',
+              message: '添加成功'
+            })
+            this.addDialogVisible = false
+            this.getListAction()
+          } else {
+            ElNotification.error({
+              title: '失败',
+              message: '添加失败，请稍后重试'
+            })
+          }
+        })
+        .catch(() => {
+          ElNotification.error({
+            title: '失败',
+            message: '添加失败，请稍后重试'
+          })
+        })
+    },
+    async updateToolsAction(data: IUpdateToolsParams) {
+      return updateTools(data)
+        .then((res) => {
+          if (res.code === 200) {
+            ElNotification.success({
+              title: '成功',
+              message: '更新成功'
+            })
+            this.editDialogVisible = false
+            this.getListAction()
+          } else {
+            ElNotification.error({
+              title: '失败',
+              message: '更新失败，请稍后重试'
+            })
+          }
+        })
+        .catch(() => {
+          ElNotification.error({
+            title: '失败',
+            message: '更新失败，请稍后重试'
+          })
+        })
+    },
+    async getToolsTypeListAction() {
+      return getToolsTypeList().then((res) => {
+        if (res.code === 200) {
+          this.toolsTypeList = res.data
+        }
+      })
     }
   }
 })

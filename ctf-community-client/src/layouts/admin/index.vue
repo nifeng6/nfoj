@@ -9,7 +9,11 @@
           <Header />
         </el-header>
         <el-main>
-          <RouterView />
+          <router-view v-slot="{ Component }">
+            <!-- <transition name="el-fade-in"> -->
+              <component :is="Component" />
+            <!-- </transition> -->
+          </router-view>
         </el-main>
       </el-container>
     </el-container>

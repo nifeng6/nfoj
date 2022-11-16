@@ -26,5 +26,6 @@ public interface ArticleReplyService extends IService<ArticleReply> {
 
     public R deleteReplyListById(String ids);
 
+    public R updateReplyById(ArticleReply articleReply);
 
 }

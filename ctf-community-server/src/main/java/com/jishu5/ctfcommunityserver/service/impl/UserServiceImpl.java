@@ -27,6 +27,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.interceptor.TransactionAspectSupport;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.*;
 
@@ -322,6 +323,31 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
             return R.ok("删除成功");
         }catch (Exception e){
             return R.error("删除失败");
+        }
+    }
+
+    @Override
+    public R addUser(User user) {
+        try {
+            user.setCreateTime(new Date());
+            BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+            user.setPassword(encoder.encode(user.getPassword()));
+
+            userMapper.insert(user);
+            return R.ok();
+        }catch (Exception e){
+            return R.error();
+        }
+    }
+
+    @Override
+    public R updateUser(User user) {
+        try {
+            userMapper.updateById(user);
+
+            return R.ok("更新成功");
+        }catch (Exception e){
+            return R.error("更新失败");
         }
     }
 

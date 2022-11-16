@@ -1,5 +1,5 @@
 <template>
-  <div class="bbs">
+  <div class="bbs-article">
     <FilterForm />
     <BtnList />
     <TableList />
@@ -21,6 +21,7 @@ import AddDialog from './components/AddDialog.vue'
 const adminBbsArticleStore = useAdminBbsArticleStore()
 
 adminBbsArticleStore.getArticleListAction()
+adminBbsArticleStore.getArticleTypeListAction()
 </script>
 
 <style scoped lang="less"></style>

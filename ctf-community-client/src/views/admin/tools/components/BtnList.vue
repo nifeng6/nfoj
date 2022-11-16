@@ -29,16 +29,16 @@
 
 <script setup lang="ts">
 import { Plus, Delete, Refresh } from '@element-plus/icons-vue'
-import useAdminLabsStore from '@/stores/modules/admin/labs/index'
+import useAdminToolsStore from '@/stores/modules/admin/tools/index'
 import { ElNotification } from 'element-plus'
 import { storeToRefs } from 'pinia'
 
-const adminLabsStore = useAdminLabsStore()
+const adminToolsStore = useAdminToolsStore()
 
-const { selectList, addDialogVisible } = storeToRefs(adminLabsStore)
+const { selectList, addDialogVisible } = storeToRefs(adminToolsStore)
 
 const flushClickHandle = () => {
-  adminLabsStore.getListAction().then(() => {
+  adminToolsStore.getListAction().then(() => {
     ElNotification.success({
       title: '刷新成功',
       message: '刷新成功'
@@ -51,7 +51,7 @@ const addClickHandle = () => {
 }
 
 const deleteListClickHandle = () => {
-  adminLabsStore.deleteListAction()
+  adminToolsStore.deleteListAction()
 }
 </script>
 

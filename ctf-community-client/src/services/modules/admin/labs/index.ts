@@ -1,5 +1,11 @@
 import request from '@/services/request'
-import type { ILabsListParams, IDataType, ILabsData } from '@/types/admin/labs'
+import type {
+  ILabsListParams,
+  IDataType,
+  ILabsData,
+  ILabsTypeData,
+  ILabsDockerData
+} from '@/types/admin/labs'
 
 export function getList(params: ILabsListParams) {
   return request.get<IDataType<ILabsData[]>>({
@@ -23,5 +29,31 @@ export function deleteList(ids: string) {
     params: {
       ids
     }
+  })
+}
+
+export function getLabsTypeList() {
+  return request.get<IDataType<ILabsTypeData[]>>({
+    url: '/admin/labs/type/list'
+  })
+}
+
+export function getLabsDockerList() {
+  return request.get<IDataType<ILabsDockerData[]>>({
+    url: '/admin/labs/rule/list'
+  })
+}
+
+export function addLabs(data: any) {
+  return request.post<IDataType>({
+    url: '/admin/labs/add',
+    data
+  })
+}
+
+export function updateLabs(data: any) {
+  return request.post<IDataType>({
+    url: '/admin/labs/update',
+    data
   })
 }

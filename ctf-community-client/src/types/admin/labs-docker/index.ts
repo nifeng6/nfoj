@@ -20,9 +20,26 @@ export interface ILabsDockerListParams {
 
 export interface ILabsDockerData {
   id: number
+  name: string
   createShell: string
   flagAddr: string
   intro: string
   nginxShell: string
-  introText: string
+}
+
+export interface ILabsDockerParams {
+  name: string
+  createShell: string
+  flagAddr: string
+  intro: string
+  nginxShell: string
+}
+
+export interface IUpdateLabsDockerParams {
+  id: number
+  name: string
+  createShell: string
+  flagAddr: string
+  intro: string
+  nginxShell: string
 }

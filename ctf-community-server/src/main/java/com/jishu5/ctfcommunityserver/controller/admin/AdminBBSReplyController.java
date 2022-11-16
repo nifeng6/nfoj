@@ -1,5 +1,6 @@
 package com.jishu5.ctfcommunityserver.controller.admin;
 
+import com.jishu5.ctfcommunityserver.entity.ArticleReply;
 import com.jishu5.ctfcommunityserver.entity.R;
 import com.jishu5.ctfcommunityserver.service.ArticleReplyService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +31,11 @@ public class AdminBBSReplyController {
     @DeleteMapping("/delete/list")
     public R deleteListById(@RequestParam("ids") String ids){
         return articleReplyService.deleteReplyListById(ids);
+    }
+
+    @PostMapping("/update")
+    public R updateReplyById(@RequestBody ArticleReply articleReply){
+        return articleReplyService.updateReplyById(articleReply);
     }
 
 }

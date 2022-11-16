@@ -23,4 +23,9 @@ public interface SafeDockerService extends IService<SafeDocker> {
 
     public R deleteListById(String ids);
 
+    public R addSafeDocker(SafeDocker safeDocker);
+
+    public R updateSafDocker(SafeDocker safeDocker);
+
+    public R getList();
 }

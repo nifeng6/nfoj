@@ -1,5 +1,11 @@
 import request from '@/services/request'
-import type { IUserListParams, IDataType, IUserData } from '@/types/admin/user'
+import type {
+  IUserListParams,
+  IDataType,
+  IUserData,
+  IAddUserParams,
+  IUpdateUserParams
+} from '@/types/admin/user'
 
 export function getList(params: IUserListParams) {
   return request.get<IDataType<IUserData[]>>({
@@ -23,5 +29,19 @@ export function deleteList(ids: string) {
     params: {
       ids
     }
+  })
+}
+
+export function addUser(data: IAddUserParams) {
+  return request.post<IDataType>({
+    url: '/admin/user/add',
+    data
+  })
+}
+
+export function updateUser(data: IUpdateUserParams) {
+  return request.post<IDataType>({
+    url: '/admin/user/update',
+    data
   })
 }

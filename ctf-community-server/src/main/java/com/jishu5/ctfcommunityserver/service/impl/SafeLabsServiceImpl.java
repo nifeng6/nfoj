@@ -100,7 +100,7 @@ public class SafeLabsServiceImpl extends ServiceImpl<SafeLabsMapper, SafeLabs> i
           SafeDocker safeDocker = safeDockerMapper.selectOne(new QueryWrapper<SafeDocker>().eq("id",safeLabs.getDockerId()));
           String dockerShell = safeDocker.getCreateShell();
           String nginxShell = safeDocker.getNginxShell();
-          String introText = safeDocker.getIntroText();
+          String introText = safeDocker.getIntro();
           // 靶场映射端口
           String port = String.valueOf(new java.util.Random().nextInt(65535-10000)+10000);
           // 靶场唯一名
@@ -296,6 +296,28 @@ public class SafeLabsServiceImpl extends ServiceImpl<SafeLabsMapper, SafeLabs> i
             return R.ok("删除成功");
         }catch (Exception e){
             return R.error("删除失败");
+        }
+    }
+
+    @Override
+    public R addLabs(SafeLabs safeLabs) {
+        try {
+            safeLabs.setCreateTime(new Date());
+            safeLabsMapper.insert(safeLabs);
+            return R.ok();
+        }catch (Exception e){
+            return R.error();
+        }
+    }
+
+    @Override
+    public R updateLabsById(SafeLabs safeLabs) {
+        try {
+            safeLabsMapper.updateById(safeLabs);
+
+            return R.ok();
+        }catch (Exception e){
+            return R.error();
         }
     }
 

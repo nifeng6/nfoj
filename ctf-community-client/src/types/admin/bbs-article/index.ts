@@ -28,6 +28,7 @@ export interface IArticleData {
   sort: IArticleType
   user: IUser
   view: number
+  sortId: number
   createTime: string
   updateTime: string
 }
@@ -43,4 +44,19 @@ export interface IUser {
   nickeName: string
   createTime: string
   avatarUrl: string
+}
+
+export interface IArticleParams {
+  title: string
+  tags: string
+  sortId: number
+  content: string
+}
+
+export interface IUpdateArticleParams {
+  id: number
+  title: string
+  tags: string
+  sortId: number
+  content: string
 }

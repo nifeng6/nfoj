@@ -14,16 +14,16 @@
           </template>
           <div class="user-container">
             <div class="user-container-item">
-              <span>Register:</span>
+              <b>Register:</b>
               <span>{{ formatTime(user.createTime, false) }}</span>
             </div>
 
             <div class="user-container-item">
-              <span>OS:</span>
+              <b>OS:</b>
               <span>{{ ua.os }}</span>
             </div>
             <div class="user-container-item">
-              <span>Broswer:</span>
+              <b>Broswer:</b>
               <span>{{ ua.broswer }}</span>
             </div>
           </div>
@@ -34,11 +34,11 @@
           </template>
           <div style="line-height: 30px">
             <p>
-              <span>QQ：</span>
+              <b>QQ：</b>
               <span>194908655</span>
             </p>
             <p>
-              <span>微信：</span>
+              <b>微信：</b>
               <span>z194908655</span>
             </p>
           </div>
@@ -53,7 +53,7 @@
                   <el-icon><Document /></el-icon>
                 </div>
                 <div class="info-item-des">
-                  <h3>100</h3>
+                  <h3>{{ countList.articleCount }}</h3>
                   <span>文章</span>
                 </div>
               </el-card>
@@ -66,7 +66,7 @@
                   <el-icon><UserFilled /></el-icon>
                 </div>
                 <div class="info-item-des">
-                  <h3>100</h3>
+                  <h3>{{ countList.userCount }}</h3>
                   <span>用户</span>
                 </div>
               </el-card>
@@ -79,7 +79,7 @@
                   <el-icon><Flag /></el-icon>
                 </div>
                 <div class="info-item-des">
-                  <h3>100</h3>
+                  <h3>{{ countList.todayRecordCount }}</h3>
                   <span>今日打靶数</span>
                 </div>
               </el-card>
@@ -91,22 +91,28 @@
             <h3>简介介绍</h3>
           </template>
           <div style="line-height: 30px">
-            <p>这是一个网络安全在线靶场社区</p>
-            <p>当前版本：v1.0.0</p>
             <p>
-              项目地址：
+              这是一个网络安全在线靶场社区，一个毕业设计项目，包含功能大致如：在线开启靶场打靶、社区交互、在线编程、工具下载、后台对前台数据增删改查、完善的权限系统等
+            </p>
+            <p>
+              <b>当前版本：</b>
+              <span>v1.0.0</span>
+            </p>
+            <p>
+              <b>项目地址：</b>
               <a href="https://gitee.com/nifeng6/nfoj" target="_blank"
                 >https://gitee.com/nifeng6/nfoj</a
               >
             </p>
             <p>
-              <span>前端选型：</span>
+              <b>前端选型：</b>
               <span
-                >Vue3 + TypeScript + Vite3 + Less + ElementPlus + Pinia + Axios + Echart + Wangeditor + Codemirror ...
+                >Vue3 + TypeScript + Vite3 + Less + ElementPlus + Pinia + Axios
+                + Echart + Wangeditor + Codemirror ...
               </span>
             </p>
             <p>
-              <span>后端选型：</span>
+              <b>后端选型：</b>
               <span
                 >Springboot + Spring Security + Jwt + MybatisPlus + Mysql +
                 Redis + Docker + Nginx + NodeJs + FastJSON ...</span
@@ -122,6 +128,7 @@
 <script setup lang="ts">
 import useAdminGlobalStore from '@/stores/modules/admin/global'
 import useCommonAccountStore from '@/stores/modules/common/account'
+import useAdminDashboardStore from '@/stores/modules/admin/dashboard'
 import { formatTime } from '@/utils/format-time'
 import { storeToRefs } from 'pinia'
 import { computed } from 'vue'
@@ -137,9 +144,13 @@ const ua = computed(() => {
   }
 })
 
+const adminDashboardStore = useAdminDashboardStore()
 const adminGlobalStore = useAdminGlobalStore()
 const commonAccountStore = useCommonAccountStore()
 
+adminDashboardStore.getCountList()
+
+const { countList } = storeToRefs(adminDashboardStore)
 const { user } = storeToRefs(commonAccountStore)
 </script>
 
@@ -173,8 +184,7 @@ const { user } = storeToRefs(commonAccountStore)
   .user-container {
     .user-container-item {
       line-height: 30px;
-      span:first-child {
-        font-weight: 500;
+      b:first-child {
         margin-right: 5px;
         width: 80px;
         text-align: right;
@@ -218,6 +228,17 @@ const { user } = storeToRefs(commonAccountStore)
         }
       }
     }
+  }
+
+  p {
+  }
+  b {
+    color: #676a6c;
+    font-size: 15px;
+  }
+  span {
+    font-size: 14px;
+    color: #676a6c;
   }
 }
 </style>

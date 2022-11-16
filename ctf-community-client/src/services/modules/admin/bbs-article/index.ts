@@ -2,7 +2,10 @@ import request from '@/services/request'
 import type {
   IArticleListParams,
   IDataType,
-  IArticleData
+  IArticleData,
+  IArticleType,
+  IArticleParams,
+  IUpdateArticleParams
 } from '@/types/admin/bbs-article'
 
 export function getArticleList(params: IArticleListParams) {
@@ -27,5 +30,25 @@ export function deleteArticleList(ids: string) {
     params: {
       ids
     }
+  })
+}
+
+export function getArticleTypeList() {
+  return request.get<IDataType<IArticleType[]>>({
+    url: '/admin/bbs/article/type/list'
+  })
+}
+
+export function addArticle(data: IArticleParams) {
+  return request.post<IDataType>({
+    url: '/admin/bbs/article/add',
+    data
+  })
+}
+
+export function updateArticle(data: IUpdateArticleParams) {
+  return request.post<IDataType>({
+    url: '/admin/bbs/article/update',
+    data
   })
 }

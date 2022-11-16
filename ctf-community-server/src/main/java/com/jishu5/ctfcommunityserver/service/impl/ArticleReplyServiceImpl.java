@@ -124,4 +124,14 @@ public class ArticleReplyServiceImpl extends ServiceImpl<ArticleReplyMapper, Art
             return R.error("删除失败");
         }
     }
+
+    @Override
+    public R updateReplyById(ArticleReply articleReply) {
+        try {
+            articleReplyMapper.updateById(articleReply);
+            return R.ok("评论更新成功");
+        }catch (Exception e){
+            return R.error("评论更新失败");
+        }
+    }
 }

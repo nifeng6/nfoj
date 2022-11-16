@@ -2,11 +2,18 @@
   <div class="table-list">
     <el-table
       style="width: 100%"
-      :data="replyList"
+      :data="labsDockerList"
       @selection-change="selectChangeClickHandle"
     >
       <el-table-column type="selection" width="55" />
       <el-table-column show-overflow-tooltip prop="id" label="ID" width="80" />
+      <el-table-column
+        show-overflow-tooltip
+        prop="createShell"
+        label="创建规则"
+        width="180"
+      />
+
       <el-table-column
         show-overflow-tooltip
         prop="flagAddr"
@@ -14,29 +21,13 @@
         width="180"
       />
 
-      <el-table-column
-        show-overflow-tooltip
-        prop="intro"
-        label="简介规则"
-      />
+      <el-table-column show-overflow-tooltip prop="intro" label="简介规则" />
 
       <el-table-column
         show-overflow-tooltip
         prop="nginxShell"
         label="Nginx规则"
       />
-
-      <el-table-column
-        show-overflow-tooltip
-        prop="introText"
-        label="简介文本规则"
-      />
-
-      <el-table-column show-overflow-tooltip label="创建时间">
-        <template #default="scope">
-          {{ formatTime(scope.row.createTime, false) }}
-        </template>
-      </el-table-column>
 
       <el-table-column label="操作" width="200">
         <template #default="scope">
@@ -73,7 +64,7 @@ import type { ILabsDockerData } from '@/types/admin/labs-docker/index'
 
 const adminLabsDockerStore = useAdminLabsDockerStore()
 
-const { replyList, selectList, editDialogVisible, editActiveItem } =
+const { labsDockerList, selectList, editDialogVisible, editActiveItem } =
   storeToRefs(adminLabsDockerStore)
 
 const handleDelete = (id: number) => {

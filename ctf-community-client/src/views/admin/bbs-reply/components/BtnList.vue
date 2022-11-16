@@ -1,9 +1,6 @@
 <template>
   <div class="btn-list">
     <div class="btn-list-left">
-      <el-button :icon="Plus" type="primary" plain @click="addClickHandle"
-        >新增</el-button
-      >
       <el-popconfirm
         :title="`确认删除 ${selectList} 文章?`"
         confirm-button-text="确认"

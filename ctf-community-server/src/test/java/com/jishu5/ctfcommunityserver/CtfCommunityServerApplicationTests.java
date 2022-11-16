@@ -9,6 +9,9 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 @SpringBootTest
@@ -37,7 +40,11 @@ class CtfCommunityServerApplicationTests {
 
 
     @Test
-    void test4(){
-        System.out.println(new Date("2022-11-18"));
+    void test4() throws ParseException {
+        SimpleDateFormat todayFormat = new SimpleDateFormat("yyyy-MM-dd");
+        Calendar calendar = Calendar.getInstance();
+        String timeDay = todayFormat.format(calendar.getTime());
+        Date date = todayFormat.parse(timeDay + " 00:00:00");
+
     }
 }

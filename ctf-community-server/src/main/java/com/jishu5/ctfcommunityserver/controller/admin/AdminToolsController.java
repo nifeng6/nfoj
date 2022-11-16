@@ -1,7 +1,9 @@
 package com.jishu5.ctfcommunityserver.controller.admin;
 
 import com.jishu5.ctfcommunityserver.entity.R;
+import com.jishu5.ctfcommunityserver.entity.ToolList;
 import com.jishu5.ctfcommunityserver.service.ToolListService;
+import com.jishu5.ctfcommunityserver.service.ToolTypeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,6 +13,9 @@ public class AdminToolsController {
 
     @Autowired
     private ToolListService toolListService;
+
+    @Autowired
+    private ToolTypeService toolTypeService;
 
 
     @GetMapping("/list")
@@ -33,5 +38,20 @@ public class AdminToolsController {
         return toolListService.deleteListById(ids);
     }
 
+    @GetMapping("/type/list")
+    public R getToolsTypeList(){
+        return toolTypeService.getList();
+    }
+
+
+    @PostMapping("/add")
+    public R addTools(@RequestBody ToolList toolList){
+        return toolListService.addTools(toolList);
+    }
+
+    @PostMapping("/update")
+    public R updateTools(@RequestBody ToolList toolList){
+        return toolListService.updateTools(toolList);
+    }
 
 }

@@ -2,7 +2,8 @@ import request from '@/services/request'
 import type {
   IReplyListParams,
   IDataType,
-  IReplyData
+  IReplyData,
+  IUpdateReplyParams
 } from '@/types/admin/bbs-reply'
 
 export function getList(params: IReplyListParams) {
@@ -27,5 +28,12 @@ export function deleteList(ids: string) {
     params: {
       ids
     }
+  })
+}
+
+export function updateById(data: IUpdateReplyParams) {
+  return request.post<IDataType>({
+    url: '/admin/bbs/reply/update',
+    data
   })
 }

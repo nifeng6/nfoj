@@ -28,4 +28,8 @@ public interface SafeLabsService extends IService<SafeLabs> {
     public R deleteById(Integer id);
 
     public R deleteListById(String ids);
+
+    public R addLabs(SafeLabs safeLabs);
+
+    public R updateLabsById(SafeLabs safeLabs);
 }

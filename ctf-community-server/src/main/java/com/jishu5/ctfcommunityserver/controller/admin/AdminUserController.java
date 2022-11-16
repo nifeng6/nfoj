@@ -1,6 +1,7 @@
 package com.jishu5.ctfcommunityserver.controller.admin;
 
 import com.jishu5.ctfcommunityserver.entity.R;
+import com.jishu5.ctfcommunityserver.entity.User;
 import com.jishu5.ctfcommunityserver.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -32,5 +33,14 @@ public class AdminUserController {
         return userService.deleteListById(ids);
     }
 
+    @PostMapping("/add")
+    public R addUser(@RequestBody User user){
+        return userService.addUser(user);
+    }
+
+    @PostMapping("/update")
+    public R updateUser(@RequestBody User user){
+        return userService.updateUser(user);
+    }
 
 }

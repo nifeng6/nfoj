@@ -54,7 +54,6 @@ public class SafeLabs extends Model<SafeLabs> {
     private Date createTime;
 
     @TableField("flag")
-    @JsonProperty(access= JsonProperty.Access.WRITE_ONLY)
     private String flag;
 
     @TableField("need_coin")

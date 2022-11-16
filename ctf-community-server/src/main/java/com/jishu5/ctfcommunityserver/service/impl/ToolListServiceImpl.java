@@ -12,6 +12,7 @@ import com.jishu5.ctfcommunityserver.utils.DtoUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -119,6 +120,27 @@ public class ToolListServiceImpl extends ServiceImpl<ToolListMapper, ToolList> i
             return R.ok("删除成功");
         }catch (Exception e){
             return R.error("删除失败");
+        }
+    }
+
+    @Override
+    public R addTools(ToolList toolList) {
+        try {
+            toolList.setCreateTime(new Date());
+            toolListMapper.insert(toolList);
+            return R.ok("添加成功");
+        }catch (Exception e){
+            return R.error("工具添加失败");
+        }
+    }
+
+    @Override
+    public R updateTools(ToolList toolList) {
+        try {
+            toolListMapper.updateById(toolList);
+            return R.ok("更新成功");
+        }catch (Exception e){
+            return R.error("更新失败");
         }
     }
 

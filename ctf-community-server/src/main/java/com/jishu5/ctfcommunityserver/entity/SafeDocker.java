@@ -27,6 +27,9 @@ public class SafeDocker extends Model<SafeDocker> {
     @TableId(value = "id", type = IdType.AUTO)
     private Integer id;
 
+    @TableField("name")
+    private String name;
+
     @TableField("create_shell")
     private String createShell;
 
@@ -36,8 +39,8 @@ public class SafeDocker extends Model<SafeDocker> {
     @TableField("nginx_shell")
     private String nginxShell;
 
-    @TableField("intro_text")
-    private String introText;
+//    @TableField("intro_text")
+//    private String introText;
 
     @TableField("intro")
     private String intro;

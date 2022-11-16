@@ -30,3 +30,26 @@ export interface IUserData {
   description: string
   status: number
 }
+
+export interface IAddUserParams {
+  username: string
+  nickName: string
+  coin: number
+  avatarUrl: string
+  email: string
+  phone: string
+  description: string
+  status: number
+}
+
+export interface IUpdateUserParams {
+  id: number
+  username: string
+  nickName: string
+  coin: number
+  avatarUrl: string
+  email: string
+  phone: string
+  description: string
+  status: number
+}

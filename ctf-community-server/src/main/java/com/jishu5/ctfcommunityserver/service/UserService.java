@@ -37,4 +37,9 @@ public interface UserService extends IService<User> {
     public R deleteById(Integer id);
 
     public R deleteListById(String ids);
+
+    public R addUser(User user);
+
+    public R updateUser(User user);
+
 }

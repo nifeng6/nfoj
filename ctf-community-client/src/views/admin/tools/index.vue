@@ -14,13 +14,13 @@ import FilterForm from './components/FilterForm.vue'
 import TableList from './components/TableList.vue'
 import BtnList from './components/BtnList.vue'
 import Pagination from './components/Pagination.vue'
-import useAdminLabsStore from '@/stores/modules/admin/labs'
+import useAdminToolsStore from '@/stores/modules/admin/tools'
 import EditDialog from './components/EditDialog.vue'
 import AddDialog from './components/AddDialog.vue'
 
-const adminLabsStore = useAdminLabsStore()
-
-adminLabsStore.getListAction()
+const adminToolsStore = useAdminToolsStore()
+adminToolsStore.getToolsTypeListAction()
+adminToolsStore.getListAction()
 </script>
 
 <style scoped lang="less"></style>

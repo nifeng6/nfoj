@@ -2,7 +2,10 @@ import request from '@/services/request'
 import type {
   IToolsListParams,
   IDataType,
-  IToolsData
+  IToolsData,
+  IUpdateToolsParams,
+  IAddToolsParams,
+  IToolsType
 } from '@/types/admin/tools'
 
 export function getList(params: IToolsListParams) {
@@ -27,5 +30,25 @@ export function deleteList(ids: string) {
     params: {
       ids
     }
+  })
+}
+
+export function addTools(data: IAddToolsParams) {
+  return request.post<IDataType>({
+    url: '/admin/tools/add',
+    data
+  })
+}
+
+export function updateTools(data: IUpdateToolsParams) {
+  return request.post<IDataType>({
+    url: '/admin/tools/update',
+    data
+  })
+}
+
+export function getToolsTypeList() {
+  return request.get<IDataType<IToolsType[]>>({
+    url: '/admin/tools/type/list'
   })
 }

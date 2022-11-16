@@ -1,9 +1,14 @@
 import { defineStore } from 'pinia'
-import type { IReplyData, IPage } from '@/types/admin/bbs-reply'
+import type {
+  IReplyData,
+  IPage,
+  IUpdateReplyParams
+} from '@/types/admin/bbs-reply'
 import {
   getList,
   deleteById,
-  deleteList
+  deleteList,
+  updateById
 } from '@/services/modules/admin/bbs-reply/index'
 import { ElNotification } from 'element-plus'
 import 'element-plus/theme-chalk/el-message.css'
@@ -89,6 +94,30 @@ const useAdminBbsReplyStore = defineStore('admin-bbs-reply', {
           ElNotification.error({
             title: '失败',
             message: '删除失败，请稍后重试'
+          })
+        })
+    },
+    async updateByIdAction(data: IUpdateReplyParams) {
+      return updateById(data)
+        .then((res) => {
+          if (res.code === 200) {
+            ElNotification.success({
+              title: '成功',
+              message: res.msg
+            })
+            this.editDialogVisible = false
+            this.getListAction()
+          } else {
+            ElNotification.error({
+              title: '错误',
+              message: res.msg
+            })
+          }
+        })
+        .catch(() => {
+          ElNotification.error({
+            title: '错误',
+            message: '评论更新失败'
           })
         })
     }

@@ -1,6 +1,7 @@
 package com.jishu5.ctfcommunityserver.controller.admin;
 
 import com.jishu5.ctfcommunityserver.entity.R;
+import com.jishu5.ctfcommunityserver.entity.SafeDocker;
 import com.jishu5.ctfcommunityserver.service.SafeDockerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -30,6 +31,17 @@ public class AdminAdminLabsDockerController {
     @DeleteMapping("/delete/list")
     public R deleteListById(@RequestParam("ids") String ids){
         return safeDockerService.deleteListById(ids);
+    }
+
+
+    @PostMapping("/add")
+    public R addLabsDocker(@RequestBody SafeDocker safeDocker){
+        return safeDockerService.addSafeDocker(safeDocker);
+    }
+
+    @PostMapping("/update")
+    public R updateLabsDocker(@RequestBody SafeDocker safeDocker){
+        return safeDockerService.updateSafDocker(safeDocker);
     }
 
 

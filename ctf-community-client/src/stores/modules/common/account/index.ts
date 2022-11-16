@@ -12,6 +12,8 @@ import { ElMessage, ElMessageBox } from 'element-plus'
 // 导入message的样式
 import 'element-plus/theme-chalk/el-message.css'
 import 'element-plus/theme-chalk/el-message-box.css'
+import { useRoute, useRouter } from 'vue-router'
+
 import type {
   ILoginParams,
   IUser,
@@ -26,7 +28,9 @@ const useCommonAccountStore = defineStore('common-account', {
     accountDialogVisible: false,
     accountDialogType: 'login',
     loginLoading: false,
-    registerLoading: false
+    registerLoading: false,
+
+    route: useRoute()
   }),
   actions: {
     async getLoginAction(data: ILoginParams) {
@@ -60,16 +64,17 @@ const useCommonAccountStore = defineStore('common-account', {
     },
     async getUserInfoAction() {
       const res = await getUserInfo()
+
       if (res.code === 200) {
         window.localStorage.setItem('user', JSON.stringify(res.data.user))
         this.user = res.data.user
       } else {
-        ElMessage.error(res.msg)
         localStorage.removeItem('token')
         localStorage.removeItem('user')
         this.token = ''
         this.user = {} as IUser
-        window.location.reload()
+
+        window.location.href = '/'
       }
     },
     async updateUserAction(data: IUser) {

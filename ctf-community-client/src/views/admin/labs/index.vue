@@ -20,6 +20,8 @@ import AddDialog from './components/AddDialog.vue'
 
 const adminLabsStore = useAdminLabsStore()
 
+adminLabsStore.getLabsDockerListAction()
+adminLabsStore.getLabsTypeListAction()
 adminLabsStore.getListAction()
 </script>
 

@@ -1,9 +1,20 @@
 import { defineStore } from 'pinia'
-import type { ILabsData, IPage } from '@/types/admin/labs'
+import type {
+  ILabsData,
+  IPage,
+  ILabsTypeData,
+  ILabsDockerData,
+  IAddLabsListParams,
+  IUpdateLabsParams
+} from '@/types/admin/labs'
 import {
   getList,
   deleteById,
-  deleteList
+  deleteList,
+  getLabsDockerList,
+  getLabsTypeList,
+  addLabs,
+  updateLabs
 } from '@/services/modules/admin/labs/index'
 import { ElNotification } from 'element-plus'
 import 'element-plus/theme-chalk/el-message.css'
@@ -14,6 +25,8 @@ const useAdminLabsStore = defineStore('admin-labs', {
     replyList: [] as ILabsData[],
     editForm: {} as ILabsData,
     editDialogVisible: false,
+    labsTypeList: [] as ILabsTypeData[],
+    labsDockerList: [] as ILabsDockerData[],
     // 被选中的那条回复
     editActiveItem: {} as ILabsData,
     addDialogVisible: false,
@@ -89,6 +102,54 @@ const useAdminLabsStore = defineStore('admin-labs', {
           ElNotification.error({
             title: '失败',
             message: '删除失败，请稍后重试'
+          })
+        })
+    },
+    async getLabsTypeListAction() {
+      return getLabsTypeList().then((res) => {
+        this.labsTypeList = res.data
+      })
+    },
+    async getLabsDockerListAction() {
+      return getLabsDockerList().then((res) => {
+        this.labsDockerList = res.data
+      })
+    },
+    async addLabsAction(params: IAddLabsListParams) {
+      return addLabs(params)
+        .then((res) => {
+          if (res.code === 200) {
+            ElNotification.success({
+              title: '成功',
+              message: '添加成功'
+            })
+            this.addDialogVisible = false
+            this.getListAction()
+          }
+        })
+        .catch(() => {
+          ElNotification.error({
+            title: '失败',
+            message: '添加失败，请稍后重试'
+          })
+        })
+    },
+    async updateLabsAction(params: IUpdateLabsParams) {
+      return updateLabs(params)
+        .then((res) => {
+          if (res.code === 200) {
+            ElNotification.success({
+              title: '成功',
+              message: '修改成功'
+            })
+            this.editDialogVisible = false
+            this.getListAction()
+          }
+        })
+        .catch(() => {
+          ElNotification.error({
+            title: '失败',
+            message: '修改失败，请稍后重试'
           })
         })
     }
