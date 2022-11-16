@@ -7,7 +7,32 @@
       :collapse="isFold"
     >
       <h1>NFOJ</h1>
-      <el-menu-item index="/admin/dashboard">
+      <template v-for="item in menuList" :key="item.id">
+        <template v-if="item.childMenuList.length === 0">
+          <el-menu-item :index="item.path">
+            <i :class="`iconfont ${item.icon}`"></i>
+            <span>{{ item.name }}</span>
+          </el-menu-item>
+        </template>
+
+        <template v-else>
+          <el-sub-menu :index="item.path">
+            <template #title>
+              <i :class="`iconfont ${item.icon}`"></i>
+              <span>{{ item.name }}</span>
+            </template>
+
+            <template v-for="subitem in item.childMenuList" :key="subitem.id">
+              <el-menu-item :index="subitem.path">
+                <i :class="`iconfont ${subitem.icon}`"></i>
+                <span>{{ subitem.name }}</span>
+              </el-menu-item>
+            </template>
+          </el-sub-menu>
+        </template>
+      </template>
+
+      <!-- <el-menu-item index="/admin/dashboard">
         <el-icon><Histogram /></el-icon>
         <span>仪表盘</span>
       </el-menu-item>
@@ -36,24 +61,13 @@
           <el-icon><Orange /></el-icon>
           <span>靶场配置</span>
         </el-menu-item>
-        <!-- <el-menu-item index="/admin/labs">
-          <el-icon><TakeawayBox /></el-icon>
-          <span>容器管理</span>
-        </el-menu-item> -->
+
         <el-menu-item index="/admin/labs-docker">
           <el-icon><Guide /></el-icon>
           <span>容器规则</span>
         </el-menu-item>
-      </el-sub-menu>
+      </el-sub-menu> -->
 
-      <el-menu-item index="/admin/tools">
-        <el-icon><Tools /></el-icon>
-        <span>工具管理</span>
-      </el-menu-item>
-      <el-menu-item index="/admin/user">
-        <el-icon><UserFilled /></el-icon>
-        <span>用户管理</span>
-      </el-menu-item>
       <div style="width: 200px"></div>
     </el-menu>
   </div>
@@ -72,7 +86,12 @@ import {
   Guide,
   TakeawayBox
 } from '@element-plus/icons-vue'
+import useAdminMenuStore from '@/stores/modules/admin/menu/index'
+import { storeToRefs } from 'pinia'
 
+const adminMenuStore = useAdminMenuStore()
+
+const { menuList } = storeToRefs(adminMenuStore)
 defineProps({
   isFold: {
     type: Boolean,
@@ -94,6 +113,9 @@ defineProps({
       margin: 40px 0;
       display: inline-block;
       width: 100%;
+    }
+    .iconfont {
+      margin-right: 10px;
     }
   }
 }

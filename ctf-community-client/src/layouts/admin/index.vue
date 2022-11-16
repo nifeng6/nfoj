@@ -10,9 +10,9 @@
         </el-header>
         <el-main>
           <router-view v-slot="{ Component }">
-            <!-- <transition name="el-fade-in"> -->
+            <transition name="fade-transform" mode="out-in">
               <component :is="Component" />
-            <!-- </transition> -->
+            </transition>
           </router-view>
         </el-main>
       </el-container>
@@ -24,10 +24,13 @@
 import Menu from './menu/index.vue'
 import Header from './header/index.vue'
 import useAdminGlobalStore from '@/stores/modules/admin/global/index'
+import useAdminMenuStore from '@/stores/modules/admin/menu'
 import { storeToRefs } from 'pinia'
 
 const adminGlobalStore = useAdminGlobalStore()
+const adminMenuStore = useAdminMenuStore()
 
+adminMenuStore.getMenuList()
 const { isFold } = storeToRefs(adminGlobalStore)
 </script>
 

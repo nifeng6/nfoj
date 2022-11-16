@@ -1,0 +1,24 @@
+// 全局 transition
+
+/* fade */
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.28s;
+}
+
+.fade-enter,
+.fade-leave-active {
+  opacity: 0;
+}
+
+// 褪色渐变，主要给菜单切换使用
+.fade-transform-enter-active,
+.fade-transform-leave-active {
+  transition: all 0.5s ease;
+}
+
+.fade-transform-enter-from,
+.fade-transform-leave-to {
+  opacity: 0;
+  transform: translateX(30px);
+}
