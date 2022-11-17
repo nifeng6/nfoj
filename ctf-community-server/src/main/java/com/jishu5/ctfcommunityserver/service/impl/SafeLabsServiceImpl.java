@@ -221,6 +221,7 @@ public class SafeLabsServiceImpl extends ServiceImpl<SafeLabsMapper, SafeLabs> i
         try {
             Page<SafeLabs> page = new Page<>(currentPage, pageSize);
             QueryWrapper<SafeLabs> wrapper = new QueryWrapper<>();
+            wrapper.orderByDesc("create_time");
 
             Page<SafeLabs> safeLabsPage = safeLabsMapper.selectPage(page, wrapper);
             Map<String, Object> resultMap = new HashMap<>();

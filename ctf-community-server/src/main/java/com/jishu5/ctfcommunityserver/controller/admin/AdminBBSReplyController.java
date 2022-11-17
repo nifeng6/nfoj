@@ -4,6 +4,7 @@ import com.jishu5.ctfcommunityserver.entity.ArticleReply;
 import com.jishu5.ctfcommunityserver.entity.R;
 import com.jishu5.ctfcommunityserver.service.ArticleReplyService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -22,17 +23,19 @@ public class AdminBBSReplyController {
         return articleReplyService.getReplyList(currentPage, pageSize, keywords, type);
     }
 
+    @PreAuthorize("hasAuthority('admin:bbsreply:delete')")
     @DeleteMapping("/delete")
     public R deleteById(@RequestParam("id") Integer id){
         return articleReplyService.deleteReplyById(id);
     }
 
-
+    @PreAuthorize("hasAuthority('admin:bbsreply:delete')")
     @DeleteMapping("/delete/list")
     public R deleteListById(@RequestParam("ids") String ids){
         return articleReplyService.deleteReplyListById(ids);
     }
 
+    @PreAuthorize("hasAuthority('admin:bbsreply:update')")
     @PostMapping("/update")
     public R updateReplyById(@RequestBody ArticleReply articleReply){
         return articleReplyService.updateReplyById(articleReply);

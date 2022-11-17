@@ -62,6 +62,22 @@ const AdminRouter: Array<RouteRecordRaw> = [
           title: '社区文章管理'
         },
         component: () => import('@/views/admin/bbs-article/index.vue')
+      },
+      {
+        path: 'role',
+        name: 'admin-role',
+        meta: {
+          title: '角色管理'
+        },
+        component: () => import('@/views/admin/role/index.vue')
+      },
+      {
+        path: 'menu',
+        name: 'admin-menu',
+        meta: {
+          title: '菜单管理'
+        },
+        component: () => import('@/views/admin/menu/index.vue')
       }
     ]
   }

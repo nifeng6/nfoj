@@ -17,7 +17,6 @@ import {
   updateLabs
 } from '@/services/modules/admin/labs/index'
 import { ElNotification } from 'element-plus'
-import 'element-plus/theme-chalk/el-message.css'
 import 'element-plus/theme-chalk/el-notification.css'
 
 const useAdminLabsStore = defineStore('admin-labs', {
@@ -72,6 +71,11 @@ const useAdminLabsStore = defineStore('admin-labs', {
               message: '删除成功'
             })
             this.getListAction()
+          } else {
+            ElNotification.error({
+              title: '失败',
+              message: res.msg
+            })
           }
         })
         .catch(() => {
@@ -88,13 +92,13 @@ const useAdminLabsStore = defineStore('admin-labs', {
           if (res.code === 200) {
             ElNotification.success({
               title: '成功',
-              message: '删除成功'
+              message: res.msg
             })
             this.getListAction()
           } else {
             ElNotification.error({
               title: '失败',
-              message: '删除失败，请稍后重试'
+              message: res.msg
             })
           }
         })
@@ -125,6 +129,11 @@ const useAdminLabsStore = defineStore('admin-labs', {
             })
             this.addDialogVisible = false
             this.getListAction()
+          } else {
+            ElNotification.error({
+              title: '失败',
+              message: res.msg
+            })
           }
         })
         .catch(() => {
@@ -144,6 +153,11 @@ const useAdminLabsStore = defineStore('admin-labs', {
             })
             this.editDialogVisible = false
             this.getListAction()
+          } else {
+            ElNotification.error({
+              title: '失败',
+              message: res.msg
+            })
           }
         })
         .catch(() => {

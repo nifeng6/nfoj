@@ -7,7 +7,6 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
 import java.io.Serializable;
-import java.time.LocalDateTime;
 import java.util.Date;
 
 import lombok.Getter;
@@ -23,8 +22,8 @@ import lombok.Setter;
  */
 @Getter
 @Setter
-@TableName("article_sort")
-public class ArticleSort extends Model<ArticleSort> {
+@TableName("article_type")
+public class ArticleType extends Model<ArticleType> {
 
     private static final long serialVersionUID = 1L;
 

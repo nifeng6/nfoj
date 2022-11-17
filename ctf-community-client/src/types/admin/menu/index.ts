@@ -21,5 +21,31 @@ export interface IMenuData {
   createTime: string
   updateTime: string
   parentId: number
+  permission: string
   childMenuList: IMenuData[]
+}
+
+export interface IMenuParams {
+  currentPage: number
+  pageSize: number
+  keywords?: string
+}
+
+export interface IAddMenuParams {
+  name: string
+  path: string
+  status: number
+  icon: string
+  parentId: number
+  permission: string
+}
+
+export interface IUpdateMenuParams {
+  id: number
+  name: string
+  path: string
+  status: number
+  icon: string
+  parentId: number
+  permission: string
 }

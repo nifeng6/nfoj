@@ -20,9 +20,9 @@ public class LoginUser implements UserDetails {
 
     private User user;
 
-    private Set<String> permission;
+    private List<String> permission;
 
-    public LoginUser(User user, Set<String> permission) {
+    public LoginUser(User user, List<String> permission) {
         this.user = user;
         this.permission=permission;
     }

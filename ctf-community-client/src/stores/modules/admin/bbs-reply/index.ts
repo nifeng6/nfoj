@@ -50,10 +50,24 @@ const useAdminBbsReplyStore = defineStore('admin-bbs-reply', {
           ? this.searchForm.createTime
           : undefined
       }
-      return getList(params).then((res) => {
-        this.page = res.page as IPage
-        this.replyList = res.data
-      })
+      return getList(params)
+        .then((res) => {
+          if (res.code === 200) {
+            this.page = res.page as IPage
+            this.replyList = res.data
+          } else {
+            ElNotification.error({
+              title: '失败',
+              message: res.msg
+            })
+          }
+        })
+        .catch(() => {
+          ElNotification.error({
+            title: '失败',
+            message: '回复列表获取失败，请联系重试或联系管理员'
+          })
+        })
     },
     async deleteAction(id: number) {
       return deleteById(id)
@@ -64,6 +78,11 @@ const useAdminBbsReplyStore = defineStore('admin-bbs-reply', {
               message: '删除成功'
             })
             this.getListAction()
+          } else {
+            ElNotification.error({
+              title: '失败',
+              message: res.msg
+            })
           }
         })
         .catch(() => {
@@ -80,13 +99,13 @@ const useAdminBbsReplyStore = defineStore('admin-bbs-reply', {
           if (res.code === 200) {
             ElNotification.success({
               title: '成功',
-              message: '删除成功'
+              message: res.msg
             })
             this.getListAction()
           } else {
             ElNotification.error({
               title: '失败',
-              message: '删除失败，请稍后重试'
+              message: res.msg
             })
           }
         })

@@ -46,11 +46,15 @@ public class LoginServiceImpl implements LoginService {
             return R.error("验证码输入错误！");
         }
 
+        System.out.println(1);
         //使用Authentication的实现类
         Authentication authentication = new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword());
+        System.out.println(2);
 
         //手动调用方法去认证 他会自动调用UserDetailsService查 然后对比啥的
         Authentication authenticate = authenticationManager.authenticate(authentication);
+        System.out.println(3);
+
         if(Objects.isNull(authenticate)){ //说明输入错误
             throw new RuntimeException("用户名或密码错误");
         }

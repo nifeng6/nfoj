@@ -26,6 +26,12 @@ public class AdminMenu {
     @TableField("icon")
     private String icon;
 
+    @TableField("permission")
+    private String permission;
+
+    @TableField("menu_type")
+    private String menuType;
+
     @TableField("create_time")
     private Date createTime;
 

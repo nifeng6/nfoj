@@ -149,7 +149,7 @@ function formSource() {
 const confirmClickHandle = () => {
   const data = {
     title: formData.value.title,
-    sortId: Number.parseInt(formData.value.typeId),
+    typeId: Number.parseInt(formData.value.typeId),
     content: formData.value.content,
     tags: formData.value.tags.join('')
   }

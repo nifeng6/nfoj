@@ -21,7 +21,7 @@ export interface IArticle {
   updateTime: string
   content: string
   user: IUser
-  sort: ISort
+  type: IType
 }
 
 export interface IUser {
@@ -31,7 +31,7 @@ export interface IUser {
   avatarUrl: string
 }
 
-export interface ISort {
+export interface IType {
   id: number
   name: string
 }
@@ -67,6 +67,6 @@ export interface IArticleAddReplyParams {
 export interface IArticleParams {
   title: string
   tags: string
-  sortId: number
+  typeId: number
   content: string
 }

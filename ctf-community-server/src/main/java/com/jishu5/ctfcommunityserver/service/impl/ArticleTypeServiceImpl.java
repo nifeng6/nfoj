@@ -1,10 +1,10 @@
 package com.jishu5.ctfcommunityserver.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.jishu5.ctfcommunityserver.entity.ArticleSort;
+import com.jishu5.ctfcommunityserver.entity.ArticleType;
 import com.jishu5.ctfcommunityserver.entity.R;
-import com.jishu5.ctfcommunityserver.mapper.ArticleSortMapper;
-import com.jishu5.ctfcommunityserver.service.ArticleSortService;
+import com.jishu5.ctfcommunityserver.mapper.ArticleTypeMapper;
+import com.jishu5.ctfcommunityserver.service.ArticleTypeService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,20 +22,20 @@ import java.util.Map;
  * @since 2022-11-05 13:24:34
  */
 @Service
-public class ArticleSortServiceImpl extends ServiceImpl<ArticleSortMapper, ArticleSort> implements ArticleSortService {
+public class ArticleTypeServiceImpl extends ServiceImpl<ArticleTypeMapper, ArticleType> implements ArticleTypeService {
 
     @Autowired
-    private ArticleSortMapper articleSortMapper;
+    private ArticleTypeMapper articleTypeMapper;
 
     @Override
     public R getArticleTypeList() {
         try {
-            QueryWrapper<ArticleSort> wrapper = new QueryWrapper<>();
-            List<ArticleSort> articleSortList = articleSortMapper.selectList(wrapper);
+            QueryWrapper<ArticleType> wrapper = new QueryWrapper<>();
+            List<ArticleType> articleTypeList = articleTypeMapper.selectList(wrapper);
 
             Map<String,Object> resultMap = new HashMap<>();
 
-            resultMap.put("data", articleSortList);
+            resultMap.put("data", articleTypeList);
 
             return R.ok(resultMap);
         }catch (Exception e){

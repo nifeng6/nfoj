@@ -1,4 +1,4 @@
-package com.jishu5.ctfcommunityserver.dao.impl;
+package com.jishu5.ctfcommunityserver.filter;
 
 import com.alibaba.fastjson.JSON;
 import com.jishu5.ctfcommunityserver.constant.SystemConstant;
@@ -18,8 +18,11 @@ import java.io.IOException;
 public class AccessDeniedHandlerImpl implements AccessDeniedHandler {
     @Override
     public void handle(HttpServletRequest request, HttpServletResponse response, AccessDeniedException e) throws IOException, ServletException {
+
+        System.out.println("AccessDeniedHandlerImpl：权限不足异常");
+
         response.setStatus(SystemConstant.JWT_ERRCODE_LOWPOWER);
-        R result = R.error(SystemConstant.JWT_ERRCODE_LOWPOWER, "权限不足无法访问");
+        R result = R.error(SystemConstant.JWT_ERRCODE_LOWPOWER, "很抱歉，您的权限不足");
         WebUtils.renderString(response, JSON.toJSONString(result));
     }
 }

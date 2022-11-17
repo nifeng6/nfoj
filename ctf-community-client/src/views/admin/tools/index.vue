@@ -1,5 +1,5 @@
 <template>
-  <div class="labs">
+  <div class="tools">
     <FilterForm />
     <BtnList />
     <TableList />

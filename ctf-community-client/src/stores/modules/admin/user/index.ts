@@ -52,10 +52,24 @@ const useAdminUserStore = defineStore('admin-user', {
           ? this.searchForm.createTime
           : undefined
       }
-      return getList(params).then((res) => {
-        this.page = res.page as IPage
-        this.replyList = res.data
-      })
+      return getList(params)
+        .then((res) => {
+          if (res.code === 200) {
+            this.page = res.page as IPage
+            this.replyList = res.data
+          } else {
+            ElNotification.error({
+              title: '失败',
+              message: res.msg
+            })
+          }
+        })
+        .catch(() => {
+          ElNotification.error({
+            title: '失败',
+            message: '网络错误'
+          })
+        })
     },
     async deleteAction(id: number) {
       return deleteById(id)
@@ -63,9 +77,14 @@ const useAdminUserStore = defineStore('admin-user', {
           if (res.code === 200) {
             ElNotification.success({
               title: '成功',
-              message: '删除成功'
+              message: res.msg
             })
             this.getListAction()
+          } else {
+            ElNotification.error({
+              title: '失败',
+              message: res.msg
+            })
           }
         })
         .catch(() => {
@@ -82,13 +101,13 @@ const useAdminUserStore = defineStore('admin-user', {
           if (res.code === 200) {
             ElNotification.success({
               title: '成功',
-              message: '删除成功'
+              message: res.msg
             })
             this.getListAction()
           } else {
             ElNotification.error({
               title: '失败',
-              message: '删除失败，请稍后重试'
+              message: res.msg
             })
           }
         })
@@ -105,14 +124,14 @@ const useAdminUserStore = defineStore('admin-user', {
           if (res.code === 200) {
             ElNotification.success({
               title: '成功',
-              message: '添加成功'
+              message: res.msg
             })
             this.addDialogVisible = false
             this.getListAction()
           } else {
             ElNotification.error({
               title: '失败',
-              message: '添加失败，请稍后重试'
+              message: res.msg
             })
           }
         })
@@ -129,14 +148,14 @@ const useAdminUserStore = defineStore('admin-user', {
           if (res.code === 200) {
             ElNotification.success({
               title: '成功',
-              message: '更新成功'
+              message: res.msg
             })
             this.editDialogVisible = false
             this.getListAction()
           } else {
             ElNotification.error({
               title: '失败',
-              message: '更新失败，请稍后重试'
+              message: res.msg
             })
           }
         })

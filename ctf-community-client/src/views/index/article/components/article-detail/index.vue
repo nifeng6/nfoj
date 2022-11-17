@@ -21,7 +21,7 @@
       </span>
       <span style="margin-left: 15px">
         <span style="font-weight: 600">分类：</span>
-        <span>{{ article.sort?.name }} </span>
+        <span>{{ article.type?.name }} </span>
       </span>
     </div>
 

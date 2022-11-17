@@ -22,7 +22,7 @@
 
       <el-table-column show-overflow-tooltip label="类别">
         <template #default="scope">
-          {{ scope.row.sort.name }}
+          {{ scope.row.type.name }}
         </template>
       </el-table-column>
 

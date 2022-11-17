@@ -1,13 +1,11 @@
 package com.jishu5.ctfcommunityserver.entity;
 
-import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
 import java.io.Serializable;
-import java.time.LocalDateTime;
 import java.util.Date;
 
 import lombok.Getter;
@@ -40,8 +38,8 @@ public class Article extends Model<Article> {
     @TableField("tags")
     private String tags;
 
-    @TableField("sort_id")
-    private Integer sortId;
+    @TableField("type_id")
+    private Integer typeId;
 
     @TableField("user_id")
     private Integer userId;
@@ -66,7 +64,7 @@ public class Article extends Model<Article> {
     private User user;
 
     @TableField(select = false,exist = false)
-    private ArticleSort sort;
+    private ArticleType type;
 
 
     @Override

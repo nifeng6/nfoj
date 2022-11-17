@@ -6,6 +6,7 @@ import com.jishu5.ctfcommunityserver.service.SafeDockerService;
 import com.jishu5.ctfcommunityserver.service.SafeLabsService;
 import com.jishu5.ctfcommunityserver.service.SafeTypeService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -30,22 +31,25 @@ public class AdminLabsController {
         return safeLabsService.getList(currentPage, pageSize, keywords, type);
     }
 
+    @PreAuthorize("hasAuthority('admin:labconfig:delete')")
     @DeleteMapping("/delete")
     public R deleteById(@RequestParam("id") Integer id){
         return safeLabsService.deleteById(id);
     }
 
-
+    @PreAuthorize("hasAuthority('admin:labconfig:delete')")
     @DeleteMapping("/delete/list")
     public R deleteListById(@RequestParam("ids") String ids){
         return safeLabsService.deleteListById(ids);
     }
 
+    @PreAuthorize("hasAuthority('admin:labconfig:add')")
     @PostMapping("/add")
     public R addLabs(@RequestBody SafeLabs safeLabs){
         return safeLabsService.addLabs(safeLabs);
     }
 
+    @PreAuthorize("hasAuthority('admin:labconfig:update')")
     @PostMapping("/update")
     public R updateLabs(@RequestBody SafeLabs safeLabs){
         return safeLabsService.updateLabsById(safeLabs);

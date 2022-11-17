@@ -1,4 +1,4 @@
-package com.jishu5.ctfcommunityserver.dao.impl;
+package com.jishu5.ctfcommunityserver.filter;
 
 import com.alibaba.fastjson.JSON;
 import com.jishu5.ctfcommunityserver.constant.SystemConstant;
@@ -18,8 +18,15 @@ import java.io.IOException;
 public class AuthenticationEntryPointImpl implements AuthenticationEntryPoint {
     @Override
     public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException e) throws IOException, ServletException {
+        System.out.println("AuthenticationEntryPointImpl：用户授权不通过异常");
+//
+
+        System.out.println(e.getMessage());
+
+
         response.setStatus(SystemConstant.JWT_ERRCODE_FAIL);//4002 表示没有授权
-        R result = R.error(SystemConstant.JWT_ERRCODE_FAIL, "认证失败");
+        R result = R.error(SystemConstant.JWT_ERRCODE_FAIL, "用户授权不通过，请稍后重试");
         WebUtils.renderString(response, JSON.toJSONString(result));
+
     }
 }

@@ -1,6 +1,6 @@
 package com.jishu5.ctfcommunityserver.mapper;
 
-import com.jishu5.ctfcommunityserver.entity.ArticleSort;
+import com.jishu5.ctfcommunityserver.entity.ArticleType;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
 /**
@@ -11,6 +11,6 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  * @author nifeng
  * @since 2022-11-05 13:24:34
  */
-public interface ArticleSortMapper extends BaseMapper<ArticleSort> {
+public interface ArticleTypeMapper extends BaseMapper<ArticleType> {
 
 }

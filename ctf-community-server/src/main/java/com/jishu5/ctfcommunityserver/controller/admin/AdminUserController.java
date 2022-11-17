@@ -4,6 +4,7 @@ import com.jishu5.ctfcommunityserver.entity.R;
 import com.jishu5.ctfcommunityserver.entity.User;
 import com.jishu5.ctfcommunityserver.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -22,22 +23,26 @@ public class AdminUserController {
         return userService.getList(currentPage, pageSize, keywords, type);
     }
 
+    @PreAuthorize("hasAuthority('admin:user:delete')")
     @DeleteMapping("/delete")
     public R deleteById(@RequestParam("id") Integer id){
         return userService.deleteById(id);
     }
 
 
+    @PreAuthorize("hasAuthority('admin:user:delete')")
     @DeleteMapping("/delete/list")
     public R deleteListById(@RequestParam("ids") String ids){
         return userService.deleteListById(ids);
     }
 
+    @PreAuthorize("hasAuthority('admin:user:add')")
     @PostMapping("/add")
     public R addUser(@RequestBody User user){
         return userService.addUser(user);
     }
 
+    @PreAuthorize("hasAuthority('admin:user:update')")
     @PostMapping("/update")
     public R updateUser(@RequestBody User user){
         return userService.updateUser(user);

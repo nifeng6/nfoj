@@ -25,10 +25,10 @@ export interface IArticleData {
   title: string
   content: string
   tags: string
-  sort: IArticleType
+  type: IArticleType
   user: IUser
   view: number
-  sortId: number
+  typeId: number
   createTime: string
   updateTime: string
 }
@@ -49,7 +49,7 @@ export interface IUser {
 export interface IArticleParams {
   title: string
   tags: string
-  sortId: number
+  typeId: number
   content: string
 }
 
@@ -57,6 +57,6 @@ export interface IUpdateArticleParams {
   id: number
   title: string
   tags: string
-  sortId: number
+  typeId: number
   content: string
 }

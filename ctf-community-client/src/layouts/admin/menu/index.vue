@@ -32,66 +32,18 @@
         </template>
       </template>
 
-      <!-- <el-menu-item index="/admin/dashboard">
-        <el-icon><Histogram /></el-icon>
-        <span>仪表盘</span>
-      </el-menu-item>
-
-      <el-sub-menu class="bbs">
-        <template #title>
-          <el-icon><Comment /></el-icon>
-          <span>社区管理</span>
-        </template>
-        <el-menu-item index="/admin/bbs-article">
-          <el-icon><Document /></el-icon>
-          <span>文章管理</span>
-        </el-menu-item>
-        <el-menu-item index="/admin/bbs-reply">
-          <el-icon><ChatLineRound /></el-icon>
-          <span>评论管理</span>
-        </el-menu-item>
-      </el-sub-menu>
-
-      <el-sub-menu index="labs">
-        <template #title>
-          <el-icon><Flag /></el-icon>
-          <span>靶场管理</span>
-        </template>
-        <el-menu-item index="/admin/labs">
-          <el-icon><Orange /></el-icon>
-          <span>靶场配置</span>
-        </el-menu-item>
-
-        <el-menu-item index="/admin/labs-docker">
-          <el-icon><Guide /></el-icon>
-          <span>容器规则</span>
-        </el-menu-item>
-      </el-sub-menu> -->
-
       <div style="width: 200px"></div>
     </el-menu>
   </div>
 </template>
 
 <script setup lang="ts">
-import {
-  Histogram,
-  UserFilled,
-  Tools,
-  Flag,
-  Comment,
-  Document,
-  ChatLineRound,
-  Orange,
-  Guide,
-  TakeawayBox
-} from '@element-plus/icons-vue'
-import useAdminMenuStore from '@/stores/modules/admin/menu/index'
+import useAdminGlobalStore from '@/stores/modules/admin/global/index'
 import { storeToRefs } from 'pinia'
 
-const adminMenuStore = useAdminMenuStore()
+const adminGlobalStore = useAdminGlobalStore()
 
-const { menuList } = storeToRefs(adminMenuStore)
+const { menuList } = storeToRefs(adminGlobalStore)
 defineProps({
   isFold: {
     type: Boolean,

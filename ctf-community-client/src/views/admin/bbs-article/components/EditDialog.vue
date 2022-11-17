@@ -151,14 +151,14 @@ watchEffect(() => {
   formData.value.tags =
     editActiveItem.value.tags &&
     (editActiveItem.value.tags.split(',') as string[])
-  formData.value.typeId = editActiveItem.value.sortId
+  formData.value.typeId = editActiveItem.value.typeId
 })
 
 const updateClickHandle = () => {
   const data = {
     id: editActiveItem.value.id,
     title: formData.value.title,
-    sortId: formData.value.typeId,
+    typeId: formData.value.typeId,
     content: formData.value.content,
     tags: formData.value.tags.join('')
   }

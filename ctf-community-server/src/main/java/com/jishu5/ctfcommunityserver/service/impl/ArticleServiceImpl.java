@@ -6,16 +6,14 @@ import com.jishu5.ctfcommunityserver.dto.LoginUser;
 import com.jishu5.ctfcommunityserver.entity.*;
 import com.jishu5.ctfcommunityserver.mapper.ArticleMapper;
 import com.jishu5.ctfcommunityserver.mapper.ArticleReplyMapper;
-import com.jishu5.ctfcommunityserver.mapper.ArticleSortMapper;
+import com.jishu5.ctfcommunityserver.mapper.ArticleTypeMapper;
 import com.jishu5.ctfcommunityserver.mapper.UserMapper;
 import com.jishu5.ctfcommunityserver.service.ArticleService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.jishu5.ctfcommunityserver.utils.DtoUtils;
-import io.lettuce.core.cluster.event.RedirectionEventSupport;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.DeleteMapping;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -37,7 +35,7 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
     private ArticleMapper articleMapper;
 
     @Autowired
-    private ArticleSortMapper articleSortMapper;
+    private ArticleTypeMapper articleTypeMapper;
 
     @Autowired
     private ArticleReplyMapper articleReplyMapper;
@@ -52,7 +50,7 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
             QueryWrapper<Article> wrapper = new QueryWrapper<>();
             wrapper.orderByDesc("id");
             if (type != 0) {
-                wrapper.eq("sort_id", type);
+                wrapper.eq("type_id", type);
             }
             if (!keywords.equals("")) {
                 wrapper.and(childWrapper -> childWrapper.like("title", keywords));
@@ -61,11 +59,11 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
             Page<Article> pageResult = articleMapper.selectPage(page, wrapper);
 
             for (Article article : pageResult.getRecords()){
-                ArticleSort articleSort = articleSortMapper.selectOne(new QueryWrapper<ArticleSort>().eq("id", article.getSortId()));
+                ArticleType articleType = articleTypeMapper.selectOne(new QueryWrapper<ArticleType>().eq("id", article.getTypeId()));
                 Integer replyCount = articleReplyMapper.selectCount(new QueryWrapper<ArticleReply>().eq("article_id", article.getId()));
                 User user = userMapper.selectOne(new QueryWrapper<User>().eq("id", article.getUserId()));
 
-                article.setTypeName(articleSort.getName());
+                article.setTypeName(articleType.getName());
 
                 article.setReplyCount(replyCount);
 
@@ -91,8 +89,8 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
             Article article = articleMapper.selectOne(wrapper);
             User user = userMapper.selectOne(new QueryWrapper<User>().eq("id",article.getUserId()));
             article.setUser(user);
-            ArticleSort articleSort = articleSortMapper.selectOne(new QueryWrapper<ArticleSort>().eq("id",article.getSortId()));
-            article.setSort(articleSort);
+            ArticleType articleType = articleTypeMapper.selectOne(new QueryWrapper<ArticleType>().eq("id",article.getTypeId()));
+            article.setType(articleType);
             article.setView(article.getView()+1);
             articleMapper.updateById(article);
             Map<String, Object> resultMap = new HashMap<>();
@@ -112,8 +110,8 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
             Page<Article> pageResult = articleMapper.selectPage(page, wrapper);
 
             for (Article article : pageResult.getRecords()){
-                ArticleSort sort = articleSortMapper.selectOne(new QueryWrapper<ArticleSort>().eq("id", article.getSortId()));
-                article.setSort(sort);
+                ArticleType type = articleTypeMapper.selectOne(new QueryWrapper<ArticleType>().eq("id", article.getTypeId()));
+                article.setType(type);
             }
 
             Map<String, Object> resultMap = new HashMap<>();
@@ -184,7 +182,7 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
             Page<Article> page = new Page<>(currentPage, pageSize);
 
             QueryWrapper<Article> wrapper = new QueryWrapper<>();
-            wrapper.eq("sort_id", 4);
+            wrapper.eq("type_id", 4);
             Page<Article> articlePage = articleMapper.selectPage(page, wrapper);
             Map<String, Object> resultMap = new HashMap<>();
 
@@ -214,7 +212,7 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
                 wrapper.like("title", keywords);
             }
             if(type != null){
-                wrapper.eq("sort_id", type);
+                wrapper.eq("type_id", type);
             }
             if(createTime != null){
             }
@@ -224,8 +222,8 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
             // 遍历添加信息
             for(Article article : articlePage.getRecords()){
                 User user = userMapper.selectOne(new QueryWrapper<User>().eq("id", article.getUserId()));
-                ArticleSort articleSort = articleSortMapper.selectOne(new QueryWrapper<ArticleSort>().eq("id", article.getSortId()));
-                article.setSort(articleSort);
+                ArticleType articleType = articleTypeMapper.selectOne(new QueryWrapper<ArticleType>().eq("id", article.getTypeId()));
+                article.setType(articleType);
                 article.setUser(user);
             }
 

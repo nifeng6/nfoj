@@ -55,10 +55,24 @@ const useAdminBbsArticleStore = defineStore('admin-bbs-article', {
           ? this.searchForm.createTime
           : undefined
       }
-      return getArticleList(params).then((res) => {
-        this.page = res.page as IPage
-        this.articleList = res.data
-      })
+      return getArticleList(params)
+        .then((res) => {
+          if (res.code === 200) {
+            this.page = res.page as IPage
+            this.articleList = res.data
+          } else {
+            ElNotification.error({
+              title: '失败',
+              message: res.msg
+            })
+          }
+        })
+        .catch(() => {
+          ElNotification.error({
+            title: '失败',
+            message: '文章列表获取失败'
+          })
+        })
     },
     async deleteArticleAction(id: number) {
       return deleteArticle(id)
@@ -69,6 +83,11 @@ const useAdminBbsArticleStore = defineStore('admin-bbs-article', {
               message: '删除成功'
             })
             this.getArticleListAction()
+          } else {
+            ElNotification.error({
+              title: '失败',
+              message: res.msg
+            })
           }
         })
         .catch(() => {
@@ -103,13 +122,23 @@ const useAdminBbsArticleStore = defineStore('admin-bbs-article', {
         })
     },
     async getArticleTypeListAction() {
-      return getArticleTypeList().then((res) => {
-        if (res.code === 200) {
-          this.articleTypeList = res.data
-        } else {
-          ElNotification.error('文章类型获取失败')
-        }
-      })
+      return getArticleTypeList()
+        .then((res) => {
+          if (res.code === 200) {
+            this.articleTypeList = res.data
+          } else {
+            ElNotification.error({
+              title: '失败',
+              message: res.msg
+            })
+          }
+        })
+        .catch(() => {
+          ElNotification.error({
+            title: '错误',
+            message: '文章类型获取失败'
+          })
+        })
     },
     async addArticleAction(data: IArticleParams) {
       return addArticle(data)
