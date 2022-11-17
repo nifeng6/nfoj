@@ -26,17 +26,18 @@ public class AdminMenuServiceImpl extends ServiceImpl<AdminMenuMapper, AdminMenu
         try {
             LoginUser loginUser =  (LoginUser)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
             Integer userId = loginUser.getUser().getId();
-            System.out.println(userId);
-            System.out.println("11111111111");
+
+            String preSql = " and id in (select menu_id from role_menu where role_id = (select role_id from user_role where user_id="+userId+"))";
+
             QueryWrapper<AdminMenu> wrapper = new QueryWrapper<>();
             wrapper.eq("parent_id", 0);
 
-            wrapper.last(" and id in (select menu_id from role_menu where role_id = (select role_id from user_role where user_id="+userId+"))");
+            wrapper.last(preSql);
 
             List<AdminMenu> adminMenuList = adminMenuMapper.selectList(wrapper);
 
             for (AdminMenu adminMenu: adminMenuList){
-                List<AdminMenu> childMenuList = adminMenuMapper.getMenuListByUserId(userId, new QueryWrapper<AdminMenu>().eq("parent_id", adminMenu.getId()));
+                List<AdminMenu> childMenuList = adminMenuMapper.selectList(new QueryWrapper<AdminMenu>().eq("parent_id", adminMenu.getId()).last(preSql));
                 adminMenu.setChildMenuList(childMenuList);
             }
 
