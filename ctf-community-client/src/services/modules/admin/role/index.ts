@@ -4,7 +4,8 @@ import type {
   IRoleData,
   IRoleParams,
   IAddRoleParams,
-  IUpdateRoleParams
+  IUpdateRoleParams,
+  IMenuData
 } from '@/types/admin/role'
 
 export function getList(params: IRoleParams) {
@@ -43,5 +44,11 @@ export function updateRole(data: IUpdateRoleParams) {
   return request.post<IDataType>({
     url: '/admin/role/update',
     data
+  })
+}
+
+export function getMenuList() {
+  return request.get<IDataType<IMenuData[]>>({
+    url: '/admin/role/menu-list'
   })
 }

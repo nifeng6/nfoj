@@ -5,6 +5,7 @@ import com.jishu5.ctfcommunityserver.entity.R;
 import com.jishu5.ctfcommunityserver.service.AdminMenuService;
 import com.jishu5.ctfcommunityserver.entity.Role;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -25,18 +26,19 @@ public class AdminMenuController {
         return adminMenuService.getList(currentPage, pageSize, keywords);
     }
 
-
-
+    @PreAuthorize("hasAuthority('admin:menu:delete')")
     @DeleteMapping("/delete")
     public R deleteById(@RequestParam("id") Integer id){
         return adminMenuService.deleteById(id);
     }
 
+    @PreAuthorize("hasAuthority('admin:menu:add')")
     @PostMapping("/add")
     public R addTools(@RequestBody AdminMenu adminMenu){
         return adminMenuService.addMenu(adminMenu);
     }
 
+    @PreAuthorize("hasAuthority('admin:menu:update')")
     @PostMapping("/update")
     public R updateTools(@RequestBody AdminMenu adminMenu){
         return adminMenuService.updateMenu(adminMenu);

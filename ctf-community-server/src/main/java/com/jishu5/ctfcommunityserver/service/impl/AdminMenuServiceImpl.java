@@ -35,20 +35,24 @@ public class AdminMenuServiceImpl extends ServiceImpl<AdminMenuMapper, AdminMenu
 
             QueryWrapper<AdminMenu> wrapper = new QueryWrapper<>();
             wrapper.eq("parent_id", 0);
-            wrapper.eq("menu_type", "M");
 
             wrapper.last(preSql);
 
             List<AdminMenu> adminMenuList = adminMenuMapper.selectList(wrapper);
 
             for (AdminMenu adminMenu: adminMenuList){
-                QueryWrapper<AdminMenu> childWrapper = new QueryWrapper<>();
-                childWrapper.eq("parent_id", adminMenu.getId());
-                childWrapper.eq("menu_type", "C");
-                childWrapper.last(preSql);
+                if(adminMenu.getMenuType().equals("M")){
 
-                List<AdminMenu> childMenuList = adminMenuMapper.selectList(childWrapper);
-                adminMenu.setChildMenuList(childMenuList);
+                    QueryWrapper<AdminMenu> childWrapper = new QueryWrapper<>();
+                    childWrapper.eq("parent_id", adminMenu.getId());
+                    childWrapper.eq("menu_type", "C");
+                    childWrapper.last(preSql);
+
+                    List<AdminMenu> childMenuList = adminMenuMapper.selectList(childWrapper);
+                    adminMenu.setChildMenuList(childMenuList);
+                }
+
+
             }
 
             Map<String, Object> resultMap = new HashMap<>();
@@ -66,16 +70,27 @@ public class AdminMenuServiceImpl extends ServiceImpl<AdminMenuMapper, AdminMenu
         try {
             Page<AdminMenu> page = new Page<>(currentPage, pageSize);
             QueryWrapper<AdminMenu> wrapper = new QueryWrapper<>();
-            wrapper.eq("menu_type", "M");
             wrapper.eq("parent_id", 0);
             Page<AdminMenu> menuPage = adminMenuMapper.selectPage(page, wrapper);
 
             for (AdminMenu adminMenu : menuPage.getRecords()){
-                QueryWrapper<AdminMenu> childWrapper = new QueryWrapper<>();
-                childWrapper.eq("menu_type", "C");
-                childWrapper.eq("parent_id", adminMenu.getId());
-                List<AdminMenu> childMenuList = adminMenuMapper.selectList(childWrapper);
-                adminMenu.setChildMenuList(childMenuList);
+
+                if(adminMenu.getMenuType().equals("M")){
+                    QueryWrapper<AdminMenu> childWrapper = new QueryWrapper<>();
+                    childWrapper.eq("menu_type", "C");
+                    childWrapper.eq("parent_id", adminMenu.getId());
+                    List<AdminMenu> childMenuList = adminMenuMapper.selectList(childWrapper);
+                    adminMenu.setChildMenuList(childMenuList);
+
+                    for (AdminMenu childMenu : childMenuList){
+                        if (childMenu.getMenuType().equals("C")){
+                            childMenu.setChildMenuList(getTypeB(childMenu));
+                        }
+                   }
+                }else if(adminMenu.getMenuType().equals("C")){
+                    adminMenu.setChildMenuList(getTypeB(adminMenu));
+                }
+
             }
 
             Map<String, Object> resultMap = new HashMap<>();
@@ -92,6 +107,17 @@ public class AdminMenuServiceImpl extends ServiceImpl<AdminMenuMapper, AdminMenu
     }
 
 
+    // 遍历类型为C菜单底下的按钮
+    public List<AdminMenu> getTypeB(AdminMenu adminMenu){
+        QueryWrapper<AdminMenu> wrapper = new QueryWrapper<>();
+        wrapper.eq("menu_type","B");
+        wrapper.eq("parent_id", adminMenu.getId());
+        List<AdminMenu> adminMenuList = adminMenuMapper.selectList(wrapper);
+
+        return adminMenuList;
+    }
+
+
     @Override
     public R deleteById(Integer id) {
         try {
@@ -105,26 +131,23 @@ public class AdminMenuServiceImpl extends ServiceImpl<AdminMenuMapper, AdminMenu
     }
 
     @Override
-    public R deleteListById(String ids) {
-        try {
-            QueryWrapper<AdminMenu> wrapper = new QueryWrapper<>();
-            wrapper.in("id", ids.split(","));
-            adminMenuMapper.delete(wrapper);
-            return R.ok("角色删除成功");
-        }catch (Exception e){
-            return R.error("角色删除失败");
-        }
-    }
-
-    @Override
     public R addMenu(AdminMenu adminMenu) {
         try {
             adminMenu.setCreateTime(new Date());
             adminMenu.setUpdateTime(new Date());
-            adminMenuMapper.insert(adminMenu);
+            if(adminMenu.getMenuType().equals("M")){
+                adminMenu.setPermission(null);
+            }else if(adminMenu.getMenuType().equals("C")){
+                adminMenu.setPermission(null);
+            }else if(adminMenu.getMenuType().equals("B")){
+                adminMenu.setIcon("#");
+                adminMenu.setStatus(1);
+            }
 
-            return R.ok("角色添加成功");
+            adminMenuMapper.insert(adminMenu);
+            return R.ok("角色菜单添加成功");
         }catch (Exception e){
+            System.out.println(e.getMessage());
             return R.error("角色添加失败");
         }
     }

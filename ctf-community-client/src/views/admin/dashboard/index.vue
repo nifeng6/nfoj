@@ -8,7 +8,7 @@
               <img :src="user.avatarUrl" :alt="user.nickName" />
               <div>
                 <h3>{{ user.nickName }}</h3>
-                <span>角色</span>
+                <span>{{ user.role.name }}</span>
               </div>
             </div>
           </template>

@@ -2,6 +2,7 @@
 export interface IDataType<T = any> {
   data: T
   code: number
+  msg: string
   page?: IPage
 }
 

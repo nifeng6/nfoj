@@ -6,7 +6,9 @@ import com.jishu5.ctfcommunityserver.controller.common.UtilController;
 import com.jishu5.ctfcommunityserver.dao.LoginService;
 import com.jishu5.ctfcommunityserver.dto.LoginUser;
 import com.jishu5.ctfcommunityserver.entity.R;
+import com.jishu5.ctfcommunityserver.entity.Role;
 import com.jishu5.ctfcommunityserver.entity.User;
+import com.jishu5.ctfcommunityserver.mapper.RoleMapper;
 import com.jishu5.ctfcommunityserver.mapper.UserMapper;
 import com.jishu5.ctfcommunityserver.utils.JwtUtil;
 import com.jishu5.ctfcommunityserver.utils.RedisCache;
@@ -37,6 +39,9 @@ public class LoginServiceImpl implements LoginService {
     @Autowired
     private UserMapper userMapper;
 
+    @Autowired
+    private RoleMapper roleMapper;
+
     @Override
     public R login(User user) {
         // 判断验证码是否正确
@@ -46,20 +51,18 @@ public class LoginServiceImpl implements LoginService {
             return R.error("验证码输入错误！");
         }
 
-        System.out.println(1);
         //使用Authentication的实现类
         Authentication authentication = new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword());
-        System.out.println(2);
 
         //手动调用方法去认证 他会自动调用UserDetailsService查 然后对比啥的
         Authentication authenticate = authenticationManager.authenticate(authentication);
-        System.out.println(3);
 
         if(Objects.isNull(authenticate)){ //说明输入错误
             throw new RuntimeException("用户名或密码错误");
         }
         //拿到用户信息 然后生成jwt返回给前端，并且将用户的信息存入redis
         LoginUser loginUser = (LoginUser)authenticate.getPrincipal(); // 这个其实就是UserDetails 也就是LoginUser
+
         String userId = loginUser.getUser().getId().toString();
 
         String jwt = JwtUtil.createJWT(userId);
@@ -92,8 +95,15 @@ public class LoginServiceImpl implements LoginService {
             LoginUser loginUser = (LoginUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
             User user = userMapper.selectOne(new QueryWrapper<User>().eq("id",loginUser.getUser().getId()));
+
+            Role role = roleMapper.getRoleByUserId(user.getId());
+
+            user.setRole(role);
+
             Map<String,Object> resultMap = new HashMap<>();
             Map<String,Object> map = new HashMap<>();
+
+
             map.put("user", user);
             map.put("permission", loginUser.getPermission());
 

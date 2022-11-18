@@ -60,6 +60,9 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     @Autowired
     private LoginService loginService;
 
+    @Autowired
+    private RoleMapper roleMapper;
+
     @Value("${static-url}")
     private String staticURL;
 
@@ -71,6 +74,8 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
             wrapper.eq("id",user_id);
             User user = userMapper.selectOne(wrapper);
 
+            Role role = roleMapper.getRoleByUserId(user_id);
+
             Map<String, Object> map = new HashMap<>();
             Map<String, Object> resultMap = new HashMap<>();
 
@@ -80,6 +85,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
             map.put("description",user.getDescription());
             map.put("nickName",user.getNickName());
             map.put("avatarUrl",user.getAvatarUrl());
+            map.put("role", role);
 
             resultMap.put("data", map);
             return R.ok(resultMap);

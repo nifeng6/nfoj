@@ -3,6 +3,7 @@ import Home from '@/views/index/home/index.vue'
 import Ctf from '@/views/index/ctf/index.vue'
 import Tools from '@/views/index/tools/index.vue'
 import Coder from '@/views/index/coder/index.vue'
+import BBS from '@/views/index/bbs/index.vue'
 
 const IndexRouter: Array<RouteRecordRaw> = [
   {
@@ -42,6 +43,16 @@ const IndexRouter: Array<RouteRecordRaw> = [
         },
         component: Coder
       },
+      {
+        path: 'bbs',
+        name: 'bbs',
+        meta: {
+          title: '用户社区'
+        },
+        component: BBS
+      },
+
+
       {
         path: 'reset-password',
         name: 'reset-password',
@@ -84,14 +95,7 @@ const IndexRouter: Array<RouteRecordRaw> = [
           }
         ]
       },
-      {
-        path: 'bbs',
-        name: 'bbs',
-        meta: {
-          title: '用户社区'
-        },
-        component: () => import('@/views/index/bbs/index.vue')
-      },
+
       {
         path: 'article/:article_id',
         name: 'article',

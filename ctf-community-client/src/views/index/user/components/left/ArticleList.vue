@@ -16,7 +16,7 @@
             </div>
           </template>
           <template #rightBottom>
-            <div class="bottom">分类：{{ item.sort.name }}</div>
+            <div class="bottom">分类：{{ item.type?.name }}</div>
           </template>
         </ArticleCard>
       </template>

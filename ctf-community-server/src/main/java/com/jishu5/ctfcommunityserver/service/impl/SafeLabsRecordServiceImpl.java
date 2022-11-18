@@ -44,6 +44,9 @@ public class SafeLabsRecordServiceImpl extends ServiceImpl<SafeLabsRecordMapper,
             Page<SafeLabsRecord> page = new Page<>(currentPage, pageSize);
 
             QueryWrapper<SafeLabsRecord> wrapper = new QueryWrapper<>();
+
+            wrapper.orderByDesc("create_time");
+
             Page<SafeLabsRecord> safeLabsRecordPage = safeLabsRecordMapper.selectPage(page, wrapper);
 
             for (SafeLabsRecord safeLabsRecord : safeLabsRecordPage.getRecords()){

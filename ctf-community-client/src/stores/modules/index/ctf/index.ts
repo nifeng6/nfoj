@@ -14,7 +14,8 @@ import type {
   ICtfList,
   IPage
 } from '@/types/index/ctf/index'
-import { ElMessage } from 'element-plus'
+import { ElNotification } from 'element-plus'
+import 'element-plus/theme-chalk/el-notification.css'
 
 const useIndexCtfStore = defineStore('index-ctf', {
   state: () => ({
@@ -42,13 +43,45 @@ const useIndexCtfStore = defineStore('index-ctf', {
   }),
   actions: {
     async getCtfTypeListAction() {
-      const res = await getCtfTypeList()
-      this.ctfTypeList = res.data
+      return getCtfTypeList()
+        .then((res) => {
+          if (res.code === 200) {
+            this.ctfTypeList = res.data
+          } else {
+            ElNotification.error({
+              title: '失败',
+              message: res.msg
+            })
+          }
+        })
+        .catch(() => {
+          ElNotification.error({
+            title: '失败',
+            message: '网络连接失败，请重试或联系管理员'
+          })
+        })
     },
+    // 获取靶场标签列表
     async getCtfTagListAction() {
-      const res = await getCtfTagList()
-      this.ctfTagList = res.data
+      return getCtfTagList()
+        .then((res) => {
+          if (res.code === 200) {
+            this.ctfTagList = res.data
+          } else {
+            ElNotification.error({
+              title: '失败',
+              message: res.msg
+            })
+          }
+        })
+        .catch(() => {
+          ElNotification.error({
+            title: '失败',
+            message: '网络连接失败，请重试或联系管理员'
+          })
+        })
     },
+    // 获取靶场列表
     async getCtfListAction() {
       const params = {
         currentPage: this.page.currentPage,
@@ -56,71 +89,206 @@ const useIndexCtfStore = defineStore('index-ctf', {
         type: this.currentType,
         keywords: this.keywords
       }
-      const res = await getCtfList(params)
-      this.ctfList = res.data
-      this.page = { ...res.page } as IPage
+      return getCtfList(params)
+        .then((res) => {
+          if (res.code === 200) {
+            this.ctfList = res.data
+            this.page = { ...res.page } as IPage
+          } else {
+            ElNotification.error({
+              title: '失败',
+              message: res.msg
+            })
+          }
+        })
+        .catch(() => {
+          ElNotification.error({
+            title: '失败',
+            message: '网络连接失败，请重试或联系管理员'
+          })
+        })
+      // const res = await getCtfList(params)
+      // this.ctfList = res.data
+      // this.page = { ...res.page } as IPage
     },
+    // 开启靶场
     async startCtfLabAction(labId: number) {
       this.startLabLoading = true
       this.labInfo.labId = labId
-      const res = await startCtfLab(labId)
-      if (res.code === 200) {
-        this.labInfo.intro = res.data.intro
-        this.labInfo.expTime = res.data.expTime
-        this.labInfo.isSuccess = res.data.isSuccess
-        this.labInfo.isExist = res.data.isExist
-        ElMessage.success('开启成功')
-        this.startLabLoading = false
-        return true
-      } else {
-        ElMessage.error('开启失败')
-        this.startLabLoading = false
-        return false
-      }
+
+      return startCtfLab(labId)
+        .then((res) => {
+          if (res.code === 200) {
+            this.labInfo.intro = res.data.intro
+            this.labInfo.expTime = res.data.expTime
+            this.labInfo.isSuccess = res.data.isSuccess
+            this.labInfo.isExist = res.data.isExist
+            ElNotification.success({
+              title: '成功',
+              message: res.msg
+            })
+            this.startLabLoading = false
+            return true
+          } else {
+            ElNotification.error({
+              title: '失败',
+              message: res.msg
+            })
+            this.startLabLoading = false
+            return false
+          }
+        })
+        .catch(() => {
+          ElNotification.error({
+            title: '失败',
+            message: '网络连接失败，请重试或联系管理员'
+          })
+          this.startLabLoading = false
+          return false
+        })
+
+      // const res = await startCtfLab(labId)
+      // if (res.code === 200) {
+      //   this.labInfo.intro = res.data.intro
+      //   this.labInfo.expTime = res.data.expTime
+      //   this.labInfo.isSuccess = res.data.isSuccess
+      //   this.labInfo.isExist = res.data.isExist
+      //   ElMessage.success('开启成功')
+      //   this.startLabLoading = false
+      //   return true
+      // } else {
+      //   ElMessage.error('开启失败')
+      //   this.startLabLoading = false
+      //   return false
+      // }
     },
+    // 关闭靶场
     async closeCtfLabAction(labId: number) {
       this.closeLabLoading = true
       this.labInfo.labId = labId
-      const res = await closeCtfLab(labId)
-      if (res.code === 200) {
-        this.labInfo.intro = ''
-        this.labInfo.expTime = 0
-        this.labInfo.isExist = 0
-        ElMessage.success('关闭成功')
-        this.closeLabLoading = false
-        return true
-      } else {
-        ElMessage.error('关闭失败')
-        this.closeLabLoading = false
-        return false
-      }
+      return closeCtfLab(labId)
+        .then((res) => {
+          if (res.code === 200) {
+            this.labInfo.intro = ''
+            this.labInfo.expTime = 0
+            this.labInfo.isExist = 0
+            ElNotification.success({
+              title: '成功',
+              message: res.msg
+            })
+            this.closeLabLoading = false
+            return true
+          } else {
+            ElNotification.error({
+              title: '失败',
+              message: res.msg
+            })
+            this.closeLabLoading = false
+            return false
+          }
+        })
+        .catch(() => {
+          ElNotification.error({
+            title: '失败',
+            message: '网络连接失败，请重试或联系管理员'
+          })
+          this.closeLabLoading = false
+          return false
+        })
+
+      // const res = await closeCtfLab(labId)
+      // if (res.code === 200) {
+      //   this.labInfo.intro = ''
+      //   this.labInfo.expTime = 0
+      //   this.labInfo.isExist = 0
+      //   ElMessage.success('关闭成功')
+      //   this.closeLabLoading = false
+      //   return true
+      // } else {
+      //   ElMessage.error('关闭失败')
+      //   this.closeLabLoading = false
+      //   return false
+      // }
     },
+    // 获取靶场详情
     async getCtfLabDetailAction(labId: number) {
       this.labDetailLoading = true
       this.labInfo.labId = labId
-      const res = await getCtfLabDetail(labId)
-      if (res.code === 200) {
-        this.labInfo.intro = res.data.intro
-        this.labInfo.isExist = res.data.isExist
-        this.labInfo.expTime = res.data.expTime
-        this.labInfo.isSuccess = res.data.isSuccess
-        this.labDetailLoading = false
-        return true
-      } else {
-        this.labDetailLoading = false
-        return false
-      }
+
+      return getCtfLabDetail(labId)
+        .then((res) => {
+          if (res.code === 200) {
+            this.labInfo.intro = res.data.intro
+            this.labInfo.isExist = res.data.isExist
+            this.labInfo.expTime = res.data.expTime
+            this.labInfo.isSuccess = res.data.isSuccess
+            this.labDetailLoading = false
+            return true
+          } else {
+            ElNotification.error({
+              title: '失败',
+              message: res.msg
+            })
+            this.labDetailLoading = false
+            return false
+          }
+        })
+        .catch(() => {
+          ElNotification.error({
+            title: '失败',
+            message: '网络连接失败，请重试或联系管理员'
+          })
+          this.labDetailLoading = false
+          return false
+        })
+
+      // const res = await getCtfLabDetail(labId)
+      // if (res.code === 200) {
+      //   this.labInfo.intro = res.data.intro
+      //   this.labInfo.isExist = res.data.isExist
+      //   this.labInfo.expTime = res.data.expTime
+      //   this.labInfo.isSuccess = res.data.isSuccess
+      //   this.labDetailLoading = false
+      //   return true
+      // } else {
+      //   this.labDetailLoading = false
+      //   return false
+      // }
     },
     // 提交flag
     async submitFlagAction(flag: string) {
-      const res = await submitFlag(this.labInfo.labId, flag)
-      if (res.code === 200) {
-        ElMessage.success(res.msg)
-        return true
-      } else {
-        ElMessage.error(res.msg)
-        return false
-      }
+      return submitFlag(this.labInfo.labId, flag)
+        .then((res) => {
+          if (res.code === 200) {
+            ElNotification.error({
+              title: '成功',
+              message: res.msg
+            })
+            return true
+          } else {
+            ElNotification.error({
+              title: '失败',
+              message: res.msg
+            })
+            return false
+          }
+        })
+        .catch(() => {
+          ElNotification.error({
+            title: '失败',
+            message: '网络连接失败，请重试或联系管理员'
+          })
+          return false
+        })
+
+      // const res = await submitFlag(this.labInfo.labId, flag)
+      // if (res.code === 200) {
+      //   ElMessage.success(res.msg)
+      //   return true
+      // } else {
+      //   ElMessage.error(res.msg)
+      //   return false
+      // }
     }
   }
 })

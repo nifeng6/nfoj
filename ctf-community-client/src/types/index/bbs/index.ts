@@ -2,6 +2,7 @@
 export interface IDataType<T = any> {
   data: T
   code: number
+  msg: string
   page?: IPage
 }
 
@@ -9,7 +10,7 @@ export interface IArticle {
   id: number
   title: string
   tags: string
-  sortId: number
+  typeId: number
   userId: number
   view: number
   createTime: string
@@ -38,6 +39,6 @@ export interface IArticleType {
 export interface IArticleAddParams {
   title: string
   tags: string
-  sortId: number
+  typeId: number
   content: string
 }

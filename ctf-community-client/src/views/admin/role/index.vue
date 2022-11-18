@@ -19,6 +19,7 @@ import EditDialog from './components/EditDialog.vue'
 import AddDialog from './components/AddDialog.vue'
 
 const adminRoleStore = useAdminRoleStore()
+adminRoleStore.getMenuListAction()
 adminRoleStore.getListAction()
 </script>
 

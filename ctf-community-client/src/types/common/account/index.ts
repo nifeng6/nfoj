@@ -28,6 +28,15 @@ export interface IUser {
   createTime: string
   updateTime: string
   description: string
+  role: IRole
+}
+
+export interface IRole {
+  id: number
+  name: string
+  createTime: string
+  updateTime: string
+  roleKey: string
 }
 
 export interface IRegisterParams {

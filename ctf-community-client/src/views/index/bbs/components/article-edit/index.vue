@@ -195,7 +195,7 @@ const articleFormRules = ref({
 const articleSubmitHandle = () => {
   const data = {
     title: articleForm.value.title,
-    sortId: Number.parseInt(articleForm.value.typeId),
+    typeId: Number.parseInt(articleForm.value.typeId),
     content: articleForm.value.content,
     tags: articleForm.value.tags.join('')
   }

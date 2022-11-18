@@ -6,7 +6,7 @@
       row-key="id"
       :tree-props="{ hasChildren: 'hasChildren', children: 'childMenuList' }"
     >
-      <!-- <el-table-column show-overflow-tooltip prop="id" label="ID" width="100" /> -->
+      <el-table-column show-overflow-tooltip prop="id" label="ID" width="150" />
       <el-table-column show-overflow-tooltip prop="name" label="菜单名" />
 
       <el-table-column
@@ -24,7 +24,7 @@
 
       <el-table-column show-overflow-tooltip prop="status" label="状态">
         <template #default="scope">
-          <el-tag type="primary" v-if="scope.row.status === 1">
+          <el-tag v-if="scope.row.status === 1">
             <span>正常</span>
           </el-tag>
           <el-tag v-else type="danger">

@@ -5,7 +5,8 @@ import {
   updatePassword
 } from '@/services/modules/index/account'
 import type { ICoinRecord, IPage } from '@/types/index/account/index'
-import { ElMessage } from 'element-plus'
+import { ElNotification } from 'element-plus'
+import 'element-plus/theme-chalk/el-notification.css'
 
 const useIndexAccountStore = defineStore('index-account', {
   state: () => ({
@@ -19,29 +20,79 @@ const useIndexAccountStore = defineStore('index-account', {
   }),
   actions: {
     async getAccountCoinRecordListAction() {
-      const res = await getAccountCoinRecordList(this.page)
-      if (res.code === 200) {
-        this.coinRecordList = res.data
-        this.page = res.page as IPage
-      }
+      return getAccountCoinRecordList(this.page)
+        .then((res) => {
+          if (res.code === 200) {
+            this.coinRecordList = res.data
+            this.page = res.page as IPage
+          } else {
+            ElNotification.error({
+              title: '失败',
+              message: res.msg
+            })
+          }
+        })
+        .catch(() => {
+          ElNotification.error({
+            title: '失败',
+            message: '网络连接失败，请重试或联系管理员'
+          })
+        })
     },
     async getAccountQiandaoAction() {
-      const res = await getAccountQiandao()
-      if (res.code === 200) {
-        ElMessage.success('签到成功')
-      } else {
-        ElMessage.error(res.msg)
-      }
+      return getAccountQiandao()
+        .then((res) => {
+          if (res.code === 200) {
+            ElNotification.success({
+              title: '成功',
+              message: res.msg
+            })
+          } else {
+            ElNotification.error({
+              title: '失败',
+              message: res.msg
+            })
+          }
+        })
+        .catch(() => {
+          ElNotification.error({
+            title: '失败',
+            message: '网络连接失败，请重试或联系管理员'
+          })
+        })
     },
     async updatePasswordAction(data: { oldPass: string; newPass: string }) {
-      const res = await updatePassword(data)
-      if (res.code === 200) {
-        ElMessage.success('修改成功')
-        return true
-      } else {
-        ElMessage.error(res.msg)
-        return false
-      }
+      return updatePassword(data)
+        .then((res) => {
+          if (res.code === 200) {
+            ElNotification.success({
+              title: '成功',
+              message: res.msg
+            })
+            return true
+          } else {
+            ElNotification.error({
+              title: '失败',
+              message: res.msg
+            })
+            return false
+          }
+        })
+        .catch(() => {
+          ElNotification.error({
+            title: '失败',
+            message: '网络连接失败，请重试或联系管理员'
+          })
+          return false
+        })
+      // const res = await updatePassword(data)
+      // if (res.code === 200) {
+      //   ElMessage.success('修改成功')
+      //   return true
+      // } else {
+      //   ElMessage.error(res.msg)
+      //   return false
+      // }
     }
   }
 })

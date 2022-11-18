@@ -74,6 +74,9 @@ public class User extends Model<User> {
     @TableField(select = false,exist = false)
     private String emailCode;
 
+    @TableField(select = false,exist = false)
+    private Role role;
+
 
     @Override
     public Serializable pkVal() {

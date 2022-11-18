@@ -8,14 +8,14 @@
     >
       <h1>NFOJ</h1>
       <template v-for="item in menuList" :key="item.id">
-        <template v-if="item.childMenuList.length === 0">
+        <template v-if="item.menuType === 'C'">
           <el-menu-item :index="item.path">
             <i :class="`iconfont ${item.icon}`"></i>
             <span>{{ item.name }}</span>
           </el-menu-item>
         </template>
 
-        <template v-else>
+        <template v-else-if="item.menuType === 'M'">
           <el-sub-menu :index="item.path">
             <template #title>
               <i :class="`iconfont ${item.icon}`"></i>

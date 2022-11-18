@@ -22,6 +22,7 @@ export interface IMenuData {
   updateTime: string
   parentId: number
   permission: string
+  menuType: string
   childMenuList: IMenuData[]
 }
 
@@ -32,6 +33,7 @@ export interface IMenuParams {
 }
 
 export interface IAddMenuParams {
+  id: number
   name: string
   path: string
   status: number

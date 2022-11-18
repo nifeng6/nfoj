@@ -26,6 +26,10 @@ public class Role {
     @TableField("role_key")
     private String roleKey;
 
+    // 所拥有权限列表
+    @TableField(select = false,exist = false)
+    private List<Integer> adminMenuIdList;
+
     @TableField(select = false,exist = false)
     private List<AdminMenu> adminMenuList;
 

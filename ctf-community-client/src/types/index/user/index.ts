@@ -1,6 +1,7 @@
 export interface IDataType<T = any> {
     data: T
     code: number
+    msg: string
     page?: IPage
   }
   
@@ -27,10 +28,10 @@ export interface IDataType<T = any> {
     id: number
     title: string
     createTime: string
-    sort: IArticleSort
+    type: IArticleType
   }
   
-  export interface IArticleSort {
+  export interface IArticleType {
     id: number
     name: string
   }

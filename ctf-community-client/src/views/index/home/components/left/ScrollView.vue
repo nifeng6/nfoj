@@ -11,11 +11,11 @@
 </template>
 
 <script setup lang="ts">
+import scsrollImg from '@/assets/image/scroll1.png'
 const scrollList = [
   {
     title: '50+靶场环境免费体验',
-    image:
-      'https://ctf.bugku.com/upload/20220308/db7880680360abe5469dbedb1d545f8e.png'
+    image: scsrollImg
   }
 ]
 </script>

@@ -11,10 +11,7 @@ public interface AdminMenuService extends IService<AdminMenu> {
 
     public R getList(Integer currentPage, Integer pageSize, String keywords);
 
-
     public R deleteById(Integer id);
-
-    public R deleteListById(String ids);
 
     public R addMenu(AdminMenu adminMenu);
 

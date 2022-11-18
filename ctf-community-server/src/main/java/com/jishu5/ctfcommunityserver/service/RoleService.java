@@ -8,6 +8,8 @@ public interface RoleService extends IService<Role> {
 
     public R getList(Integer currentPage, Integer pageSize, String keywords);
 
+    public R getMenuList();
+
     public R deleteById(Integer id);
 
     public R deleteListById(String ids);

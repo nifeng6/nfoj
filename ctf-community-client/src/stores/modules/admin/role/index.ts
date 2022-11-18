@@ -3,19 +3,22 @@ import type {
   IRoleData,
   IPage,
   IAddRoleParams,
-  IUpdateRoleParams
+  IUpdateRoleParams,
+  IMenuData
 } from '@/types/admin/role'
 import {
   getList,
   addRole,
   updateRole,
   deleteById,
-  deleteList
+  deleteList,
+  getMenuList
 } from '@/services/modules/admin/role/index'
 
 const useAdminRoleStore = defineStore('admin-role', {
   state: () => ({
     roleList: [] as IRoleData[],
+    menuList: [] as IMenuData[],
     page: {
       currentPage: 1,
       pageSize: 10,
@@ -41,6 +44,25 @@ const useAdminRoleStore = defineStore('admin-role', {
         .then((res) => {
           if (res.code === 200) {
             this.roleList = res.data
+          } else {
+            ElNotification.error({
+              title: '失败',
+              message: res.msg
+            })
+          }
+        })
+        .catch(() => {
+          ElNotification.error({
+            title: '失败',
+            message: '网络连接失败，请重试或联系管理员'
+          })
+        })
+    },
+    async getMenuListAction() {
+      return getMenuList()
+        .then((res) => {
+          if (res.code === 200) {
+            this.menuList = res.data
           } else {
             ElNotification.error({
               title: '失败',
