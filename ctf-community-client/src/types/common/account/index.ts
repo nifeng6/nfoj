@@ -7,6 +7,7 @@ export interface IDataType<T = any> {
 export interface ILoginParams {
   username: string
   password: string
+  captchaCode: string
 }
 
 export interface ILogin {
@@ -45,11 +46,11 @@ export interface IRegisterParams {
   email: string
 }
 
-export interface ILoginForm {
-  username: string
-  password: string
-  captchaCode: string
-}
+// export interface ILoginForm {
+//   username: string
+//   password: string
+//   captchaCode: string
+// }
 
 export interface IRegisterForm {
   username: string

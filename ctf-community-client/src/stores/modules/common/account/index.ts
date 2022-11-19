@@ -13,6 +13,7 @@ import { ElMessage, ElMessageBox } from 'element-plus'
 import 'element-plus/theme-chalk/el-message.css'
 import 'element-plus/theme-chalk/el-message-box.css'
 import { useRoute, useRouter } from 'vue-router'
+import { USER_TYPE } from '@/utils/constants'
 
 import type {
   ILoginParams,
@@ -50,7 +51,7 @@ const useCommonAccountStore = defineStore('common-account', {
       }
     },
     async userLogoutAction() {
-      ElMessageBox.confirm('确定退出登录吗？', '提示', {
+      return ElMessageBox.confirm('确定退出登录吗？', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'
@@ -60,6 +61,7 @@ const useCommonAccountStore = defineStore('common-account', {
         window.localStorage.removeItem('token')
         window.localStorage.removeItem('user')
         ElMessage.success('退出成功')
+        return true
       })
     },
     async getUserInfoAction() {
@@ -126,6 +128,17 @@ const useCommonAccountStore = defineStore('common-account', {
         ElMessage.error(res.msg)
         return false
       }
+    }
+  },
+  getters: {
+    // 判断是否是管理员，可以进入后台
+    isAdmin(state) {
+      return (
+        state.user?.role?.roleKey.indexOf(USER_TYPE.SUPPER_ADMIN) != -1 ||
+        state.user?.role?.roleKey.indexOf(USER_TYPE.ADMIN) != -1 ||
+        state.user?.role?.roleKey.indexOf(USER_TYPE.TEST) != -1 ||
+        false
+      )
     }
   }
 })

@@ -49,11 +49,40 @@
           <span>copyright </span>
           <span>倪风 ©2022</span>
           <span>备案号：xxxxxxxxxxxxx</span>
+          <span class="i18n-dropdown">
+            <el-dropdown @command="changeWebLanguage" placement="top">
+              <span class="el-dropdown-link">
+                <i class="fa fa-globe" aria-hidden="true">
+                  {{ currentLocale == 'zh-CN' ? '简体中文' : 'English' }}</i
+                ><i class="el-icon-arrow-up el-icon--right"></i>
+              </span>
+              <template #dropdown>
+                <el-dropdown-menu>
+                  <el-dropdown-item command="zh-CN">简体中文</el-dropdown-item>
+                  <el-dropdown-item command="en-US">English</el-dropdown-item>
+                </el-dropdown-menu>
+              </template>
+            </el-dropdown>
+          </span>
         </p>
       </div>
     </div>
   </div>
 </template>
+
+<script setup lang="ts">
+import useI18n from '@/hooks/i18n-hook'
+
+const {
+  currentLocale,
+  changeLocale,
+  i18n: { t }
+} = useI18n()
+
+const changeWebLanguage = () => {
+  changeLocale(currentLocale.value == 'zh-CN' ? 'en-US' : 'zh-CN')
+}
+</script>
 
 <style scoped lang="less">
 .footer {
@@ -73,7 +102,7 @@
         font-weight: 700;
       }
       ul {
-        margin-top: 10px;
+        margin-top: 20px;
         li {
           margin-bottom: 10px;
         }
@@ -83,6 +112,10 @@
       text-align: center;
       color: #999;
       font-size: 12px;
+      .i18n-dropdown {
+        margin-left: 10px;
+        cursor: pointer;
+      }
     }
   }
 }

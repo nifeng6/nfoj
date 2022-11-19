@@ -1,4 +1,3 @@
-
 import path from 'path'
 import { fileURLToPath, URL } from 'node:url'
 
@@ -58,7 +57,10 @@ export default defineConfig({
   ],
   resolve: {
     alias: {
-      '@': fileURLToPath(new URL('./src', import.meta.url))
+      '@': fileURLToPath(new URL('./src', import.meta.url)),
+
+      find: 'vue-i18n',
+      replacement: 'vue-i18n/dist/vue-i18n.cjs.js' //解决i8n警告
     }
   }
 })

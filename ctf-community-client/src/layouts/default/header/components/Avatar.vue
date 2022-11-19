@@ -53,7 +53,6 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
 import AccountDialog from '@/components/index/AccountDialog/index.vue'
 import useCommonAccountStore from '@/stores/modules/common/account'
 import useIndexAccountStore from '@/stores/modules/index/account'

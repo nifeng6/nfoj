@@ -67,14 +67,14 @@ import { reactive } from 'vue'
 const loginForm = reactive({
   username: '',
   password: '',
-  captchaCode: '',
-  emailCode: ''
+  captchaCode: ''
 })
 const registerForm = reactive({
   username: '',
   password: '',
   repassword: '',
-  email: ''
+  email: '',
+  emailCode: ''
 })
 
 const commonAccountStore = useCommonAccountStore()

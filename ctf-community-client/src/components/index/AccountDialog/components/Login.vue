@@ -59,7 +59,7 @@ import { User, Lock } from '@element-plus/icons-vue'
 import type { FormInstance } from 'element-plus'
 import useCommonAccountStore from '@/stores/modules/common/account'
 import { storeToRefs } from 'pinia'
-import type { ILoginForm } from '@/types/common/account'
+import type { ILoginParams } from '@/types/common/account'
 
 const commonAccountStore = useCommonAccountStore()
 const { loginLoading } = storeToRefs(commonAccountStore)
@@ -69,7 +69,7 @@ const captchaURL = ref(import.meta.env.VITE_CAPTCHA_URL)
 const emit = defineEmits(['update:dialogVisible', 'update:loginForm'])
 const props = defineProps<{
   dialogVisible: boolean
-  loginForm: ILoginForm
+  loginForm: ILoginParams
 }>()
 
 const dialogVisible = computed({

@@ -31,7 +31,11 @@ commonAccountStore.getUserInfoAction()
 const { user } = storeToRefs(commonAccountStore)
 
 const logout = () => {
-  commonAccountStore.userLogoutAction()
+  commonAccountStore.userLogoutAction().then((status) => {
+    if (status) {
+      location.href = '/admin/login'
+    }
+  })
 }
 </script>
 
