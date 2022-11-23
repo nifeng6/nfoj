@@ -1,4 +1,6 @@
 HELP.md
+ctf-community-server/src/main/resources/application-dev.yml
+
 target/
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**
@@ -18,7 +20,6 @@ target/
 *.iws
 *.iml
 *.ipr
-application-dev.yml
 
 ### NetBeans ###
 /nbproject/private/
