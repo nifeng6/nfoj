@@ -14,7 +14,7 @@
         <span v-if="type === 'child'"
           >@{{ itemData?.replyUser.nickName }}：</span
         >
-        <span v-html="itemData?.content"></span>
+        <span v-dompurify-html="itemData?.content"></span>
       </div>
       <div
         style="
