@@ -12,9 +12,15 @@
       <div class="friendly-content">
         <el-row>
           <el-col :span="8">
-            <a href="http://chengyi.jmu.edu.cn/" target="_blank">
-              <img src="@/assets/image/cyxy.png" alt="集美大学诚毅学院" />
-            </a>
+            <el-tooltip
+              effect="dark"
+              content="集美大学诚毅学院"
+              placement="top"
+            >
+              <a href="http://chengyi.jmu.edu.cn/" target="_blank">
+                <img src="@/assets/image/cyxy.png" alt="集美大学诚毅学院" />
+              </a>
+            </el-tooltip>
           </el-col>
         </el-row>
       </div>
