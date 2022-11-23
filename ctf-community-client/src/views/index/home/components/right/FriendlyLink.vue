@@ -1,6 +1,7 @@
 <template>
   <div class="friendly-link">
     <el-card class="notice" shadow="never">
+      <template></template>
       <template #header>
         <div class="friendly-title">
           <span class="title-text">
