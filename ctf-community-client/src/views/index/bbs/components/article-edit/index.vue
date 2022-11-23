@@ -159,7 +159,7 @@ const tagOptions = [
     label: 'sass'
   }
 ]
-const toolbarKeys = ['bold', 'fontSize', 'italic', 'underline']
+const toolbarKeys = ['bold', 'fontSize', 'italic', 'underline', 'codeBlock']
 
 const articleForm = ref({
   title: '',

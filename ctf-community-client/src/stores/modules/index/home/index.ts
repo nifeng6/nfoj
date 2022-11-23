@@ -7,6 +7,8 @@ import {
 } from '@/services/modules/index/home'
 import type { IPage } from '@/types/index/home'
 import type { IWeekRecordData } from '@/types/index/home/index'
+import { ElNotification } from 'element-plus'
+import 'element-plus/theme-chalk/el-notification.css'
 
 const useIndexHomeStore = defineStore('index-home', {
   state: () => ({
@@ -39,11 +41,17 @@ const useIndexHomeStore = defineStore('index-home', {
         currentPage: this.noticePage.currentPage,
         pageSize: this.noticePage.pageSize
       }
-      return getNoticeList(params).then((res) => {
+      const res = await getNoticeList(params)
+      if (res.code === 200) {
         this.noticeList = res.data
         this.noticePage.currentPage = res.page!.currentPage
         this.noticePage.pageSize = res.page!.pageSize
-      })
+      } else {
+        ElNotification.error({
+          title: '请求错误',
+          message: res.msg
+        })
+      }
     },
     async getNoticePageAction() {
       const params = {

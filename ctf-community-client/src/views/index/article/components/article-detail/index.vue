@@ -25,7 +25,12 @@
       </span>
     </div>
 
-    <div class="article-content" v-html="article.content"></div>
+    <div
+      ref="contentRef"
+      class="article-content"
+      v-dompurify-html="article.content"
+      v-highlight
+    ></div>
     <TipsCard style="font-size: 13px">
       <span>免责声明</span><br />
       <span
@@ -39,10 +44,12 @@
 import useIndexArticleStore from '@/stores/modules/index/article'
 import { storeToRefs } from 'pinia'
 import { formatTime } from '@/utils/format-time'
-import { watch } from 'vue'
+import { watch, onMounted, nextTick, ref } from 'vue'
 import usecommonRootStore from '@/stores/modules/common/root'
 
 const commonRootStore = usecommonRootStore()
+
+const contentRef = ref()
 
 const indexArticleStore = useIndexArticleStore()
 
@@ -54,7 +61,75 @@ watch(
     commonRootStore.changeDomTitle(title)
   }
 )
+
+watch(article, () => {
+  nextTick(() => {
+    var e = contentRef.value.querySelectorAll('code')
+    console.log(e)
+
+    var e_len = e.length
+
+    for (let i = 0; i < e_len; i++) {
+      e[i].innerHTML =
+        '<ul><li>' +
+        e[i].innerHTML.replace(/\n/g, '\n</li><li>') +
+        '\n</li></ul>'
+    }
+  })
+})
+
+onMounted(() => {
+  nextTick(() => {
+    var e = contentRef.value.querySelectorAll('code')
+    console.log(e)
+
+    var e_len = e.length
+
+    for (let i = 0; i < e_len; i++) {
+      e[i].innerHTML =
+        '<ul><li>' +
+        e[i].innerHTML.replace(/\n/g, '\n</li><li>') +
+        '\n</li></ul>'
+    }
+  })
+})
 </script>
+
+<style>
+pre {
+  margin: 5px 0;
+}
+
+.hljs ul {
+  list-style: decimal;
+
+  margin: 0 0 0 40px !important;
+
+  padding: 0;
+}
+
+.hljs li {
+  list-style: decimal-leading-zero;
+
+  border-left: 1px solid #111 !important;
+
+  padding: 2px 5px !important;
+
+  margin: 0 !important;
+
+  line-height: 14px;
+
+  width: 100%;
+
+  box-sizing: border-box;
+}
+
+.hljs li:nth-of-type(even) {
+  background-color: rgba(255, 255, 255, 0.015);
+
+  color: inherit;
+}
+</style>
 
 <style scoped lang="less">
 .article {

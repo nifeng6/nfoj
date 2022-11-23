@@ -28,7 +28,6 @@ const indexHomeStore = useIndexHomeStore()
 const { weekRecord } = storeToRefs(indexHomeStore)
 
 const values = computed(() => {
-  console.log(weekRecord.value)
   return [
     {
       name: '通过次数',

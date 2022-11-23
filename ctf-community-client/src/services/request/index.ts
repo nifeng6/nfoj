@@ -3,6 +3,8 @@ import type { AxiosInstance, AxiosRequestConfig } from 'axios'
 import { BASE_URL, TIMEOUT } from './config'
 import NProgress from 'nprogress'
 import 'nprogress/nprogress.css'
+import { ElNotification } from 'element-plus'
+import 'element-plus/theme-chalk/el-notification.css'
 
 class MainRequest {
   instance: AxiosInstance
@@ -33,6 +35,13 @@ class MainRequest {
         return config
       },
       (err) => {
+        console.log(err)
+
+        // ElNotification.error({
+        //   title: '请求错误',
+        //   message: err.message
+        // })
+
         return err
       }
     )
