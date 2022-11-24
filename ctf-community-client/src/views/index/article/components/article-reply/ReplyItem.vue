@@ -7,14 +7,14 @@
       <div style="margin-top: 5px">
         <span>{{ itemData?.user.nickName }}</span>
         <span style="margin-left: 15px; color: #888; font-size: 12px"
-          >时间：{{ itemData?.createTime }}</span
+          >{{ timeBeautifulFormat(itemData?.createTime) }}</span
         >
       </div>
       <div style="margin-top: 15px; font-size: 14px">
         <span v-if="type === 'child'"
           >@{{ itemData?.replyUser.nickName }}：</span
         >
-        <span v-dompurify-html="itemData?.content"></span>
+        <span v-dompurify-html="itemData?.content" class="reply-content"></span>
       </div>
       <div
         style="
@@ -35,6 +35,7 @@
 
 <script lang="ts" setup>
 import { withDefaults } from 'vue'
+import { timeBeautifulFormat } from '@/utils/format-time'
 const emit = defineEmits(['replyBtnClick'])
 
 // 设置props默认值
@@ -65,6 +66,9 @@ const replyHandle = () => {
   margin: 10px 0;
   .footer {
     margin-left: 50px;
+  }
+  .reply-content{
+    display: inline-block;
   }
 }
 </style>
