@@ -34,6 +34,11 @@ const selectHandle = (index: any) => {
 </script>
 
 <style scoped lang="less">
+@media screen and (max-width: 768px) {
+  .sort {
+    display: none;
+  }
+}
 .sort {
   border-radius: 5px;
   overflow: hidden;

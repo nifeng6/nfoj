@@ -14,8 +14,6 @@
         width="180"
       />
 
-
-
       <el-table-column
         show-overflow-tooltip
         prop="intro"
@@ -23,7 +21,6 @@
         width="300"
       />
 
-      
       <el-table-column show-overflow-tooltip prop="website" label="网站地址" />
 
       <el-table-column show-overflow-tooltip prop="download" label="下载地址" />
@@ -33,7 +30,6 @@
           {{ formatTime(scope.row.createTime, false) }}
         </template>
       </el-table-column>
-
 
       <el-table-column label="操作" width="200">
         <template #default="scope">

@@ -7,8 +7,8 @@ import Icons from 'unplugin-icons/vite'
 import IconsResolver from 'unplugin-icons/resolver'
 import Components from 'unplugin-vue-components/vite'
 import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
-
 import vue from '@vitejs/plugin-vue'
+import viteCompression from 'vite-plugin-compression'
 
 const pathSrc = path.resolve(__dirname, 'src')
 
@@ -53,6 +53,9 @@ export default defineConfig({
 
     Icons({
       autoInstall: true
+    }),
+    viteCompression({
+      threshold: 51200 // 对大于 1mb 的文件进行压缩
     })
   ],
   resolve: {

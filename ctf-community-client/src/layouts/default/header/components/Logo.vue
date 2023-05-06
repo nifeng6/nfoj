@@ -11,7 +11,7 @@
   display: flex;
   align-items: center;
   height: 100%;
-  width: 200px;
+  max-width: 200px;
   .logo-text {
     font-size: 20px;
     font-weight: 600;

@@ -1,8 +1,8 @@
 <template>
   <div class="bbs">
     <el-row :gutter="20">
-      <el-col :span="18"><Left></Left></el-col>
-      <el-col :span="6"
+      <el-col :xs="24" :sm="24" :md="18" :lg="18" :xl="18"><Left></Left></el-col>
+      <el-col :xs="24" :sm="24" :md="6" :lg="6" :xl="6"
         ><Right v-model:dialogVisible="dialogVisible"></Right
       ></el-col>
     </el-row>

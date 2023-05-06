@@ -7,27 +7,41 @@
       style="height: 100%"
     >
       <el-menu-item index="/home">
-        <i class="iconfont icon-shouye iconnav"></i> 首页
+        <i class="iconfont icon-shouye iconnav"></i> {{ t('header.home') }}
       </el-menu-item>
       <el-menu-item index="/ctf">
-        <i class="iconfont icon-flag iconnav"></i>安全靶场
+        <i class="iconfont icon-flag iconnav"></i>{{ t('header.safelab') }}
       </el-menu-item>
       <el-menu-item index="/tools">
-        <i class="iconfont icon-Tool iconnav"></i>工具下载
+        <i class="iconfont icon-Tool iconnav"></i>{{ t('header.safelab') }}
       </el-menu-item>
       <el-menu-item index="/coder">
-        <i class="iconfont icon-codelibrary iconnav"></i>在线编程
+        <i class="iconfont icon-codelibrary iconnav"></i>
+        {{ t('header.onlinecode') }}
       </el-menu-item>
       <el-menu-item index="/bbs">
-        <i class="iconfont icon-community iconnav"></i>社区
+        <i class="iconfont icon-community iconnav"></i>{{ t('header.bbs') }}
       </el-menu-item>
     </el-menu>
   </div>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import useI18n from '@/hooks/i18n-hook'
+
+const {
+  currentLocale,
+  changeLocale,
+  i18n: { t }
+} = useI18n()
+</script>
 
 <style scoped lang="less">
+@media screen and (max-width: 768px) {
+  .menu {
+    display: none;
+  }
+}
 .menu {
   flex: 1;
   color: #495060;

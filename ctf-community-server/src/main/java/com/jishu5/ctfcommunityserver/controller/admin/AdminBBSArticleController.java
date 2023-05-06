@@ -28,11 +28,6 @@ public class AdminBBSArticleController {
         return articleService.getArticleList(currentPage, pageSize, keywords, type, createTime);
     }
 
-    @PreAuthorize("hasAuthority('admin:bbsarticle:delete')")
-    @DeleteMapping("/delete")
-    public R deleteArticleById(@RequestParam("id") Integer id){
-        return articleService.deleteArticleById(id);
-    }
 
     @PreAuthorize("hasAuthority('admin:bbsarticle:delete')")
     @DeleteMapping("/delete/list")
@@ -43,6 +38,13 @@ public class AdminBBSArticleController {
     @GetMapping("/type/list")
     public R getArticleTypeList(){
         return articleSortService.getArticleTypeList();
+    }
+
+
+    @PreAuthorize("hasAuthority('admin:bbsarticle:delete')")
+    @DeleteMapping("/delete")
+    public R deleteArticleById(@RequestParam("id") Integer id){
+        return articleService.deleteArticleById(id);
     }
 
     @PreAuthorize("hasAuthority('admin:bbsarticle:add')")
@@ -56,4 +58,5 @@ public class AdminBBSArticleController {
     public R updateArticle(@RequestBody Article article){
         return articleService.updateArticle(article);
     }
+
 }

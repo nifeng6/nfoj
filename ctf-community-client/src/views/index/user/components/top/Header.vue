@@ -24,6 +24,7 @@ import { storeToRefs } from 'pinia'
 
 const indexUserStore = useIndexUserStore()
 
+// a:好的
 const { user } = storeToRefs(indexUserStore)
 </script>
 

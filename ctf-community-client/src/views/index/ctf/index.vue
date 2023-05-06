@@ -4,7 +4,7 @@
       <el-col :xs="24" :sm="24" :md="18" :lg="18" :xl="18">
         <Left />
       </el-col>
-      <el-col :xs="6" :sm="6" :md="6" :lg="6" :xl="6">
+      <el-col :xs="24" :sm="24" :md="6" :lg="6" :xl="6">
         <Right />
       </el-col>
     </el-row>

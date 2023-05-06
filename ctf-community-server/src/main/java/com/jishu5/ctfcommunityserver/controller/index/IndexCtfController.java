@@ -45,6 +45,7 @@ public class IndexCtfController {
             resultMap.put("data",safeTypeList);
             return R.ok(resultMap);
         }catch (Exception e){
+            System.out.println(e.getMessage());
             return R.error();
         }
     }

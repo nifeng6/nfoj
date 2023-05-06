@@ -11,18 +11,24 @@
           </ul>
         </div>
         <div class="footer-top-item">
-          <div class="footer-top-item-title">服务</div>
+          <div class="footer-top-item-title">
+            {{ t('footer.service') }}
+          </div>
           <ul>
             <li>
-              <a href="#" target="_blank">系统信息</a>
+              <a href="#" target="_blank">{{
+                t('footer.service.systeminfo')
+              }}</a>
             </li>
             <li>
-              <a href="#" target="_blank">用户投稿</a>
+              <a href="#" target="_blank">{{
+                t('footer.service.usersubmission')
+              }}</a>
             </li>
           </ul>
         </div>
         <div class="footer-top-item">
-          <div class="footer-top-item-title">开发</div>
+          <div class="footer-top-item-title">{{ t('footer.dev') }}</div>
           <ul>
             <li>
               <a href="#" target="_blank">Github</a>
@@ -33,13 +39,13 @@
           </ul>
         </div>
         <div class="footer-top-item">
-          <div class="footer-top-item-title">支持</div>
+          <div class="footer-top-item-title">{{ t('footer.support') }}</div>
           <ul>
             <li>
-              <a href="#" target="_blank">关于</a>
+              <a href="#" target="_blank">{{ t('footer.support.about') }}</a>
             </li>
             <li>
-              <a href="#" target="_blank">帮助</a>
+              <a href="#" target="_blank">{{ t('footer.support.help') }}</a>
             </li>
           </ul>
         </div>
@@ -85,10 +91,14 @@ const changeWebLanguage = () => {
 </script>
 
 <style scoped lang="less">
+// 移动端自适应
+// @media screen and (max-width: 768px) {
+// }
+
 .footer {
   background-color: #fff;
   .wrapper {
-    width: 1250px;
+    max-width: 1250px;
     margin: 0 auto;
     padding: 20px 0;
     .footer-top {

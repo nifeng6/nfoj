@@ -36,6 +36,7 @@ public class SafeTypeServiceImpl extends ServiceImpl<SafeTypeMapper, SafeType> i
             resultMap.put("data",safeTypeList);
             return R.ok(resultMap);
         }catch (Exception e){
+            System.out.println(e.getMessage());
             return R.error();
         }
     }

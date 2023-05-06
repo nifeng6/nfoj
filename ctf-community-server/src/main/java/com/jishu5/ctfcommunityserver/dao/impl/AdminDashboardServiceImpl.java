@@ -31,6 +31,8 @@ public class AdminDashboardServiceImpl implements AdminDashboardService {
     @Override
     public R getCountList(){
         try {
+
+            System.out.println(1111);
             SimpleDateFormat todayFormat = new SimpleDateFormat("yyyy-MM-dd");
             Calendar calendar = Calendar.getInstance();
             String timeDay = todayFormat.format(calendar.getTime());

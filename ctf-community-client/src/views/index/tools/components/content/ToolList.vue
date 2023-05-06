@@ -6,7 +6,7 @@
         :key="item"
         v-if="toolList.length !== 0"
       >
-        <el-col :span="6"> <ToolItem :itemData="item" /></el-col>
+        <el-col :xs="12" :sm="12" :md="6" :lg="6" :xl="6"> <ToolItem :itemData="item" /></el-col>
       </template>
       <template v-else>
         <el-empty class="empty" description="暂无数据" />
@@ -48,7 +48,7 @@ const currentChangeHandle = (activePage: number) => {
     justify-content: right;
     margin-top: 10px;
   }
-  .empty{
+  .empty {
     text-align: center;
     width: 100%;
   }

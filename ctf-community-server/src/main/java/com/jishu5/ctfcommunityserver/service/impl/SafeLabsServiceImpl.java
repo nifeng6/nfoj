@@ -77,7 +77,7 @@ public class SafeLabsServiceImpl extends ServiceImpl<SafeLabsMapper, SafeLabs> i
 
           // 判断靶场是否存在
           SafeDockerUser safeDockerUser = safeDockerUserMapper.selectOne(new QueryWrapper<SafeDockerUser>().eq("user_id", loginUser.getUser().getId()).eq("lab_id",startLabParamsDto.getLabId()));
-          System.out.println(safeDockerUser);
+          System.out.println("safeDockerUser: "+ safeDockerUser);
           if(safeDockerUser != null && safeDockerUser.getIsExist() == 1){
               return R.error("靶场已存在，等等待过期后重新创建...");
           }
@@ -94,8 +94,6 @@ public class SafeLabsServiceImpl extends ServiceImpl<SafeLabsMapper, SafeLabs> i
           coinRecord.setCreateTime(new Date());
           coinRecord.setCount(user.getCoin());
           coinRecordMapper.insert(coinRecord);
-
-
           // 获取靶场创建代码
           SafeDocker safeDocker = safeDockerMapper.selectOne(new QueryWrapper<SafeDocker>().eq("id",safeLabs.getDockerId()));
           String dockerShell = safeDocker.getCreateShell();
@@ -106,22 +104,28 @@ public class SafeLabsServiceImpl extends ServiceImpl<SafeLabsMapper, SafeLabs> i
           // 靶场唯一名
           String uuid = StringUtil.getUUID();
           dockerShell = dockerShell.replace("{{name}}",uuid).replace("{{port}}",port);
-          introText = introText.replace("{{name}}",uuid);
+          introText = introText.replace("{{name}}",uuid).replace("{{port}}",port);
           nginxShell = nginxShell.replace("{{name}}",uuid).replace("{{port}}",port).replace("{{nginx}}",nginxAddress);
-
           // 发送容器创建代码，接收返回的容器id号（container id）
+          System.out.println("开始执行docker shell");
+          System.out.println(dockerShell);
           String containerId = sshBackUtil.sendCommand(dockerShell);
+          System.out.println("结束执行docker shell");
+          System.out.println("containerId:"+ containerId);
           if(containerId.equals("获取失败")){
               throw new RuntimeException("容器创建失败");
           }
-
+          // 宝塔默认地址： /www/server/panel/vhost/nginx
           // 添加nginx域名映射
           // 发送nginx映射代码
+          System.out.println("开始执行nginx shell");
+          System.out.println(nginxShell);
           String nginxStatus = sshBackUtil.sendCommand(nginxShell);
+          System.out.println("结束执行nginx shell");
           if(nginxStatus.equals("获取失败")){
               throw new RuntimeException("域名映射失败");
           }
-          String nginxReloadStatus = sshBackUtil.sendCommand("systemctl reload nginx");
+          String nginxReloadStatus = sshBackUtil.sendCommand("nginx -s reload");
           if(nginxReloadStatus.equals("获取失败")){
               throw new RuntimeException("nginx重启失败");
           }

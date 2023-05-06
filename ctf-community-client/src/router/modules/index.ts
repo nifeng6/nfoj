@@ -25,7 +25,7 @@ const IndexRouter: Array<RouteRecordRaw> = [
         meta: {
           title: '安全靶场'
         },
-        component: () => Ctf
+        component: Ctf
       },
       {
         path: 'tools',
@@ -51,7 +51,6 @@ const IndexRouter: Array<RouteRecordRaw> = [
         },
         component: BBS
       },
-
 
       {
         path: 'reset-password',

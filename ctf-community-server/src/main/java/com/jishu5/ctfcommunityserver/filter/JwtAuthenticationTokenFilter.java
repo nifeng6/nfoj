@@ -36,8 +36,6 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-
-
         //我们先拿到请求头中的token
         String token = request.getHeader("Authorization");
         if(StringUtils.isBlank(token)){

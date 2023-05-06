@@ -260,7 +260,7 @@ const useIndexCtfStore = defineStore('index-ctf', {
       return submitFlag(this.labInfo.labId, flag)
         .then((res) => {
           if (res.code === 200) {
-            ElNotification.error({
+            ElNotification.success({
               title: '成功',
               message: res.msg
             })

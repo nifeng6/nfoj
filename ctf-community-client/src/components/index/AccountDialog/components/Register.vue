@@ -60,7 +60,7 @@
             <el-icon class="el-input__icon"><Lock /></el-icon>
           </template>
         </el-input>
-      </el-form-item> 
+      </el-form-item>
       <el-form-item>
         <el-button
           style="width: 100%"

@@ -40,13 +40,13 @@
           <div style="text-align: center">
             <el-avatar :src="userInfo.avatarUrl" :size="200"> </el-avatar>
           </div>
-          <div style="text-align: center; margin-top: 20px">
+          <!-- <div style="text-align: center; margin-top: 20px">
             <el-upload>
               <el-button style="padding: 10px" type="primary"
                 >更新头像</el-button
               >
             </el-upload>
-          </div>
+          </div> -->
         </el-col>
       </el-row>
     </div>

@@ -6,9 +6,9 @@
     <div>
       <div style="margin-top: 5px">
         <span>{{ itemData?.user.nickName }}</span>
-        <span style="margin-left: 15px; color: #888; font-size: 12px"
-          >{{ timeBeautifulFormat(itemData?.createTime) }}</span
-        >
+        <span style="margin-left: 15px; color: #888; font-size: 12px">{{
+          timeBeautifulFormat(itemData?.createTime)
+        }}</span>
       </div>
       <div style="margin-top: 15px; font-size: 14px">
         <span v-if="type === 'child'"
@@ -67,7 +67,7 @@ const replyHandle = () => {
   .footer {
     margin-left: 50px;
   }
-  .reply-content{
+  .reply-content {
     display: inline-block;
   }
 }

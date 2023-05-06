@@ -11,7 +11,6 @@ import ArticleReply from './components/article-reply/index.vue'
 import useIndexArticleStore from '@/stores/modules/index/article'
 import { useRoute } from 'vue-router'
 
-
 const route = useRoute()
 const indexArticleStore = useIndexArticleStore()
 
@@ -21,10 +20,7 @@ indexArticleStore.getArticleDetailAction(Number.parseInt(articleId as string))
 indexArticleStore.getArticleReplyListAction(
   Number.parseInt(articleId as string)
 )
-
-
 </script>
-
 
 <style scoped lang="less">
 @import url('http://cdn.bootcss.com/highlight.js/8.0/styles/monokai_sublime.min.css');

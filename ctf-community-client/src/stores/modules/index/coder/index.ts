@@ -10,7 +10,7 @@ import {
   shareCode,
   getShareCode
 } from '@/services/modules/index/coder/index'
-import {  ElNotification } from 'element-plus'
+import { ElNotification } from 'element-plus'
 import 'element-plus/theme-chalk/el-notification.css'
 
 const useIndexCoderStore = defineStore('index-coder', {

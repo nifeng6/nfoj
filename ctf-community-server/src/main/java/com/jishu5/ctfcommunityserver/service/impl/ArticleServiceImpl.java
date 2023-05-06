@@ -128,15 +128,19 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
         try {
             LoginUser loginUser = (LoginUser)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
+            System.out.println(article);
+
             article.setUserId(loginUser.getUser().getId());
             // 这里之后因该需要判断一下类型id，以免部分用户上传到公告
             article.setCreateTime(new Date());
             article.setUpdateTime(new Date());
             article.setId(null);
+            article.setView(0);
 
             articleMapper.insert(article);
             return R.ok("发布成功");
         }catch (Exception e){
+            System.out.println(e.getMessage());
             return R.error();
         }
     }

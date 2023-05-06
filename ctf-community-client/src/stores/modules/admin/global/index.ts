@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia'
 import { getMenuList } from '@/services/modules/admin/menu'
 import type { IMenuData } from '@/types/admin/menu'
+import { ElNotification } from 'element-plus'
 
 const useAdminGlobalStore = defineStore('', {
   state: () => ({

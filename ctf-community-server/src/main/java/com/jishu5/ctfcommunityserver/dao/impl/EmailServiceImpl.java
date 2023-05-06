@@ -77,7 +77,7 @@ public class EmailServiceImpl implements EmailService {
             String url = mainURL + "/reset-password?username="+user.getUsername()+"&code="+code;
             String content = "请在5分钟内完成验证，验证码为：" + code + "点击链接快速重置：" + url;
 
-            emailUtil.sendMail(emailSendParams.getEmail(),"NFOJ的注册通知",content);
+            emailUtil.sendMail(emailSendParams.getEmail(),"NFOJ的密码重置通知",content);
 
             redisCache.setCacheObject("user:email:reset:verify:"+emailSendParams.getEmail(), code,5, TimeUnit.MINUTES);
             redisCache.setCacheObject("user:email:time:"+emailSendParams.getEmail(), code,2, TimeUnit.MINUTES);

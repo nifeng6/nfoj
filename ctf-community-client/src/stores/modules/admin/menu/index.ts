@@ -28,7 +28,7 @@ const useAdminMenuStore = defineStore('admin-menu', {
     },
     addDialogVisible: false,
     editDialogVisible: false,
-    editActiveItem: {} as IMenuData,
+    editActiveItem: {} as IMenuData
   }),
   actions: {
     async getListAction() {

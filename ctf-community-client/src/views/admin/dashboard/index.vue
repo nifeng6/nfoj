@@ -5,9 +5,9 @@
         <el-card>
           <template #header>
             <div class="user-header">
-              <img :src="user.avatarUrl" :alt="user.nickName" />
+              <img :src="user.avatarUrl" :alt="user?.nickName" />
               <div>
-                <h3>{{ user.nickName }}</h3>
+                <h3>{{ user?.nickName }}</h3>
                 <span>{{ user.role.name }}</span>
               </div>
             </div>
@@ -136,11 +136,10 @@ import { Document, UserFilled, Flag } from '@element-plus/icons-vue'
 
 const ua = computed(() => {
   return {
-    broswer:
-      navigator.userAgentData.brands[1].brand +
+    broswer: (navigator! as any).userAgentData.brands[1].brand +
       '' +
-      navigator.userAgentData.brands[1].version,
-    os: navigator.userAgentData.platform
+      (navigator! as any).userAgentData.brands[1].version,
+    os: (navigator! as any).userAgentData.platform
   }
 })
 

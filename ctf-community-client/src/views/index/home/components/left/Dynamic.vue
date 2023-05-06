@@ -14,7 +14,6 @@
           <el-timeline-item
             color="#409eff"
             size="large"
-
             v-for="(item, index) in dynamicList"
             :key="index"
           >

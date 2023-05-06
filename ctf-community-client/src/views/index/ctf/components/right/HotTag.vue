@@ -7,7 +7,6 @@
       <el-tag
         class="tag-item"
         :type="tag_type[Math.ceil(Math.random() * 10)]"
-        
         effect="dark"
         v-for="item in ctfTagList"
         :key="item.id"
@@ -20,7 +19,6 @@
 </template>
 
 <script lang="ts" setup>
-
 import { storeToRefs } from 'pinia'
 import useIndexCtfStore from '@/stores/modules/index/ctf'
 

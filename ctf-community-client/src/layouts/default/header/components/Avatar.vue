@@ -18,6 +18,10 @@
           </span>
           <template #dropdown>
             <el-dropdown-menu>
+              <el-dropdown-item command="admin" v-show="user?.role?.id <= 2">
+                <i class="iconfont icon-setting iconnav"></i>
+                管理员后台
+              </el-dropdown-item>
               <el-dropdown-item command="qiandao">
                 <i class="iconfont icon-Sign iconnav"></i>
                 签到
@@ -41,6 +45,7 @@
     </template>
     <!-- 未登录 -->
     <template v-else>
+      <AccountDialog />
       <div class="unlogin">
         <el-button type="primary" @click="unloginHandle('login')">
           登录
@@ -49,7 +54,6 @@
       </div>
     </template>
   </div>
-  <AccountDialog />
 </template>
 
 <script setup lang="ts">
@@ -67,7 +71,7 @@ const unloginHandle = (type: string) => {
   accountDialogVisible.value = true
 }
 
-const commandHandle = (key: String) => {
+const commandHandle = (key: string) => {
   switch (key) {
     case 'qiandao':
       indexAccountStore.getAccountQiandaoAction()
@@ -77,6 +81,9 @@ const commandHandle = (key: String) => {
       break
     case 'account':
       window.location.href = '/account'
+      break
+    case 'admin':
+      window.location.href = '/admin'
       break
     case 'logout':
       logoutHandle()

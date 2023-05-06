@@ -1,10 +1,10 @@
 <template>
   <div class="home">
     <el-row :gutter="20">
-      <el-col :span="16">
+      <el-col :xs="24" :sm="24" :md="16" :lg="16" :xl="16">
         <Left />
       </el-col>
-      <el-col :span="8">
+      <el-col :xs="24" :sm="24" :md="8" :lg="8" :xl="8">
         <Right />
       </el-col>
     </el-row>
@@ -28,7 +28,7 @@ commonRootStore.changeDomTitle()
 
 <style scoped lang="less">
 .home {
-  width: 1250px;
+  max-width: 1250px;
   margin: 20px auto;
 }
 </style>

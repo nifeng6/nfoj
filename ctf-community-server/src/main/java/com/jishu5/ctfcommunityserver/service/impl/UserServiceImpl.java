@@ -212,7 +212,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
             user.setPassword(encoder.encode(user.getPassword()));
             user.setNickName(user.getUsername());
             user.setCreateTime(new Date());
-            user.setAvatarUrl(staticURL + DefaultConstant.DEFAULT_AVATAR_PATH);
+            user.setAvatarUrl("https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fup.enterdesk.com%2Fedpic_source%2F34%2F93%2Ffe%2F3493fec56c307642522b2bc2fc4461e0.jpg&refer=http%3A%2F%2Fup.enterdesk.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1644938763&t=4a3558526cb7183a0e420ec367b65a72");
             user.setStatus(DefaultConstant.DEFAULT_USER_STATUS);
             user.setCoin(DefaultConstant.DEFAULT_USER_COIN);
             user.setDescription(DefaultConstant.DEFAULT_USER_DESCRIPTION);

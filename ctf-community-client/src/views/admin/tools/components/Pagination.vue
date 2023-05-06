@@ -10,7 +10,7 @@
 </template>
 
 <script setup lang="ts">
-import useAdminLabsStore from '@/stores/modules/admin/labs/index'
+import useAdminLabsStore from '@/stores/modules/admin/tools/index'
 import { storeToRefs } from 'pinia'
 
 const adminLabsStore = useAdminLabsStore()
